@@ -15,5 +15,5 @@ app.use((err, req, res, next) => {
 });
 
 db.sync()
- .then(() => app.listen(3000, ()=> console.log('Servidor corriendo en http://localhost:3001')))
+ .then(() => app.listen(5432, ()=> console.log('Servidor corriendo en http://localhost:5432')))
  .catch((err) => console.log(err));
