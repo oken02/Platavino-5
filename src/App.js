@@ -1,10 +1,9 @@
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <h1>PLATAVINO</h1>
-    </div>
-  );
+    <Footer />
+  )
 }
 
 export default App;
