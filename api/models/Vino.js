@@ -18,7 +18,7 @@ const Vino = db.define('vino', {
         type: S.STRING,
     },
     ml:{
-        type: S.NUMBER,
+        type: S.INTEGER,
     },
     Descripcion:{
         type: S.STRING,
