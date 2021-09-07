@@ -24,4 +24,6 @@ const Vino = db.define('vino', {
         type: S.STRING,
     },
         
-})
+});
+
+module.exports = Vino;
