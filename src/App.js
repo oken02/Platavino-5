@@ -1,13 +1,7 @@
-import Footer from "./components/Footer";
-import Grid from "./components/Grid";
+import NavBar from "./components/NavBar";
 
 function App() {
-  return (
-    <div>
-      <Footer />
-      <Grid />
-    </div>
-  );
+  return <NavBar />;
 }
 
 export default App;
