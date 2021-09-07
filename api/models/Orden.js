@@ -1,20 +1,24 @@
 const S = require('sequelize');
 const db = require('../db');
 
-const User = db.define('user', {
-    UserName :{
+const Orden = db.define('user', {
+    Id :{
         type: S.STRING,
         allowNull: false,
     },
-    email:{
+    PrecioTotal:{
         type: S.STRING,
         allowNull: false,
     },
-    Password:{
+    Status:{
         type: S.STRING,
         allowNull: false,
     },
+    FechaCompra:{
+        type: S.DATE,
+        allowNull: false,
+    }
 
 });
 
-module.exports = User;
+module.exports = Orden;
