@@ -1,9 +1,13 @@
 import Footer from "./components/Footer";
+import Grid from "./components/Grid";
 
 function App() {
   return (
-    <Footer />
-  )
+    <div>
+      <Footer />
+      <Grid />
+    </div>
+  );
 }
 
 export default App;
