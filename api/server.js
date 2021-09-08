@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const db = require("./db");
-const Vino = require("./models/Vino");
+const { Vino, User, Orden, Carrito } = require('./models/index')
 
 const app = express();
 // logging middleware
@@ -26,7 +26,7 @@ app.use("/api", routes);
 
 app.use("/api", (req, res) => {
   res.sendStatus(404);
-}); 
+});
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
 app.use((err, req, res, next) => {
