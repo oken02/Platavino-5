@@ -1,4 +1,5 @@
 import Footer from "./components/Footer";
+import Wine from "./components/Wine";
 import { Switch, Route } from "react-router-dom";
 
 import NavBar from "./components/NavBar";
