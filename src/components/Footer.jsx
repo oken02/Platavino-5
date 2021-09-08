@@ -22,15 +22,15 @@ const useStyles = makeStyles((theme) => ({
 const Footer = () => {
     const classes = useStyles();
     return (
-        <div className='footer'>
-            <AppBar position="static">
-                <Toolbar>
+        <div className='footer' >
+            <AppBar position="static" >
+                <Toolbar className='toolbarFooter'>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        News
+                        Platavino 5
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    Argentina / Venezuela / Uruguay
                 </Toolbar>
             </AppBar>
         </div>
