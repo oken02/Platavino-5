@@ -2,28 +2,53 @@ const express = require("express");
 const router = express.Router();
 const Vinos = require("../models/Vino");
 
+////LLEGAREMOS A LAS RUTAS A TRAVÉS DE LA RUTA "http://localhost:3001/api/vinos/..."
 
-
+//RUTAS DE TODOS NUESTROS VINOS
 router.get("/", (req, res, next) => {
- Vinos.findAll()
-  .then((vinos) => res.send(vinos))
-  .catch(next);
-} );
+  Vinos.findAll()
+    .then((vinos) => res.send(vinos))
+    .catch(next);
+});
 
+
+router.get("/pais", (req, res, next) => {
+  Vinos.findAll({where:{
+    PaisDeOrigen:req.body.Pais
+  }})
+    .then((vinos) => res.send(vinos))
+    .catch(next);
+});
+
+router.get("/precio", (req, res, next) => {
+  Vinos.findAll({where:{
+    Precio:req.body.Precio
+  }})
+    .then((vinos) => res.send(vinos))
+    .catch(next);
+});
+
+router.get("/varietal", (req, res, next) => {
+  Vinos.findAll({where:{
+    Varietal:req.body.Varietal
+  }})
+    .then((vinos) => res.send(vinos))
+    .catch(next);
+});
+
+//RUTA PARA CREAR UN NUEVO VINO
 router.post("/nuevo", (req, res, next) => {
   Vinos.create(req.body)
     .then((product) => res.status(201).send(product))
     .catch(next);
-} );
+});
 
-
+//RUTA PARA LLEVARNOS A UNA PAGINA A TAVÉS DEL ID DE UN VINO
 router.get("/:id", (req, res, next) => {
-  // Finding the Page
   Vinos.findOne({
     where: {
       id: req.params.id,
     },
-    
   })
     .then((page) => {
       if (!page) return next("No se encontro tu pagina");
@@ -32,9 +57,8 @@ router.get("/:id", (req, res, next) => {
     .catch(next);
 });
 
-
-
-router.put("/:id", (req, res, next) => {
+//RUTA QUE NOS LLEVA A UN VINO A TRAVÉS DE SU ID Y NOS PERMITE EDITAR SUS DATOS
+router.put("/edit/:id", (req, res, next) => {
   Vinos.update(req.body, {
     where: {
       id: req.params.id,
@@ -48,8 +72,7 @@ router.put("/:id", (req, res, next) => {
     .catch(next);
 });
 
-
-/** DELETE **/
+//RUTA QUE NOS PERMITE ELIMINAR UN VINO A TRAVÉS DE SU ID
 router.delete("/borrar/:id", (req, res, next) => {
   Vinos.destroy({
     where: {
