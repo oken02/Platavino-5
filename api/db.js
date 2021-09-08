@@ -1,18 +1,10 @@
 const Sequelize = require('sequelize');
 
-const WineModel = require('./models/films')
-const UserModel = require('./models/users')
+//https://sequelize.org/master/manual/getting-started.html
+// Option 2: Passing parameters separately (other dialects)
+const db = new Sequelize('Platavino5', null, null, {
+    host: 'localhost',
+    dialect: 'postgres'
+  });
 
-
-const db = new Sequelize();
-
-
-
-const Wine = WineModel(db, Sequelize);
-const User = UserModel(db, Sequelize);
-
-
-module.exports = {
-    Film,
-    User
-}
+module.exports = db;

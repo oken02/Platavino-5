@@ -1,10 +1,8 @@
+import Footer from "./components/Footer";
+import Wine from "./components/Wine";
 
 function App() {
-  return (
-    <div className="App">
-      <h1>PLATAVINO</h1>
-    </div>
-  );
+  return <Wine />;
 }
 
 export default App;
