@@ -8,6 +8,9 @@ import { useDispatch } from "react-redux";
 import carritoReducer from "./store/carritoReducer";
 import { setCarrito } from "./store/addToCarrito";
 
+
+
+
 function App() {
   const dispatch = useDispatch()
 
@@ -16,6 +19,7 @@ function App() {
     return dispatch(setCarrito(input))
   }
 
+  const history = useHistory()
 
   return (
     <div>

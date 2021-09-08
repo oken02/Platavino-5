@@ -113,6 +113,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
+import { red } from "@material-ui/core/colors";
 import {
   Info,
   InfoCaption,
@@ -121,7 +122,9 @@ import {
 } from "@mui-treasury/components/info";
 import { useGalaxyInfoStyles } from "@mui-treasury/styles/info/galaxy";
 import { useCoverCardMediaStyles } from "@mui-treasury/styles/cardMedia/cover";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Icon } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -151,7 +154,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Cards = React.memo(function GalaxyCard({ products }) {
-  const { title, year, description, image } = products;
+  const { id, title, year, description, image } = products;
   const mediaStyles = useCoverCardMediaStyles({ bgPosition: "top" });
   const styles = useStyles();
   return (
@@ -172,6 +175,19 @@ export const Cards = React.memo(function GalaxyCard({ products }) {
             <InfoTitle>{title}</InfoTitle>
             <InfoCaption>{description}</InfoCaption>
           </Info>
+
+          <IconButton
+            onClick={() =>
+              "aca usariamos el useHistory para redireccionar a la vista individual"
+            }
+          >
+            <Icon color="secondary">add_circle</Icon>
+          </IconButton>
+          <IconButton
+            onClick={() => "dispatch para agregar el producto al carrito"}
+          >
+            <AddShoppingCartSharpIcon color="secondary" />
+          </IconButton>
         </Box>
       </Card>
     </>
