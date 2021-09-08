@@ -6,6 +6,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -13,6 +14,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
+function Wine() {
+  const [wine, setwine] = useState(null);
+  // const selectedvino = useSelector((state) => state.selectedvino)
+
+  //   useEffect(() => {
+  //     get("/movie/" + wineid).then((data) => {
+  //       setMovie(data);
+  //     });
+  //   }, []);
+
 
 function Wine({ wineId }) {
   const defaultProps = {
@@ -24,6 +36,7 @@ function Wine({ wineId }) {
   };
   const classes = useStyles();
   return (
+
     <>
       <div className={styles.detailsContainer}>
         <img
@@ -32,31 +45,9 @@ function Wine({ wineId }) {
           alt="foto vino"
         ></img>
 
-        <div className={`${styles.col} ${styles.movieDetails}`}>
-          <h1 className={styles.firstItem}> Nombre vino</h1>
-          <p>
-            <strong>Bodega:</strong>
-          </p>
-          <p>
-            <strong>Color:</strong>
-          </p>
-          <p>
-            <strong>Description:</strong>
-          </p>
 
-          <p>
-            <strong>Variedad:</strong>
-          </p>
 
-          <p>
-            <strong>Año:</strong>
-          </p>
-          <p>
-            <strong>Pais:</strong>
-          </p>
-          <p>
-            <strong>Ml: </strong>
-          </p>
+
 
           <p> Precio: </p>
 
@@ -64,8 +55,40 @@ function Wine({ wineId }) {
             Comprar
           </Button>
         </div>
+
+      <div className={`${styles.col} ${styles.movieDetails}`}>
+        <h1 className={styles.firstItem}> Nombre vino</h1>
+        <p>
+          <strong>Bodega:</strong>
+        </p>
+        <p>wine
+          <strong>Color:</strong>
+        </p>
+        <p>
+          <strong>Description:</strong>
+        </p>
+
+        <p>
+          <strong>Variedad:</strong>
+        </p>
+
+        <p>
+          <strong>Año:</strong>
+        </p>
+        <p>
+          <strong>Pais:</strong>
+        </p>
+        <p>
+          <strong>Ml: </strong>
+        </p>
+
+        <p> Precio: </p>
+        <IconButton color="primary" aria-label="add to shopping cart">
+          {/* <AddShoppingCartIcon /> */}
+        </IconButton>
+
       </div>
-    </>
+    </div>
   );
 }
 
