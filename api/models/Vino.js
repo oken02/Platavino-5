@@ -23,6 +23,9 @@ const Vino = db.define('vino', {
     Descripcion:{
         type: S.STRING,
     },
+    Img:{
+        type: S.STRING,
+    },
         
 });
 
