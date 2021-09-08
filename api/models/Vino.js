@@ -9,7 +9,7 @@ const Vino = db.define('vino', {
         type: S.STRING,
     },
     Precio:{
-        type: S.NUMBER,
+        type: S.INTEGER,
     },
     Varietal:{
         type: S.STRING,
