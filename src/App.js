@@ -1,5 +1,6 @@
 import Footer from "./components/Footer";
 import { Switch, Route, useHistory } from "react-router-dom";
+import Wine from "./components/Wine";
 
 import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
