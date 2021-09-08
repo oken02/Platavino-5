@@ -10,8 +10,9 @@ Vino.belongsToMany(Carrito, { through: "CarritoVino" });
 Carrito.belongsToMany(Vino, { through: "CarritoVino" });
 
 module.exports = {
-  User,
-  Carrito,
-  Vino,
-  Orden,
-};
+    User,
+    Carrito,
+    Vino,
+    Orden
+
+}
