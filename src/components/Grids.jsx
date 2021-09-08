@@ -64,17 +64,19 @@ function Grids() {
   }, []);
 
   return (
-    <Box
-      pb={10}
-      display="flex"
-      flexWrap="wrap"
-      justifyContent="center"
-      // alignItems="center"
-      bgcolor="text.primary"
-    >
-      {fakeProducts.map((wine, i) => {
-        return <Cards key={i} products={wine} />;
-      })}
+    <Box>
+      <Box
+        pb={10}
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="center"
+        // alignItems="center"
+        bgcolor="text.primary"
+      >
+        {fakeProducts.map((wine, i) => {
+          return <Cards key={i} products={wine} />;
+        })}
+      </Box>
     </Box>
   );
 }

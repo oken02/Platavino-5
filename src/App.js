@@ -5,7 +5,13 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
 
+
+
+
 function App() {
+
+  
+
   return (
     <div>
       <NavBar />
