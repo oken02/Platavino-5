@@ -5,8 +5,16 @@ import Wine from "./components/Wine";
 import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
 
+
+
+
 function App() {
+
+
+  
+
   const history = useHistory()
+
   return (
     <div>
       <NavBar />
