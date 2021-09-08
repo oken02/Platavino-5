@@ -1,22 +1,38 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const routes = require('./routes/index')
-const models = require('./models/index')
-const Vino = require("./models/Vino")
-const vinosRoute = require("../api/routes/vinosRoute")
-const db = require('./db');
+// server configs
+const express = require("express");
+const volleyball = require("volleyball");
+const routes = require("./routes/index");
+const http = require("http");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+
+const db = require("./db");
+const Vino = require("./models/Vino");
 
 const app = express();
+// logging middleware
+app.use(volleyball);
 
-app.use(express.static('../public'));
-app.use(bodyParser.urlencoded({ extended: false }));
+/* app.use(express.static("build")); */
+
+// parsing middleware
+app.use(express.json());
+
 app.use(bodyParser.json());
-app.use("/api",routes);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use((err, req, res, next) => {
-    res.status(500).send(err);
+app.use("/api", routes);
+
+/* app.use("/api", (req, res) => {
+  res.sendStatus(404);
+});  */
+
+// error middleware -> https://expressjs.com/es/guide/error-handling.html
+/* app.use((err, req, res, next) => {
+  res.status(500).send(err.message);
+}); */
+
+db.sync({ force: false }).then(() => {
+  app.listen(3001, () => console.log("Servidor escuchando en el puerto 3001"));
 });
-
-db.sync({ force: true })
- .then(() => app.listen(3000, ()=> console.log('Servidor corriendo en http://localhost:3000')))
- .catch((err) => console.log(err));
