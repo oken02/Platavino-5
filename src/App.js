@@ -1,16 +1,16 @@
-
 import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
 import { Switch, Route } from "react-router-dom";
+
+import NavBar from "./components/NavBar";
+import Grids from "./components/Grids";
 
 function App() {
   return (
     <div>
       <NavBar />
-      <Footer />
       <Switch>
         <Route exact path='/products' render={() => {
-          //Aca iria e Grids de Jose.
+            return <Grids />
         }} />
         <Route exact path='/login' render={() => {
           //Aca iria el LogIn de Bruno.
@@ -22,8 +22,9 @@ function App() {
           //Aca iria el carrito.
         }} />
       </Switch>
-    </div>
-  )
+      <Footer />
+     </div>
+  );
 }
 
 export default App;
