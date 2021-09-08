@@ -5,7 +5,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
-import { BrowserRouter } from "react-router-dom"
+
+import { BrowserRouter } from "react-router-dom";
+
+
+
 
 
 
@@ -16,7 +20,9 @@ ReactDOM.render(
     </Provider>
   </BrowserRouter>,
 
+
   document.getElementById("root")
+
 
 
 );
