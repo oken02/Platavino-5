@@ -1,0 +1,63 @@
+const Vino = require('./models/Vino');
+
+Vino.bulkCreate([
+    {   
+    PaisDeOrigen: 'Argentina ',
+    Bodega: 'Alma Mora, Chivilcoy ',
+    Precio:1500,
+    Varietal:'Malbec',
+    Color:'Tinto',
+    ml:750,
+    Descripcion:'Austero: es uno de los más valorados por los profesionales. Se usa para aquellos que expresan sin distorsiones el carácter varietal de las uvas y su origen o aquellos en los que la elaboración no desvirtúa su naturaleza. ',
+    Img:'https://static0.tiendeo.com.ar/upload_articulos/259644/0d89eaa5-db12-50d9-b06a-c7cda1c94a4b.jpg',
+},
+{   
+    PaisDeOrigen: 'Estados Unidos',
+    Bodega: 'Antigal',
+    Precio:25000,
+    Varietal:'Malbec',
+    Color:'Tinto',
+    ml:750,
+    Descripcion:'Balanceado: es el estado ideal de un vino en boca y significa que sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en armonía. ',
+    Img:'https://www.antigal.com/wp-content/uploads/2020/09/antigal-key-visuals-28.jpg',
+},
+{   
+    PaisDeOrigen: 'Francia',
+    Bodega: 'Alaris',
+    Precio:3200,
+    Varietal:'Syrah',
+    Color:'Tinto',
+    ml:750,
+    Descripcion:'Cálido: el alcohol en boca despierta sensaciones táctiles y psudotérmicas, cuando su presencia está por encima de lo ideal se puede sentir cierta calidez que llega a desbalancear el paladar.',
+    Img:'https://d3ugyf2ht6aenh.cloudfront.net/stores/001/151/809/products/alaris-syrah1-72489b184e1ac3831415900687171609-640-0.jpg',
+},
+{   
+    PaisDeOrigen: 'Itallia',
+    Bodega: 'Bonnal',
+    Precio:7000,
+    Varietal:'Merlot',
+    Color:'Tinto',
+    ml:750,
+    Descripcion:'Carnoso: el cuerpo del vino, su peso y textura deben ser descriptos y este término se utiliza con aquello de buena presencia y cuerpo.',
+    Img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgja2Uqhyrx1CsBJyIoZLXNMQTQUbDNUIzpQ&usqp=CAU',
+}, {   
+    PaisDeOrigen: 'Argentina',
+    Bodega: 'The Luxonomist, Mendoza',
+    Precio:1700,
+    Varietal:'Borgoña',
+    Color:'Blanco',
+    ml:750,
+    Descripcion:'Complejo: es un vino que reúne características excepcionales con sus aromas y sabores. Además debe ser armónico y elegante.',
+    Img:'https://theluxonomist.es/wp-content/uploads/2020/04/vino-blanco-f.jpg',
+}, {   
+    PaisDeOrigen: 'Francia',
+    Bodega: 'Lur Saluces Grand Chateau d’Yquem',
+    Precio:4500,
+    Varietal:'Cosecha Tardia',
+    Color:'Rosado',
+    ml:750,
+    Descripcion:'Expresivo: no todos los vinos se la hacen fácil a los sentidos. Algunos huelen mientras otros apenas se hacen notar. Idealmente es bueno que un vino permita disfrutar de sus aromas y cuando su caudal aromático lo facilita se lo destaca con este término.',
+    Img:'https://fecovita.vteximg.com.br/arquivos/ids/155479-450-450/Dilema_Rosado_Dulce_Natural.png?v=637033715176200000',
+},
+  ]);
+  
