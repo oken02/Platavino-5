@@ -4,14 +4,28 @@ import Wine from "./components/Wine";
 import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
+import { useDispatch } from "react-redux";
+import carritoReducer from "./store/carritoReducer";
+import { setCarrito } from "./store/addToCarrito";
 
 function App() {
+
   const history = useHistory();
+
+  const dispatch = useDispatch()
+
+  const handleClick = (input) => {
+    console.log(input)
+    return dispatch(setCarrito(input))
+  }
+
+
 
   return (
     <div>
-      <NavBar />
+      <NavBar handleClick={handleClick} />
       <Switch>
+
         <Route
           exact
           path="/products"
@@ -40,13 +54,13 @@ function App() {
             return <Cart />;
           }}
         />
-        <Route
-          exact
-          path="/product/:id"
-          render={({ match }) => {
-            return <Wine wineId={match.params.id} />;
-          }}
-        />
+ 
+        <Route exact path='/singleProduct' render={() => {
+          return <Wine />
+        }} />
+      
+   
+
       </Switch>
       <Footer />
     </div>
