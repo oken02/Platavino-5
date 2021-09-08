@@ -26,7 +26,7 @@ app.use("/api", routes);
 
 app.use("/api", (req, res) => {
   res.sendStatus(404);
-}); 
+});
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
 app.use((err, req, res, next) => {

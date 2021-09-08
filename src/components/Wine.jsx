@@ -5,12 +5,13 @@ import { IconButton } from "@material-ui/core";
 
 function Wine() {
   const [wine, setwine] = useState(null);
+  // const selectedvino = useSelector((state) => state.selectedvino)
 
   //   useEffect(() => {
   //     get("/movie/" + wineid).then((data) => {
   //       setMovie(data);
   //     });
-  //   }, [movieId]);
+  //   }, []);
 
   const defaultProps = {
     bgcolor: "background.paper",
@@ -22,8 +23,6 @@ function Wine() {
 
   return (
     <>
-      <Footer />
-
       <div className={styles.detailsContainer}>
         <img
           className={`${styles.col} ${styles.movieImage}`}
