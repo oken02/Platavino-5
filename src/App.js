@@ -6,13 +6,17 @@ import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
+
 import Login from "./components/Login";
+
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
+
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
+
 
 function App() {
   let usernameRegister;
@@ -24,7 +28,9 @@ function App() {
   useEffect(() => {
     dispatch(sendValidation());
   }, []);
-  
+
+
+
   const handleClick = (input) => {
     console.log(input);
     return dispatch(setCarrito(input));
@@ -37,6 +43,7 @@ function App() {
   const noLogin = (user) => {
     if (user.isAuthenticated) return "/search";
   };
+
 
 
   const handleChangeUsernameRegister = (e) => {
@@ -65,12 +72,11 @@ function App() {
       .catch(e => console.log(e))
   }
 
+
   return (
     <div>
       <NavBar handleClick={handleClick} />
       <Switch>
-
-
         <Route exact path="/login">
           <Protector evaluate={noLogin}>
             <Login />

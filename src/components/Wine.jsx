@@ -77,42 +77,6 @@ function Wine() {
             </Button>
           </Link>
         </div>
-
-        <p> Precio: </p>
-      </div>
-
-      <div className={`${styles.col} ${styles.movieDetails}`}>
-        <h1 className={styles.firstItem}> Nombre vino</h1>
-        <p>
-          <strong>Bodega:</strong>
-        </p>
-        <p>
-          wine
-          <strong>Color:</strong>
-        </p>
-        <p>
-          <strong>Description:</strong>
-        </p>
-
-        <p>
-          <strong>Variedad:</strong>
-        </p>
-
-        <p>
-          <strong>Año:</strong>
-        </p>
-        <p>
-          <strong>Pais:</strong>
-        </p>
-        <p>
-          <strong>Ml: </strong>
-        </p>
-
-        <p> Precio: </p>
-        <IconButton color="primary" aria-label="add to shopping cart">
-          {/* <AddShoppingCartIcon /> */}
-        </IconButton>
-      </div>
     </>
   );
 }

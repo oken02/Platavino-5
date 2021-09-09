@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const generateToken = (payload) => {
-  return jwt.sign({id:userid}, "SECRET", { expiresIn: "7d" });
+  return jwt.sign({ id: payload.userid }, "SECRET", { expiresIn: "7d" });
 };
 
 const validateToken = (req, res, next) => {
