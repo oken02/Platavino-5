@@ -1,6 +1,7 @@
 const express = require("express");
 
 const User = require("../models/User");
+const Carrito = require("../models/Carrito");
 
 const bcrypt = require("bcrypt");
 const { justAdmin } = require("../middlewares/justAdmin");
@@ -97,7 +98,6 @@ router.post("/login", async (req, res) => {
       console.log("userLogged", userLogged);
 
       res.send({ ok: true, user: userLogged, token });
-
     } else {
       return res.status(404).send({
         ok: false,
@@ -141,17 +141,18 @@ router.post("/register", async (req, res) => {
       }
     );
 
-    console.log("USER CREATE RESPONSE", userCreated);
+    // userCreated
+    const carrito = Carrito.build({ Unidades: 0 });
+
+    const carritoDB = await userCreated.setCarrito(carrito);
+
+    console.log("CARRITO CREATED RESPONSE", carritoDB);
 
     return res.status(201).json({
       ok: true,
       msg: "el usuario fue creado",
       userdb: userCreated,
-      // user: {
-      //   id: userCreated.id,
-      //   email: userCreated.email,
-      //   username: userCreated.username,
-      // },
+      carritoDB,
     });
   } catch (error) {
     console.log(error);

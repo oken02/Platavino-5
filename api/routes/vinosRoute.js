@@ -12,15 +12,6 @@ router.get("/", (req, res, next) => {
 });
 
 
-
-
-router.get("/", (req, res, next) => {
-  Vinos.findAll()
-    .then((vinos) => res.send(vinos))
-    .catch(next);
-});
-
-
 //RUTA PARA CREAR UN NUEVO VINO
 router.post("/nuevo", (req, res, next) => {
   Vinos.create(req.body)
