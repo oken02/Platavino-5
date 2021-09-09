@@ -13,6 +13,9 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { sendValidation, setIsLogged } from "../store/isLoggedReducer";
 
 function Copyright() {
   return (
@@ -61,18 +64,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.post("/api/auth/login").then(dispatch(setIsLogged));
+    axios
+      .post("http://localhost:3001/api/auth/login", { email, password })
+      .then((data) => {
+        console.log(data);
+      });
   };
 
-  const handelPassword = (e) => {};
+  const handelPassword = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+  };
 
   const handleEmail = (e) => {
     const value = e.target.value;
+    setEmail(value);
   };
 
   return (
@@ -116,23 +129,19 @@ function Login() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Link to="/products">
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Sign In
-              </Button>
-            </Link>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign In
+            </Button>
+
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+              <Grid item xs></Grid>
               <Grid item>
                 <Link href="#" variant="body2">
                   {"Don't have an account? Sign Up"}

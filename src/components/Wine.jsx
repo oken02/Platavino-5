@@ -9,7 +9,6 @@ import { setSelectedProduct } from "../store/selectedProductReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { setCarrito } from "../store/addToCarrito";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -23,9 +22,7 @@ function Wine() {
 
   const dispatch = useDispatch();
 
-
   //dispatch(setSelectedProduct())
-
 
   const defaultProps = {
     bgcolor: "background.paper",
@@ -44,7 +41,6 @@ function Wine() {
           src={wine.Img}
           alt="foto vino"
         ></img>
-
 
         <div className={`${styles.col} ${styles.movieDetails}`}>
           <h1 className={styles.firstItem}> </h1>
@@ -81,46 +77,6 @@ function Wine() {
             </Button>
           </Link>
         </div>
-
-        <p> Precio: </p>
-
-        <Button variant="contained" color="secondary">
-          Comprar
-        </Button>
-      </div>
-
-      <div className={`${styles.col} ${styles.movieDetails}`}>
-        <h1 className={styles.firstItem}> Nombre vino</h1>
-        <p>
-          <strong>Bodega:</strong>
-        </p>
-        <p>
-          wine
-          <strong>Color:</strong>
-        </p>
-        <p>
-          <strong>Description:</strong>
-        </p>
-
-        <p>
-          <strong>Variedad:</strong>
-        </p>
-
-        <p>
-          <strong>Año:</strong>
-        </p>
-        <p>
-          <strong>Pais:</strong>
-        </p>
-        <p>
-          <strong>Ml: </strong>
-        </p>
-
-        <p> Precio: </p>
-        <IconButton color="primary" aria-label="add to shopping cart">
-          {/* <AddShoppingCartIcon /> */}
-        </IconButton>
-
       </div>
     </>
   );
