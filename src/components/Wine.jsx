@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Wine.module.css";
 import { IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+
+import { setSelectedProduct } from "../store/selectedProductReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { setCarrito } from "../store/addToCarrito";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,14 +19,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Wine() {
-  const [wine, setwine] = useState(null);
-  // const selectedvino = useSelector((state) => state.selectedvino)
+  const wine = useSelector((state) => state.selectedProduct);
 
-  //   useEffect(() => {
-  //     get("/movie/" + wineid).then((data) => {
-  //       setMovie(data);
-  //     });
-  //   }, []);
+  const dispatch = useDispatch();
+
+
+  //dispatch(setSelectedProduct())
+
 
   const defaultProps = {
     bgcolor: "background.paper",
@@ -31,14 +35,52 @@ function Wine() {
     style: { width: "5rem", height: "5rem" },
   };
   const classes = useStyles();
+
   return (
     <>
       <div className={styles.detailsContainer}>
         <img
           className={`${styles.col} ${styles.movieImage}`}
-          src="https://cepadevinos.com/wp-content/uploads/2017/07/Luigi_Bosca_Malbec_vludvq.jpg"
+          src={wine.Img}
           alt="foto vino"
         ></img>
+
+
+        <div className={`${styles.col} ${styles.movieDetails}`}>
+          <h1 className={styles.firstItem}> </h1>
+          <p>
+            <strong>Bodega:</strong> {wine.Bodega}
+          </p>
+          <p>
+            <strong>Color:</strong> {wine.color}
+          </p>
+          <p>
+            <strong>Description:</strong>
+            {wine.Descripcion}
+          </p>
+          <p>
+            <strong>Variedad:</strong>
+            {wine.Varietal}
+          </p>
+          <p>
+            <strong>Pais:</strong>
+            {wine.PaisDeOrigen}
+          </p>
+          <p>
+            <strong>Ml: </strong>
+            {wine.ml}
+          </p>
+          <p> Precio: </p> {wine.Precio}
+          <Link to="/carrito">
+            <Button
+              onClick={() => dispatch(setCarrito(wine))}
+              variant="contained"
+              color="secondary"
+            >
+              Comprar
+            </Button>
+          </Link>
+        </div>
 
         <p> Precio: </p>
 
@@ -78,6 +120,7 @@ function Wine() {
         <IconButton color="primary" aria-label="add to shopping cart">
           {/* <AddShoppingCartIcon /> */}
         </IconButton>
+
       </div>
     </>
   );

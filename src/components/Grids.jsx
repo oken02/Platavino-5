@@ -3,7 +3,7 @@ import Cards from "./Cards";
 import { flexbox } from "@material-ui/system";
 import { Box } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
-import axios from "axios";
+
 function Grids() {
   //por aca debemos traer la data del state con useSelector cuando este hecho
 
