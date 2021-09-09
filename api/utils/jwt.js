@@ -10,11 +10,11 @@ const validateToken = (req, res, next) => {
   console.log("REQ TOKEN", reqToken);
 
   if (!reqToken) {
-    return res.sendStatus(401);
+    return res.status(401).json({ msg: "no se envio el token" });
   }
 
   jwt.verify(reqToken, "SECRET", (err, payload) => {
-    if (err) return res.sendStatus(401);
+    if (err) return res.status(401).json({ msg: "el token no es valido" });
 
     req.payload = payload;
     next();

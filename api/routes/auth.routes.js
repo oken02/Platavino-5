@@ -3,6 +3,7 @@ const express = require("express");
 const User = require("../models/User");
 
 const bcrypt = require("bcrypt");
+const { justAdmin } = require("../middlewares/justAdmin");
 
 const { generateToken, validateToken } = require("../utils/jwt");
 
@@ -14,6 +15,22 @@ const router = express.Router();
     /api/auth
 
 */
+
+router.put("/promover/:id", [validateToken, justAdmin], async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findByPk(id);
+
+  console.log("USER", user);
+  if (!user) {
+    res.sendStatus(404);
+  }
+
+  user.role = "admin";
+  const resDB = await user.save();
+  console.log("RES  DB", resDB);
+
+  return res.sendStatus(200);
+});
 
 router.post("/admin", async (req, res) => {
   try {
@@ -57,7 +74,10 @@ router.post("/login", async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      attributes: ["username", "email", "id", "role", "password"],
+    });
 
     if (!user) {
       return res
@@ -70,9 +90,12 @@ router.post("/login", async (req, res) => {
     if (validLogin) {
       const token = generateToken({ id: user.id, role: user.role });
 
-      delete user.password;
+      // delete user.dataValues.password;
 
-      res.send({ ok: true, user, token });
+      const userLogged = user.toJSON();
+      delete userLogged.password;
+      console.log("userLogged", userLogged);
+      res.send({ ok: true, user: userLogged, token });
     } else {
       return res.status(404).send({
         ok: false,
@@ -135,19 +158,3 @@ router.post("/register", async (req, res) => {
 });
 
 module.exports = router;
-
-router.put("/promover/:id", async (req, res) => {
-  const { id } = req.params;
-  const user = await User.findByPk(id);
-
-  console.log("USER", user);
-  if (!user) {
-    res.sendStatus(404);
-  }
-
-  user.role = "admin";
-  const resDB = await user.save();
-  console.log("RES  DB", resDB);
-
-  return res.sendStatus(200);
-});

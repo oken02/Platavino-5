@@ -2,7 +2,7 @@ const express = require("express");
 
 const { request, response } = express;
 
-const isAdmin = (req = request, res = response, next) => {
+const justAdmin = (req = request, res = response, next) => {
   const { role } = req.payload;
 
   if (role === "admin") {
@@ -12,4 +12,4 @@ const isAdmin = (req = request, res = response, next) => {
   }
 };
 
-module.exports = isAdmin;
+module.exports = { justAdmin };
