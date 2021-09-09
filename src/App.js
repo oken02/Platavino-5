@@ -7,16 +7,12 @@ import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
 import Login from "./components/Login";
-
-
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
-
-
 
 function App() {
   let usernameRegister;
@@ -25,18 +21,14 @@ function App() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     dispatch(sendValidation());
   }, []);
-
-
+  
   const handleClick = (input) => {
     console.log(input);
     return dispatch(setCarrito(input));
   };
-
-
 
   const protector = (user) => {
     if (!user.isAuthenticated) return "/login";
@@ -45,6 +37,7 @@ function App() {
   const noLogin = (user) => {
     if (user.isAuthenticated) return "/search";
   };
+
 
   const handleChangeUsernameRegister = (e) => {
     usernameRegister = e.target.value
@@ -72,41 +65,10 @@ function App() {
       .catch(e => console.log(e))
   }
 
-
   return (
     <div>
       <NavBar handleClick={handleClick} />
       <Switch>
-        {/* 
-        <Route
-          exact
-          path="/products"
-          render={() => {
-            return <Grids />;
-          }}
-        />
-        <Route
-          exact
-          path="/login"
-          render={() => {
-            //Aca iria el LogIn de Bruno.
-            return <Login />;
-          }}
-        />
-        <Route
-          exact
-          path="/Register"
-          render={() => {
-            return <Register />
-          }}
-        />
-        <Route
-          exact
-          path="/carrito"
-          render={() => {
-            return <Cart />;
-          }}
-        /> */}
 
 
         <Route exact path="/login">
@@ -138,7 +100,6 @@ function App() {
             <Wine />
           </Protector>
         </Route>
-
 
         <Route
           exact

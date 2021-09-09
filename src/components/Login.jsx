@@ -16,6 +16,10 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setIsLogged } from "../store/isLoggedReducer";
 
+
+=======
+import { sendValidation } from "../store/isLoggedReducer";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
