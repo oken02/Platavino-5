@@ -1,29 +1,19 @@
-// server configs
 const express = require("express");
-
 const routes = require("./routes/index");
-const http = require("http");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const models = require("./models/index");
 
 const db = require("./db");
+// const db = require("./config/db");
 
-// const Vino = require("./models/Vino");\
-const { Vino, User, Orden, Carrito } = require("./models/index");
 
 const app = express();
 // logging middleware
 
-/* app.use(express.static("build")); */
-
-// parsing middleware
+// app.use(express.static("../public"));
+app.use(express.urlencoded());
 app.use(express.json());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-app.use("/api", routes); // IREMOS LLEGENADO A LAS RUTAS A TRAVES DE http://localhost:3001/api/
+app.use("/api", routes);
 
 app.use("/api", (req, res) => {
   res.sendStatus(404);
@@ -31,9 +21,14 @@ app.use("/api", (req, res) => {
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
 app.use((err, req, res, next) => {
-  res.status(500).send(err.message);
+  res.status(500).send(err);
 });
 
-db.sync({ force: true }).then(() => {
-  app.listen(3001, () => console.log("Servidor escuchando en el puerto 3001"));
-});
+db.sync({ force: false }) 
+  .then(() =>
+    app.listen(3000, () =>
+      console.log("Servidor corriendo en http://localhost:3000")
+    )
+  )
+  .catch((err) => console.log(err));
+
