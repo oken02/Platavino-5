@@ -5,7 +5,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
 import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
@@ -16,7 +15,11 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setIsLogged } from "../store/isLoggedReducer";
+
+
+=======
 import { sendValidation } from "../store/isLoggedReducer";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -72,7 +75,7 @@ function Login() {
     axios.post("/api/auth/login").then(dispatch(setIsLogged));
   };
 
-  const handelPassword = (e) => {};
+  const handelPassword = (e) => { };
 
   const handleEmail = (e) => {
     const value = e.target.value;

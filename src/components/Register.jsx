@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Register() {
+function Register({ handleChangeEmailRegister, handleChangePasswordRegister, handleChangeUsernameRegister, handleSubmitRegisterForm }) {
   const classes = useStyles();
 
   return (
@@ -60,29 +60,19 @@ function Register() {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmitRegisterForm}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="username"
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
+                id="username"
+                label="Username"
                 autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                onChange={handleChangeUsernameRegister}
               />
             </Grid>
             <Grid item xs={12}>
@@ -94,6 +84,7 @@ function Register() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChangeEmailRegister}
               />
             </Grid>
             <Grid item xs={12}>
@@ -106,6 +97,7 @@ function Register() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={handleChangePasswordRegister}
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,17 +107,17 @@ function Register() {
               />
             </Grid>
           </Grid>
-          <Link to="/products">
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Register
-            </Button>
-          </Link>
+          {/* <Link to="/products"> */}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Register
+          </Button>
+          {/* </Link> */}
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
