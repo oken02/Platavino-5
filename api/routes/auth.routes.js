@@ -48,19 +48,17 @@ router.post("/admin", async (req, res) => {
 });
 
 router.post("/validate", validateToken, (req, res) => {
-  const { id: userId } = req.user;
+  const { id: userId } = req.payload;
 
-  User.findByPk(userId).then((user) => {
-    // if (!user) {
-
-    // }
-
-    res.json({
-      ok: true,
-      msg: "el token es valido",
-      user: user.toJSON(),
-    });
-  });
+  User.findByPk(userId)
+    .then((user) => {
+      res.json({
+        ok: true,
+        msg: "el token es valido",
+        user: user.toJSON(),
+      });
+    })
+    .catch(console.log);
 });
 
 router.post("/login", async (req, res) => {

@@ -1,10 +1,10 @@
 const express = require("express");
 const routes = require("./routes/index");
 const models = require("./models/index");
-
+const cors = require("cors");
 const db = require("./db");
 // const db = require("./config/db");
-
+const { Carrito, Orden, User, Vino } = require("./models/index");
 
 const app = express();
 // logging middleware
@@ -13,6 +13,7 @@ const app = express();
 app.use(express.urlencoded());
 app.use(express.json());
 
+app.use(cors());
 app.use("/api", routes);
 
 app.use("/api", (req, res) => {
@@ -24,11 +25,10 @@ app.use((err, req, res, next) => {
   res.status(500).send(err);
 });
 
-db.sync({ force: false }) 
+db.sync({ force: false })
   .then(() =>
     app.listen(3001, () =>
       console.log("Servidor corriendo en http://localhost:3001")
     )
   )
   .catch((err) => console.log(err));
-

@@ -14,7 +14,7 @@ const router = express.Router();
 
  */
 
-router.get("/", [validateToken, justAdmin], async (req, res) => {
+router.get("/", /*[validateToken, justAdmin]*/ async (req, res) => {
   try {
     const users = await User.findAll({
       // attributes: ["username", "email", "id", "role"],
@@ -44,7 +44,7 @@ router.delete("/:id", [validateToken, justAdmin], async (req, res) => {
 });
 
 router.put("/:id", [validateToken], async (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
   const body = req.body;
   console.log("PAYLOAD", req.payload);
 

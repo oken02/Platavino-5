@@ -9,6 +9,7 @@
 
 // module.exports = db;
 
+// module.exports = db;
 
 const { Sequelize } = require("sequelize");
 
@@ -19,3 +20,4 @@ const db = new Sequelize("e-comerce", "oken02", "nose123", {
 });
 
 module.exports = db;
+
