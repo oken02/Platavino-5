@@ -14,13 +14,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 import { sendValidation, setIsLogged } from "../store/isLoggedReducer";
-
-
-
-
-
 
 function Copyright() {
   return (
@@ -70,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const [email, setEmail] = useState("");
+  const history = useHistory();
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -78,11 +75,14 @@ function Login() {
     e.preventDefault();
     axios
       .post("http://localhost:3001/api/auth/login", { email, password })
-      .then((data) => {
+      .then(({ data }) => {
+        localStorage.setItem("token", data.token);
         console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
-
 
   const handelPassword = (e) => {
     const value = e.target.value;

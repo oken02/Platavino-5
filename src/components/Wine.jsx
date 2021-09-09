@@ -34,50 +34,49 @@ function Wine() {
   const classes = useStyles();
 
   return (
-    <>
-      <div className={styles.detailsContainer}>
-        <img
-          className={`${styles.col} ${styles.movieImage}`}
-          src={wine.Img}
-          alt="foto vino"
-        ></img>
+    <div className={styles.detailsContainer}>
+      <img
+        className={`${styles.col} ${styles.movieImage}`}
+        src={wine.Img}
+        alt="foto vino"
+      ></img>
 
-        <div className={`${styles.col} ${styles.movieDetails}`}>
-          <h1 className={styles.firstItem}> </h1>
-          <p>
-            <strong>Bodega:</strong> {wine.Bodega}
-          </p>
-          <p>
-            <strong>Color:</strong> {wine.color}
-          </p>
-          <p>
-            <strong>Description:</strong>
-            {wine.Descripcion}
-          </p>
-          <p>
-            <strong>Variedad:</strong>
-            {wine.Varietal}
-          </p>
-          <p>
-            <strong>Pais:</strong>
-            {wine.PaisDeOrigen}
-          </p>
-          <p>
-            <strong>Ml: </strong>
-            {wine.ml}
-          </p>
-          <p> Precio: </p> {wine.Precio}
-          <Link to="/carrito">
-            <Button
-              onClick={() => dispatch(setCarrito(wine))}
-              variant="contained"
-              color="secondary"
-            >
-              Comprar
-            </Button>
-          </Link>
-        </div>
-    </>
+      <div className={`${styles.col} ${styles.movieDetails}`}>
+        <h1 className={styles.firstItem}> </h1>
+        <p>
+          <strong>Bodega:</strong> {wine.Bodega}
+        </p>
+        <p>
+          <strong>Color:</strong> {wine.color}
+        </p>
+        <p>
+          <strong>Description:</strong>
+          {wine.Descripcion}
+        </p>
+        <p>
+          <strong>Variedad:</strong>
+          {wine.Varietal}
+        </p>
+        <p>
+          <strong>Pais:</strong>
+          {wine.PaisDeOrigen}
+        </p>
+        <p>
+          <strong>Ml: </strong>
+          {wine.ml}
+        </p>
+        <p> Precio: </p> {wine.Precio}
+        <Link to="/carrito">
+          <Button
+            onClick={() => dispatch(setCarrito(wine))}
+            variant="contained"
+            color="secondary"
+          >
+            Comprar
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 }
 
