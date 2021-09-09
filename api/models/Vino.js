@@ -26,6 +26,9 @@ const Vino = db.define('vino', {
     Img:{
         type: S.STRING,
     },
+    Stock:{
+        type: S.INTEGER,
+    },
         
 });
 
