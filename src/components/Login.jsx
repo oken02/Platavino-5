@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -61,7 +61,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    axios.post("/api/auth/login").then(dispatch(setIsLogged));
+  };
+
+  const handelPassword = (e) => {};
+
+  const handleEmail = (e) => {
+    const value = e.target.value;
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -75,8 +87,9 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
+              onChange={handleEmail}
               variant="outlined"
               margin="normal"
               required
@@ -88,6 +101,7 @@ function Login() {
               autoFocus
             />
             <TextField
+              onChange={handelPassword}
               variant="outlined"
               margin="normal"
               required
