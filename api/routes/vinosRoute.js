@@ -19,7 +19,6 @@ router.post("/nuevo", (req, res, next) => {
     .catch(next);
 });
 
-
 //RUTA PARA LLEVARNOS A UNA PAGINA A TAVÉS DEL ID DE UN VINO
 router.get("/:id", (req, res, next) => {
   Vinos.findOne({
@@ -59,7 +58,5 @@ router.delete("/borrar/:id", (req, res, next) => {
     .then(() => res.sendStatus(202))
     .catch(next);
 });
-
-
 
 module.exports = router;
