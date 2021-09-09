@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
 
+import { Redirect } from "react-router-dom";
 
 function App() {
   let usernameRegister;
@@ -29,8 +30,6 @@ function App() {
     dispatch(sendValidation());
   }, []);
 
-
-
   const handleClick = (input) => {
     console.log(input);
     return dispatch(setCarrito(input));
@@ -41,37 +40,35 @@ function App() {
   };
 
   const noLogin = (user) => {
-    if (user.isAuthenticated) return "/search";
+    if (user.isAuthenticated) return "/products";
   };
 
-
-
   const handleChangeUsernameRegister = (e) => {
-    usernameRegister = e.target.value
-    console.log('se cambio username')
-  }
+    usernameRegister = e.target.value;
+    console.log("se cambio username");
+  };
   const handleChangePasswordRegister = (e) => {
-    passwordRegister = e.target.value
-    console.log('se cambio pass')
-  }
+    passwordRegister = e.target.value;
+    console.log("se cambio pass");
+  };
   const handleChangeEmailRegister = (e) => {
-    emailRegister = e.target.value
-    console.log('se cambio mail')
-  }
+    emailRegister = e.target.value;
+    console.log("se cambio mail");
+  };
 
   const handleSubmitRegisterForm = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:3001/api/auth/register', {
-      email: emailRegister,
-      username: usernameRegister,
-      password: passwordRegister
-    })
-      .then((data) => {
-        dispatch(setUsers(data.data))
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/auth/register", {
+        email: emailRegister,
+        username: usernameRegister,
+        password: passwordRegister,
       })
-      .catch(e => console.log(e))
-  }
-
+      .then((data) => {
+        dispatch(setUsers(data.data));
+      })
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div>
@@ -85,7 +82,12 @@ function App() {
 
         <Route exact path="/Register">
           <Protector evaluate={noLogin}>
-            <Register handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitRegisterForm} />
+            <Register
+              handleChangeEmailRegister={handleChangeEmailRegister}
+              handleChangePasswordRegister={handleChangePasswordRegister}
+              handleChangeUsernameRegister={handleChangeUsernameRegister}
+              handleSubmitRegisterForm={handleSubmitRegisterForm}
+            />
           </Protector>
         </Route>
 
@@ -114,7 +116,9 @@ function App() {
             return <Wine />;
           }}
         />
+        <Redirect to="/products" />
       </Switch>
+
       <Footer />
     </div>
   );
