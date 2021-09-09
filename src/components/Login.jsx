@@ -15,7 +15,11 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import { sendValidation, setIsLogged } from "../store/isLoggedReducer";
+import {
+  sendLogin,
+  sendValidation,
+  setIsLogged,
+} from "../store/isLoggedReducer";
 
 function Copyright() {
   return (
@@ -72,17 +76,13 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/api/auth/login", { email, password })
-      .then(({ data }) => {
-        localStorage.setItem("token", data.token);
-        console.log("DATA", data);
-        history.push("/products");
-      })
-      .catch((err) => {
-        console.log(err);
+    dispatch(sendLogin({ email, password })).then((action) => {
+      if (action.error) {
         setPassword("");
-      });
+      } else {
+        history.push("/products");
+      }
+    });
   };
 
   const handelPassword = (e) => {
@@ -131,6 +131,7 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
