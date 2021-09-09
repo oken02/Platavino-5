@@ -13,7 +13,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { setIsLogged } from "../store/isLoggedReducer";
+import { sendValidation } from "../store/isLoggedReducer";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
