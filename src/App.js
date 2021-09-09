@@ -5,20 +5,23 @@ import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
-import carritoReducer from "./store/carritoReducer";
 import { setCarrito } from "./store/addToCarrito";
 import Login from "./components/Login";
 
 
 import Register from "./components/Register";
-import Login from "./components/Login";
 import Protector from "./components/Protector";
 import { sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
+import axios from "axios";
+import { setUsers } from "./store/usersReducer";
 
 
 
 function App() {
+  let usernameRegister;
+  let passwordRegister;
+  let emailRegister;
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,9 +29,6 @@ function App() {
   useEffect(() => {
     dispatch(sendValidation());
   }, []);
-
-
-  const dispatch = useDispatch();
 
 
   const handleClick = (input) => {
@@ -46,12 +46,38 @@ function App() {
     if (user.isAuthenticated) return "/search";
   };
 
+  const handleChangeUsernameRegister = (e) => {
+    usernameRegister = e.target.value
+    console.log('se cambio username')
+  }
+  const handleChangePasswordRegister = (e) => {
+    passwordRegister = e.target.value
+    console.log('se cambio pass')
+  }
+  const handleChangeEmailRegister = (e) => {
+    emailRegister = e.target.value
+    console.log('se cambio mail')
+  }
+
+  const handleSubmitRegisterForm = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:3001/api/auth/register', {
+      email: emailRegister,
+      username: usernameRegister,
+      password: passwordRegister
+    })
+      .then((data) => {
+        dispatch(setUsers(data.data))
+      })
+      .catch(e => console.log(e))
+  }
+
 
   return (
     <div>
       <NavBar handleClick={handleClick} />
       <Switch>
-
+        {/* 
         <Route
           exact
           path="/products"
@@ -71,7 +97,7 @@ function App() {
           exact
           path="/Register"
           render={() => {
-            //Aca iria el Register de Bruno.
+            return <Register />
           }}
         />
         <Route
@@ -80,7 +106,7 @@ function App() {
           render={() => {
             return <Cart />;
           }}
-        />
+        /> */}
 
 
         <Route exact path="/login">
@@ -91,7 +117,7 @@ function App() {
 
         <Route exact path="/Register">
           <Protector evaluate={noLogin}>
-            <Register />
+            <Register handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitRegisterForm} />
           </Protector>
         </Route>
 
