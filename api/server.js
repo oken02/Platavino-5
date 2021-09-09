@@ -4,7 +4,7 @@ const models = require("./models/index");
 const cors = require("cors");
 const db = require("./db");
 // const db = require("./config/db");
-const { Carrito, Orden, User, Vino } = require('./models/index')
+const { Carrito, Orden, User, Vino } = require("./models/index");
 
 const app = express();
 // logging middleware
