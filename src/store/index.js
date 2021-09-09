@@ -13,7 +13,9 @@ const store = configureStore({
         //Aca irian los reducer de cada estado que necesitemos
         products: ProductsReducer,
         selectedProduct: selectedProductReducer,
-        isLogged: isLoggedReducer,
+
+        user: isLoggedReducer,
+        
         users: usersReducer,
         carrito: carritoReducer,
     },

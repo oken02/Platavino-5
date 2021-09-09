@@ -26,8 +26,8 @@ app.use((err, req, res, next) => {
 
 db.sync({ force: false }) 
   .then(() =>
-    app.listen(3000, () =>
-      console.log("Servidor corriendo en http://localhost:3000")
+    app.listen(3001, () =>
+      console.log("Servidor corriendo en http://localhost:3001")
     )
   )
   .catch((err) => console.log(err));
