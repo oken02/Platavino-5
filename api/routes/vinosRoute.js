@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Vinos = require("../models/Vino");
 
-////LLEGAREMOS A LAS RUTAS A TRAVÉS DE LA RUTA "http://localhost:3001/api/vinos/..."
+//LLEGAREMOS A LAS RUTAS A TRAVÉS DE LA RUTA "http://localhost:3001/api/vinos/..."
 
 //RUTAS DE TODOS NUESTROS VINOS
 router.get("/", (req, res, next) => {
@@ -12,29 +12,7 @@ router.get("/", (req, res, next) => {
 });
 
 
-router.get("/pais", (req, res, next) => {
-  Vinos.findAll({where:{
-    PaisDeOrigen:req.body.Pais
-  }})
-    .then((vinos) => res.send(vinos))
-    .catch(next);
-});
 
-router.get("/precio", (req, res, next) => {
-  Vinos.findAll({where:{
-    Precio:req.body.Precio
-  }})
-    .then((vinos) => res.send(vinos))
-    .catch(next);
-});
-
-router.get("/varietal", (req, res, next) => {
-  Vinos.findAll({where:{
-    Varietal:req.body.Varietal
-  }})
-    .then((vinos) => res.send(vinos))
-    .catch(next);
-});
 
 //RUTA PARA CREAR UN NUEVO VINO
 router.post("/nuevo", (req, res, next) => {
