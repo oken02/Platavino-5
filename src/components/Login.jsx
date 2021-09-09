@@ -80,7 +80,7 @@ function Login() {
         history.push("/products");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err); 
         setPassword("");
       });
   };
