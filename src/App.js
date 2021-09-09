@@ -7,25 +7,23 @@ import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import carritoReducer from "./store/carritoReducer";
 import { setCarrito } from "./store/addToCarrito";
+import Login from "./components/Login";
+import Register from "./components/Register";
 
 function App() {
-
   const history = useHistory();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleClick = (input) => {
-    console.log(input)
-    return dispatch(setCarrito(input))
-  }
-
-
+    console.log(input);
+    return dispatch(setCarrito(input));
+  };
 
   return (
     <div>
       <NavBar handleClick={handleClick} />
       <Switch>
-
         <Route
           exact
           path="/products"
@@ -37,14 +35,14 @@ function App() {
           exact
           path="/login"
           render={() => {
-            //Aca iria el LogIn de Bruno.
+            return <Login />;
           }}
         />
         <Route
           exact
           path="/Register"
           render={() => {
-            //Aca iria el Register de Bruno.
+            return <Register />;
           }}
         />
         <Route
@@ -54,17 +52,18 @@ function App() {
             return <Cart />;
           }}
         />
- 
-        <Route exact path='/singleProduct' render={() => {
-          return <Wine />
-        }} />
-      
-   
 
+        <Route
+          exact
+          path="/singleproduct"
+          render={() => {
+            return <Wine />;
+          }}
+        />
       </Switch>
       <Footer />
     </div>
   );
 }
-
+// "start": "react-scripts start",
 export default App;
