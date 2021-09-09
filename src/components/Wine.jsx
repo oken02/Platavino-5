@@ -77,7 +77,6 @@ function Wine() {
             </Button>
           </Link>
         </div>
-      </div>
     </>
   );
 }

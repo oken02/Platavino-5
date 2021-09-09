@@ -3,9 +3,9 @@ const db = require('../db');
 
 const Carrito = db.define('carrito', {
 
-    Unidades:{
-        type: S.INTEGER,
-    },
+    // Unidades:{
+    //     type: S.INTEGER,
+    // },
     
 });
 
