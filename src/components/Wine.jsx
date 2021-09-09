@@ -2,15 +2,26 @@ import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import styles from "./Wine.module.css";
 import { IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+}));
 
 function Wine() {
   const [wine, setwine] = useState(null);
+  // const selectedvino = useSelector((state) => state.selectedvino)
 
   //   useEffect(() => {
   //     get("/movie/" + wineid).then((data) => {
   //       setMovie(data);
   //     });
-  //   }, [movieId]);
+  //   }, []);
 
   const defaultProps = {
     bgcolor: "background.paper",
@@ -19,11 +30,9 @@ function Wine() {
     borderColor: "text.primary",
     style: { width: "5rem", height: "5rem" },
   };
-
+  const classes = useStyles();
   return (
     <>
-      <Footer />
-
       <div className={styles.detailsContainer}>
         <img
           className={`${styles.col} ${styles.movieImage}`}
@@ -31,37 +40,44 @@ function Wine() {
           alt="foto vino"
         ></img>
 
-        <div className={`${styles.col} ${styles.movieDetails}`}>
-          <h1 className={styles.firstItem}> Nombre vino</h1>
-          <p>
-            <strong>Bodega:</strong>
-          </p>
-          <p>
-            <strong>Color:</strong>
-          </p>
-          <p>
-            <strong>Description:</strong>
-          </p>
+        <p> Precio: </p>
 
-          <p>
-            <strong>Variedad:</strong>
-          </p>
+        <Button variant="contained" color="secondary">
+          Comprar
+        </Button>
+      </div>
 
-          <p>
-            <strong>Año:</strong>
-          </p>
-          <p>
-            <strong>Pais:</strong>
-          </p>
-          <p>
-            <strong>Ml: </strong>
-          </p>
+      <div className={`${styles.col} ${styles.movieDetails}`}>
+        <h1 className={styles.firstItem}> Nombre vino</h1>
+        <p>
+          <strong>Bodega:</strong>
+        </p>
+        <p>
+          wine
+          <strong>Color:</strong>
+        </p>
+        <p>
+          <strong>Description:</strong>
+        </p>
 
-          <p> Precio: </p>
-          <IconButton color="primary" aria-label="add to shopping cart">
-            {/* <AddShoppingCartIcon /> */}
-          </IconButton>
-        </div>
+        <p>
+          <strong>Variedad:</strong>
+        </p>
+
+        <p>
+          <strong>Año:</strong>
+        </p>
+        <p>
+          <strong>Pais:</strong>
+        </p>
+        <p>
+          <strong>Ml: </strong>
+        </p>
+
+        <p> Precio: </p>
+        <IconButton color="primary" aria-label="add to shopping cart">
+          {/* <AddShoppingCartIcon /> */}
+        </IconButton>
       </div>
     </>
   );
