@@ -16,8 +16,6 @@ const router = express.Router();
 
 */
 
-const axios = require("axios")
-
 router.put("/promover/:id", [validateToken, justAdmin], async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);

@@ -21,7 +21,7 @@ const Vino = db.define("vino", {
     type: S.INTEGER,
   },
   Descripcion: {
-    type: S.STRING,
+    type: S.TEXT,
   },
 });
 
