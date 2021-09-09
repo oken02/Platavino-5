@@ -76,11 +76,11 @@ function Login() {
       .post("http://localhost:3001/api/auth/login", { email, password })
       .then(({ data }) => {
         localStorage.setItem("token", data.token);
-        console.log(data);
+        console.log("DATA", data);
         history.push("/products");
       })
       .catch((err) => {
-        console.log(err); 
+        console.log(err);
         setPassword("");
       });
   };
