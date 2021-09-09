@@ -1,10 +1,76 @@
-
+import Footer from "./components/Footer";
+import { Switch, Route, useHistory } from "react-router-dom";
+import Wine from "./components/Wine";
+import Cart from "./components/Cart";
 import NavBar from "./components/NavBar";
+import Grids from "./components/Grids";
+import { useDispatch } from "react-redux";
+import carritoReducer from "./store/carritoReducer";
+import { setCarrito } from "./store/addToCarrito";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Protector from "./components/Protector";
+import { sendValidation } from "./store/isLoggedReducer";
+import { useEffect } from "react";
 
 function App() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(sendValidation());
+  }, []);
+
+  const handleClick = (input) => {
+    console.log(input);
+    return dispatch(setCarrito(input));
+  };
+
+  const protector = (user) => {
+    if (!user.isAuthenticated) return "/login";
+  };
+
+  const noLogin = (user) => {
+    if (user.isAuthenticated) return "/search";
+  };
+
   return (
-    <NavBar />
-  )
+    <div>
+      <NavBar handleClick={handleClick} />
+      <Switch>
+        <Route exact path="/login">
+          <Protector evaluate={noLogin}>
+            <Login />
+          </Protector>
+        </Route>
+
+        <Route exact path="/Register">
+          <Protector evaluate={noLogin}>
+            <Register />
+          </Protector>
+        </Route>
+
+        <Route exact path="/products">
+          <Protector evaluate={protector}>
+            <Grids />
+          </Protector>
+        </Route>
+
+        <Route exact path="/carrito">
+          <Protector evaluate={protector}>
+            <Cart />
+          </Protector>
+        </Route>
+
+        <Route exact path="/singleProduct">
+          <Protector evaluate={protector}>
+            <Wine />
+          </Protector>
+        </Route>
+      </Switch>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

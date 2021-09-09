@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Button from '@restart/ui/esm/Button';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -79,7 +81,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NavBar() {
+export default function NavBar({ handleClick }) {
+
+
+
+    ////////////////////////
+
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -162,9 +169,10 @@ export default function NavBar() {
     );
 
     return (
-        <div className={classes.grow}>
+        <div className={`{classes.grow} navBar`} >
             <AppBar position="static">
                 <Toolbar>
+                    <Button onClick={() => { handleClick({ unidades: 2 }) }}>Click</Button>
                     <IconButton
                         edge="start"
                         className={classes.menuButton}
@@ -174,7 +182,7 @@ export default function NavBar() {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Material-UI
+                        Platavino 5
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
