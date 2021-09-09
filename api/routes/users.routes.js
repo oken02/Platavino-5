@@ -17,7 +17,7 @@ const router = express.Router();
 router.get("/", [validateToken, justAdmin], async (req, res) => {
   try {
     const users = await User.findAll({
-      attributes: ["username", "email", "id", "role"],
+      // attributes: ["username", "email", "id", "role"],
     });
     res.json({ ok: true, users });
   } catch (error) {

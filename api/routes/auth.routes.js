@@ -46,21 +46,21 @@ router.post("/admin", async (req, res) => {
   }
 });
 
-// router.post("/validate", validateToken, (req, res) => {
-//   const { id: userId } = req.user;
+router.post("/validate", validateToken, (req, res) => {
+  const { id: userId } = req.user;
 
-//   User.findByPk(userId).then((user) => {
-//     // if (!user) {
+  User.findByPk(userId).then((user) => {
+    // if (!user) {
 
-//     // }
+    // }
 
-//     res.json({
-//       ok: true,
-//       msg: "el token es valido",
-//       user: user.toJSON(),
-//     });
-//   });
-// });
+    res.json({
+      ok: true,
+      msg: "el token es valido",
+      user: user.toJSON(),
+    });
+  });
+});
 
 router.post("/login", async (req, res) => {
   console.log("BODY EN LOGIN", req.body);
@@ -95,7 +95,9 @@ router.post("/login", async (req, res) => {
       const userLogged = user.toJSON();
       delete userLogged.password;
       console.log("userLogged", userLogged);
+
       res.send({ ok: true, user: userLogged, token });
+
     } else {
       return res.status(404).send({
         ok: false,

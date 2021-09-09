@@ -21,15 +21,16 @@ const Vino = db.define('vino', {
         type: S.INTEGER,
     },
     Descripcion:{
-        type: S.STRING,
+        type: S.TEXT,
     },
     Img:{
-        type: S.STRING,
+        type: S.TEXT,
     },
     Stock:{
         type: S.INTEGER,
     },
         
+
 });
 
 module.exports = Vino;

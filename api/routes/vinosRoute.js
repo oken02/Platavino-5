@@ -11,15 +11,11 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-
-
-
 router.get("/", (req, res, next) => {
   Vinos.findAll()
     .then((vinos) => res.send(vinos))
     .catch(next);
 });
-
 
 //RUTA PARA CREAR UN NUEVO VINO
 router.post("/nuevo", (req, res, next) => {
@@ -27,7 +23,6 @@ router.post("/nuevo", (req, res, next) => {
     .then((product) => res.status(201).send(product))
     .catch(next);
 });
-
 
 //RUTA PARA LLEVARNOS A UNA PAGINA A TAVÉS DEL ID DE UN VINO
 router.get("/:id", (req, res, next) => {
@@ -68,7 +63,5 @@ router.delete("/borrar/:id", (req, res, next) => {
     .then(() => res.sendStatus(202))
     .catch(next);
 });
-
-
 
 module.exports = router;
