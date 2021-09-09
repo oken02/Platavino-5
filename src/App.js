@@ -7,24 +7,29 @@ import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import carritoReducer from "./store/carritoReducer";
 import { setCarrito } from "./store/addToCarrito";
+
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Protector from "./components/Protector";
 import { sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
 
+
 function App() {
   const history = useHistory();
   const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(sendValidation());
   }, []);
 
+
   const handleClick = (input) => {
     console.log(input);
     return dispatch(setCarrito(input));
   };
+
 
   const protector = (user) => {
     if (!user.isAuthenticated) return "/login";
@@ -34,10 +39,12 @@ function App() {
     if (user.isAuthenticated) return "/search";
   };
 
+
   return (
     <div>
       <NavBar handleClick={handleClick} />
       <Switch>
+
         <Route exact path="/login">
           <Protector evaluate={noLogin}>
             <Login />
@@ -67,10 +74,11 @@ function App() {
             <Wine />
           </Protector>
         </Route>
+
       </Switch>
       <Footer />
     </div>
   );
 }
-
+// "start": "react-scripts start",
 export default App;

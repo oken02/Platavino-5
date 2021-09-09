@@ -30,6 +30,7 @@ const Vino = db.define('vino', {
         type: S.INTEGER,
     },
         
+
 });
 
 module.exports = Vino;

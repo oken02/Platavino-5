@@ -5,7 +5,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
-
 import {
   Info,
   InfoCaption,
@@ -17,6 +16,9 @@ import { useCoverCardMediaStyles } from "@mui-treasury/styles/cardMedia/cover";
 import { IconButton, Icon } from "@material-ui/core";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
 import { useHistory } from "react-router-dom";
+import { setCarrito } from "../store/addToCarrito";
+import { useDispatch } from "react-redux";
+import { setSelectedProduct } from "../store/selectedProductReducer";
 
 const useStyles = makeStyles(() => ({
   card: {
@@ -46,13 +48,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const Cards = React.memo(function GalaxyCard({ products }) {
-  const { id, title, year, description, image } = products;
+  const { Bodega, Precio, Color, Img } = products;
+
   const mediaStyles = useCoverCardMediaStyles({ bgPosition: "top" });
   const history = useHistory();
   const styles = useStyles();
+  const dispatch = useDispatch();
 
-
-  
   return (
     <>
       <NoSsr>
@@ -64,21 +66,27 @@ export const Cards = React.memo(function GalaxyCard({ products }) {
         />
       </NoSsr>
       <Card className={styles.card}>
-        <CardMedia classes={mediaStyles} image={image} />
+        <CardMedia classes={mediaStyles} image={Img} />
         <Box py={3} px={2} className={styles.content}>
           <Info useStyles={useGalaxyInfoStyles}>
-            <InfoSubtitle>info</InfoSubtitle>
-            <InfoTitle>{title}</InfoTitle>
-            <InfoCaption>{description}</InfoCaption>
+            <InfoSubtitle>{Color}</InfoSubtitle>
+            <InfoTitle>{Bodega}</InfoTitle>
+            <InfoCaption>{`$ ${Precio}`}</InfoCaption>
           </Info>
 
-          <IconButton onClick={() => history.push(`/product/${id}`)}>
+          <IconButton
+            onClick={() => {
+              dispatch(setSelectedProduct(products));
+              history.push(`/singleproduct`);
+            }}
+          >
             <Icon color="secondary">add_circle</Icon>
           </IconButton>
           <IconButton
-            onClick={() =>
-              "necesito una action de user que sea ADD_TO_CART para usar en el dispatch"
-            }
+            onClick={() => {
+              dispatch(setCarrito(products));
+              history.push("/carrito");
+            }}
           >
             <AddShoppingCartSharpIcon color="secondary" />
           </IconButton>
