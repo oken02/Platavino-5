@@ -11,10 +11,9 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 
 import { sendValidation, setIsLogged } from "../store/isLoggedReducer";
 
@@ -78,9 +77,11 @@ function Login() {
       .then(({ data }) => {
         localStorage.setItem("token", data.token);
         console.log(data);
+        history.push("/products");
       })
       .catch((err) => {
         console.log(err);
+        setPassword("");
       });
   };
 
