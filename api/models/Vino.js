@@ -2,34 +2,34 @@ const S = require("sequelize");
 const db = require("../db");
 
 const Vino = db.define('vino', {
-    PaisDeOrigen:{
+    PaisDeOrigen: {
         type: S.STRING,
     },
-    Bodega:{
+    Bodega: {
         type: S.STRING,
     },
-    Precio:{
+    Precio: {
         type: S.INTEGER,
     },
-    Varietal:{
+    Varietal: {
         type: S.STRING,
     },
-    Color:{
+    Color: {
         type: S.STRING,
     },
-    ml:{
+    ml: {
         type: S.INTEGER,
     },
-    Descripcion:{
-        type: S.STRING,
+    Descripcion: {
+        type: S.TEXT,
     },
-    Img:{
-        type: S.STRING,
+    Img: {
+        type: S.TEXT,
     },
-    Stock:{
+    Stock: {
         type: S.INTEGER,
     },
-        
+
 });
 
 module.exports = Vino;

@@ -4,6 +4,7 @@ const models = require("./models/index");
 
 const db = require("./db");
 // const db = require("./config/db");
+const { Carrito, Orden, User, Vino } = require('./models/index')
 
 
 const app = express();
@@ -24,7 +25,7 @@ app.use((err, req, res, next) => {
   res.status(500).send(err);
 });
 
-db.sync({ force: false }) 
+db.sync({ force: false })
   .then(() =>
     app.listen(3000, () =>
       console.log("Servidor corriendo en http://localhost:3000")
