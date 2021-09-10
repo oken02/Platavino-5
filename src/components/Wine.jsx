@@ -66,7 +66,10 @@ function Wine() {
             <strong>Ml: </strong>
             {wine.ml}
           </p>
-          <p> Precio: </p> {wine.Precio}
+          <p>
+            {" "}
+            <strong>Precio: US$ </strong> {wine.Precio}
+          </p>
           <Link to="/carrito">
             <Button
               onClick={() => dispatch(setCarrito(wine))}
@@ -77,6 +80,7 @@ function Wine() {
             </Button>
           </Link>
         </div>
+      </div>
     </>
   );
 }
