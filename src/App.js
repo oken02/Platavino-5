@@ -34,6 +34,21 @@ function App() {
     dispatch(sendValidation());
   }, []);
 
+  const handleSubmitAdminRegisterForm = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/auth/register", {
+        email: emailRegister,
+        username: usernameRegister,
+        password: passwordRegister,
+        role: "admin",
+      })
+      .then((data) => {
+        dispatch(setUsers(data.data));
+      })
+      .catch((e) => console.log(e));
+  };
+
   const handleClick = (input) => {
     console.log(input);
     return dispatch(setCarrito(input));
