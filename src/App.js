@@ -16,6 +16,9 @@ import { useEffect } from "react";
 
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
+import AdminRegister from "./components/AdminRegister";
+import AdminLogin from "./components/AdminLogin";
+import Header from "./components/Header";
 
 import { Redirect } from "react-router-dom";
 
@@ -68,8 +71,9 @@ function App() {
       .then((data) => {
         dispatch(setUsers(data.data));
       })
-      .catch((e) => console.log(e));
-  };
+
+      .catch(e => console.log(e))
+  }
 
   return (
     <div>
@@ -81,7 +85,19 @@ function App() {
           </Protector>
         </Route>
 
-        <Route exact path="/Register">
+        <Route exact path="/adminLogin">
+          <Protector evaluate={noLogin}>
+            <AdminLogin />
+          </Protector>
+        </Route>
+
+        <Route exact path="/">
+          <Protector evaluate={noLogin}>
+            <Header />
+          </Protector>
+        </Route>
+
+        <Route exact path="/register">
           <Protector evaluate={noLogin}>
             <Register
               handleChangeEmailRegister={handleChangeEmailRegister}
@@ -89,6 +105,12 @@ function App() {
               handleChangeUsernameRegister={handleChangeUsernameRegister}
               handleSubmitRegisterForm={handleSubmitRegisterForm}
             />
+          </Protector>
+        </Route>
+
+        <Route exact path="/adminRegister">
+          <Protector evaluate={noLogin}>
+            <AdminRegister handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitAdminRegisterForm} />
           </Protector>
         </Route>
 

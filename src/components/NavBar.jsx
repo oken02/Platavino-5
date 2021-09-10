@@ -14,8 +14,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Button from '@restart/ui/esm/Button';
+import Button from "@material-ui/core/Button";
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -145,6 +146,7 @@ export default function NavBar({ handleClick }) {
                     </Badge>
                 </IconButton>
                 <p>Messages</p>
+                <AccountCircle />
             </MenuItem>
             <MenuItem>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
@@ -161,7 +163,6 @@ export default function NavBar({ handleClick }) {
                     aria-haspopup="true"
                     color="inherit"
                 >
-                    <AccountCircle />
                 </IconButton>
                 <p>Profile</p>
             </MenuItem>
@@ -219,6 +220,14 @@ export default function NavBar({ handleClick }) {
                         >
                             <AccountCircle />
                         </IconButton>
+                        <div className='divButton'>
+                            <Link to='/login'>
+                                <Button >Log In</Button>
+                            </Link>
+                            <Link to='/register'>
+                                <Button >Register</Button>
+                            </Link>
+                        </div>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton
