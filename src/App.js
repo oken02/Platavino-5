@@ -55,9 +55,25 @@ function App() {
     passwordRegister = e.target.value;
     console.log("se cambio pass");
   };
+
   const handleChangeEmailRegister = (e) => {
     emailRegister = e.target.value;
     console.log("se cambio mail");
+  };
+
+  const handleSubmitAdminRegisterForm = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/auth/register", {
+        email: emailRegister,
+        username: usernameRegister,
+        password: passwordRegister,
+        role: "admin",
+      })
+      .then((data) => {
+        dispatch(setUsers(data.data));
+      })
+      .catch((e) => console.log(e));
   };
 
   const handleSubmitRegisterForm = (e) => {
@@ -72,8 +88,8 @@ function App() {
         dispatch(setUsers(data.data));
         history.push("/login");
       })
-      .catch(e => console.log(e))
-  }
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div>
@@ -91,7 +107,7 @@ function App() {
           </Protector>
         </Route>
 
-        <Route exact path="/">
+        <Route exact path="/home">
           <Protector evaluate={noLogin}>
             <Header />
           </Protector>
@@ -110,7 +126,12 @@ function App() {
 
         <Route exact path="/adminRegister">
           <Protector evaluate={noLogin}>
-            <AdminRegister handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitAdminRegisterForm} />
+            <AdminRegister
+              handleChangeEmailRegister={handleChangeEmailRegister}
+              handleChangePasswordRegister={handleChangePasswordRegister}
+              handleChangeUsernameRegister={handleChangeUsernameRegister}
+              handleSubmitRegisterForm={handleSubmitAdminRegisterForm}
+            />
           </Protector>
         </Route>
 
@@ -132,7 +153,7 @@ function App() {
           </Protector>
         </Route>
 
-        <Redirect to="/products" />
+        <Redirect to="/home" />
       </Switch>
 
       <Footer />
