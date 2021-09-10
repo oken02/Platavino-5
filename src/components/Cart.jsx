@@ -22,6 +22,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { removeCarrito } from "../store/addToCarrito";
 //necesito dispatchear(removeCarrito, addCarrito)
 
 const useStyles = makeStyles(() => ({
@@ -82,11 +84,31 @@ const Cart = React.memo(function DarkRapListItem() {
   const [total, setTotal] = useState(0);
   const [carrito, setCarrito] = useState([]);
   const history = useHistory();
+  const user = useSelector((state) => state.user.data);
+  const dispatch = useDispatch();
+  const [evt, setEvt] = useState(false);
+
   let contador = 1;
 
   useEffect(() => {
-    
-  }, []);
+    //hay que cambiar para hacerlo con dispatch y obtenerlo mediante el useSelector
+    axios
+      .get(`http://localhost:3001/api/carritos/${user.carritoId}`)
+      .then((res) => {
+        setCarrito(res.data.vinosDB);
+        console.log("res.data", res.data);
+      });
+  }, [evt]);
+
+  useEffect(() => {
+    let suma = carrito.map((wine) => wine.Precio);
+
+    setTotal(
+      suma.reduce(function (previousValue, currentValue) {
+        return Number(previousValue) + Number(currentValue);
+      }, 0)
+    );
+  });
 
   return (
     <Row gap={5} className={styles.row}>
@@ -102,7 +124,7 @@ const Cart = React.memo(function DarkRapListItem() {
                   style={{ margin: "auto" }}
                 />
                 <Info useStyles={useD01InfoStyles}>
-                  <InfoCaption> • U$D {wine.Precio} #</InfoCaption>
+                  <InfoCaption> • $ {wine.Precio} #</InfoCaption>
                   <InfoTitle>{wine.Bodega}</InfoTitle>
                   <InfoSubtitle>• {wine.PaisDeOrigen} •</InfoSubtitle>
                 </Info>
@@ -112,11 +134,10 @@ const Cart = React.memo(function DarkRapListItem() {
                 <Tooltip title="Delete">
                   <IconButton
                     aria-label="delete"
-                    onClick={() =>
-                      console.log(
-                        "poner dispatch que elimina producto de carrito"
-                      )
-                    }
+                    onClick={() => {
+                      setEvt(!evt);
+                      dispatch(removeCarrito(wine));
+                    }}
                   >
                     <DeleteIcon className={styles.delete} />
                   </IconButton>
@@ -133,18 +154,10 @@ const Cart = React.memo(function DarkRapListItem() {
                     <Icon color="secondary">remove_circle</Icon>
                   </IconButton>
                 </Tooltip>
-                <Typography>{contador}</Typography>
+                <Typography>{1}</Typography>
                 <Tooltip title="Add">
                   {/* agregar la logica de agregar tipo.. crear el producto en la base de datos y cuando lo queramos mostrar en el subtotal hacer un filter por el id  */}
-                  <IconButton
-                    aria-label="add"
-                    onClick={() => {
-                      console.log(
-                        "poner dispatch que suma 1  producto de carrito",
-                        contador
-                      );
-                    }}
-                  >
+                  <IconButton aria-label="add" onClick={() => {}}>
                     <Icon color="primary">add_circle</Icon>
                   </IconButton>
                 </Tooltip>
