@@ -30,7 +30,7 @@ const Footer = () => {
                     <Typography variant="h6" className={classes.title}>
                         Platavino 5
                     </Typography>
-                    Argentina / Venezuela / Uruguay
+                    Argentina / Venezuela / Uruguay / Peru
                 </Toolbar>
             </AppBar>
         </div>

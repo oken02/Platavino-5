@@ -20,7 +20,7 @@ code {
 
 .footer {
   margin-top: -30px;
-  height: 93.1vh;
+  height: 600px;
   background-color: white !important;
   border-top: 1px solid rgba(0, 0, 0, 0.164);
   display: flex;
@@ -33,4 +33,60 @@ code {
   background-color: white;
   color: rgba(0, 0, 0, 0.5);
 
+}
+
+.divButton {
+  /* border: solid red 2px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+
+}
+
+.divButton button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+  color: white;
+}
+
+.logoPhrase {
+  width: 100%;
+}
+
+.logoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -33px !important;
+  background-color: transparent !important;
+  /* z-index: -1; */
+  /* border: solid red 2px; */
+  height: 90vh !important;
+  box-shadow: none !important;
+}
+
+.hola {
+  /* border: solid red 2px; */
+  background-color: transparent !important;
+  box-shadow: none !important;
+  height: 300px !important;
+}
+/* 
+.hola img:first{
+  border: solid red 2px; 
+  height: 90vh;
+} */
+
+.chau {
+  /* border:  solid red 2px; */
+  height: 90vh;
+  margin-top: -33px !important;
+}
+
+.chau img {
+  /* height: 100%; */
+  margin-top: 155px;
 }
