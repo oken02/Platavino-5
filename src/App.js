@@ -70,6 +70,7 @@ function App() {
     passwordRegister = e.target.value;
     console.log("se cambio pass");
   };
+
   const handleChangeEmailRegister = (e) => {
     emailRegister = e.target.value;
     console.log("se cambio mail");
@@ -121,7 +122,7 @@ function App() {
         </Route>
 
         <Route exact path="/home">
-          <Protector evaluate={noLogin}>
+          <Protector evaluate={protector}>
             <Header />
           </Protector>
         </Route>
