@@ -21,55 +21,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 //necesito dispatchear(removeCarrito, addCarrito)
-//cuando este la db funcional traer la info con un useEffect para traer los productos que esten guardados en el carrito
-// aca para abajo es fakeinfo
-let probando = [
-  {
-    PaisDeOrigen: "Argentina ",
-    Bodega: "Alma Mora, Chivilcoy ",
-    Precio: 1500,
-    Varietal: "Malbec",
-    Color: "Tinto",
-    ml: 750,
-    Descripcion:
-      "Austero: es uno de los más valorados por los profesionales. Se usa para aquellos que expresan sin distorsiones el carácter varietal de las uvas y su origen o aquellos en los que la elaboración no desvirtúa su naturaleza. ",
-    Img: "https://static0.tiendeo.com.ar/upload_articulos/259644/0d89eaa5-db12-50d9-b06a-c7cda1c94a4b.jpg",
-  },
-  {
-    PaisDeOrigen: "Estados Unidos",
-    Bodega: "Antigal",
-    Precio: 25000,
-    Varietal: "Malbec",
-    Color: "Tinto",
-    ml: 750,
-    Descripcion:
-      "Balanceado: es el estado ideal de un vino en boca y significa que sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en armonía. ",
-    Img: "https://www.antigal.com/wp-content/uploads/2020/09/antigal-key-visuals-28.jpg",
-  },
-  {
-    PaisDeOrigen: "Argentina ",
-    Bodega: "Alma Mora, Chivilcoy ",
-    Precio: 1500,
-    Varietal: "Malbec",
-    Color: "Tinto",
-    ml: 750,
-    Descripcion:
-      "Austero: es uno de los más valorados por los profesionales. Se usa para aquellos que expresan sin distorsiones el carácter varietal de las uvas y su origen o aquellos en los que la elaboración no desvirtúa su naturaleza. ",
-    Img: "https://static0.tiendeo.com.ar/upload_articulos/259644/0d89eaa5-db12-50d9-b06a-c7cda1c94a4b.jpg",
-  },
-  {
-    PaisDeOrigen: "Estados Unidos",
-    Bodega: "Antigal",
-    Precio: 25000,
-    Varietal: "Malbec",
-    Color: "Tinto",
-    ml: 750,
-    Descripcion:
-      "Balanceado: es el estado ideal de un vino en boca y significa que sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en armonía. ",
-    Img: "https://www.antigal.com/wp-content/uploads/2020/09/antigal-key-visuals-28.jpg",
-  },
-];
 
 const useStyles = makeStyles(() => ({
   item: {
@@ -127,21 +80,18 @@ const Cart = React.memo(function DarkRapListItem() {
   const avatarStyles = useDynamicAvatarStyles({ size: 70 });
   const styles = useStyles();
   const [total, setTotal] = useState(0);
+  const [carrito, setCarrito] = useState([]);
   const history = useHistory();
   let contador = 1;
 
   useEffect(() => {
-    let count = 0;
-    probando.map((wine) => {
-      count += wine.Precio;
-    });
-    setTotal(count);
+    
   }, []);
 
   return (
     <Row gap={5} className={styles.row}>
       <div className={styles.width}>
-        {probando.map((wine, i) => {
+        {carrito.map((wine, i) => {
           return (
             <Row key={i} className={styles.item}>
               <Item className={styles.card}>
