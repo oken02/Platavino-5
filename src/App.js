@@ -76,21 +76,6 @@ function App() {
     console.log("se cambio mail");
   };
 
-  const handleSubmitAdminRegisterForm = (e) => {
-    e.preventDefault();
-    axios
-      .post("http://localhost:3001/api/auth/register", {
-        email: emailRegister,
-        username: usernameRegister,
-        password: passwordRegister,
-        role: "admin",
-      })
-      .then((data) => {
-        dispatch(setUsers(data.data));
-      })
-      .catch((e) => console.log(e));
-  };
-
   const handleSubmitRegisterForm = (e) => {
     e.preventDefault();
     axios
@@ -123,7 +108,7 @@ function App() {
         </Route>
 
         <Route exact path="/home">
-          <Protector evaluate={noLogin}>
+          <Protector evaluate={protector}>
             <Header />
           </Protector>
         </Route>
