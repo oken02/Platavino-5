@@ -13,14 +13,17 @@ import {
 } from "@mui-treasury/components/info";
 import { useGalaxyInfoStyles } from "@mui-treasury/styles/info/galaxy";
 import { useCoverCardMediaStyles } from "@mui-treasury/styles/cardMedia/cover";
-import { IconButton, Icon } from "@material-ui/core";
+import { IconButton, Icon, Button } from "@material-ui/core";
 import AddShoppingCartSharpIcon from "@material-ui/icons/AddShoppingCartSharp";
 import { useHistory } from "react-router-dom";
 import { setCarrito } from "../store/addToCarrito";
 import { useDispatch } from "react-redux";
 import { setSelectedProduct } from "../store/selectedProductReducer";
-
+import ZoomInOutlinedIcon from "@material-ui/icons/ZoomInOutlined";
 const useStyles = makeStyles(() => ({
+  button: {
+    // border: "solid 1px red",
+  },
   card: {
     borderRadius: "1rem",
     boxShadow: "none",
@@ -80,13 +83,18 @@ export const Cards = React.memo(function GalaxyCard({ products }) {
               history.push(`/singleproduct`);
             }}
           >
-            <Icon color="secondary">add_circle</Icon>
+            <ZoomInOutlinedIcon color={"secondary"}>
+              add_circle
+            </ZoomInOutlinedIcon>
+
+            {/* <Icon color="secondary">add_circle</Icon> */}
           </IconButton>
           <IconButton
             onClick={() => {
               dispatch(setCarrito(products));
               history.push("/carrito");
             }}
+            className={styles.button}
           >
             <AddShoppingCartSharpIcon color="secondary" />
           </IconButton>
