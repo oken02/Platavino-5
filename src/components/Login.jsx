@@ -89,6 +89,9 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <Link to='/adminLogin'>
+            <Button >Admin?</Button>
+          </Link>
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
               onChange={handleEmail}

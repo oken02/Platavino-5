@@ -15,6 +15,9 @@ import { sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
+import AdminRegister from "./components/AdminRegister";
+import AdminLogin from "./components/AdminLogin";
+import Header from "./components/Header";
 
 
 
@@ -72,42 +75,25 @@ function App() {
       .catch(e => console.log(e))
   }
 
+  const handleSubmitAdminRegisterForm = (e) => {
+    e.preventDefault()
+    axios.post('http://localhost:3001/api/auth/register', {
+      email: emailRegister,
+      username: usernameRegister,
+      password: passwordRegister,
+      role: 'admin'
+    })
+      .then((data) => {
+        dispatch(setUsers(data.data))
+      })
+      .catch(e => console.log(e))
+  }
+
 
   return (
     <div>
       <NavBar handleClick={handleClick} />
       <Switch>
-        {/* 
-        <Route
-          exact
-          path="/products"
-          render={() => {
-            return <Grids />;
-          }}
-        />
-        <Route
-          exact
-          path="/login"
-          render={() => {
-            //Aca iria el LogIn de Bruno.
-            return <Login />;
-          }}
-        />
-        <Route
-          exact
-          path="/Register"
-          render={() => {
-            return <Register />
-          }}
-        />
-        <Route
-          exact
-          path="/carrito"
-          render={() => {
-            return <Cart />;
-          }}
-        /> */}
-
 
         <Route exact path="/login">
           <Protector evaluate={noLogin}>
@@ -115,9 +101,27 @@ function App() {
           </Protector>
         </Route>
 
-        <Route exact path="/Register">
+        <Route exact path="/adminLogin">
+          <Protector evaluate={noLogin}>
+            <AdminLogin />
+          </Protector>
+        </Route>
+
+        <Route exact path="/">
+          <Protector evaluate={noLogin}>
+            <Header />
+          </Protector>
+        </Route>
+
+        <Route exact path="/register">
           <Protector evaluate={noLogin}>
             <Register handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitRegisterForm} />
+          </Protector>
+        </Route>
+
+        <Route exact path="/adminRegister">
+          <Protector evaluate={noLogin}>
+            <AdminRegister handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitAdminRegisterForm} />
           </Protector>
         </Route>
 
