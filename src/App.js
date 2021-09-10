@@ -19,6 +19,7 @@ import { setUsers } from "./store/usersReducer";
 import AdminRegister from "./components/AdminRegister";
 import AdminLogin from "./components/AdminLogin";
 import Header from "./components/Header";
+import { NotFound } from "./components/NotFound";
 
 import { Redirect } from "react-router-dom";
 
@@ -30,7 +31,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.error("SEND VALIDATIONNNNNN");
     dispatch(sendValidation());
   }, []);
 
@@ -91,8 +91,6 @@ function App() {
       .catch((e) => console.log(e));
   };
 
- 
-
   return (
     <div>
       <NavBar handleClick={handleClick} />
@@ -110,9 +108,9 @@ function App() {
         </Route>
 
         <Route exact path="/home">
-          <Protector evaluate={protector}>
+          {/* <Protector evaluate={protector}> */}
             <Header />
-          </Protector>
+          {/* </Protector> */}
         </Route>
 
         <Route exact path="/register">
@@ -155,7 +153,15 @@ function App() {
           </Protector>
         </Route>
 
-        <Redirect to="/home" />
+        <Route exact path="/notFound">
+          <NotFound />
+        </Route>
+
+        <Redirect exact from="/" to="/home" />
+
+        <Route path="*" component={NotFound} />
+
+
       </Switch>
 
       <Footer />

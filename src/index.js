@@ -8,11 +8,8 @@ import store from "./store";
 
 import { BrowserRouter } from "react-router-dom";
 
-
-
-
-
-
+import { NotFound } from "./components/NotFound";
+ 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
@@ -20,11 +17,6 @@ ReactDOM.render(
     </Provider>
   </BrowserRouter>,
 
-
   document.getElementById("root")
-
-
-
 );
-
 
