@@ -70,8 +70,8 @@ function App() {
       })
       .then((data) => {
         dispatch(setUsers(data.data));
+        history.push("/login");
       })
-
       .catch(e => console.log(e))
   }
 
