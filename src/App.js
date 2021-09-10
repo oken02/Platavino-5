@@ -27,6 +27,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.error("SEND VALIDATIONNNNNN");
     dispatch(sendValidation());
   }, []);
 
@@ -109,13 +110,6 @@ function App() {
           </Protector>
         </Route>
 
-        <Route
-          exact
-          path="/singleProduct"
-          render={() => {
-            return <Wine />;
-          }}
-        />
         <Redirect to="/products" />
       </Switch>
 

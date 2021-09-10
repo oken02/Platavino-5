@@ -11,7 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link, useHistory } from "react-router-dom";
+import { Link as routerLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -20,6 +20,7 @@ import {
   sendValidation,
   setIsLogged,
 } from "../store/isLoggedReducer";
+import { Link } from "@material-ui/core";
 
 function Copyright() {
   return (
@@ -151,7 +152,7 @@ function Login() {
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={routerLink} to="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
