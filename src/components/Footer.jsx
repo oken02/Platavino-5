@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const Footer = () => {
   const classes = useStyles();
   return (
-    <div className="footer">
+    <div className="">
       <div className={classes.offset} />
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar className="toolbarFooter">
