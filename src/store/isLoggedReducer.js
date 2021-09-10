@@ -3,12 +3,19 @@ import {
   createAsyncThunk,
   createReducer,
 } from "@reduxjs/toolkit";
+import axios from "axios";
 import { login } from "../utils/login";
 
 export const setIsLogged = createAction("SET_IS_LOGGED");
 
 export const sendValidation = createAsyncThunk("SEND_VALIDATION", () => {
   return login().then(({ data }) => data);
+});
+
+export const sendLogin = createAsyncThunk("SEND_LOGIN", (credd) => {
+  return axios
+    .post("http://localhost:3001/api/auth/login", credd)
+    .then(({ data }) => data);
 });
 
 const isLoggedReducer = createReducer(
@@ -21,6 +28,16 @@ const isLoggedReducer = createReducer(
     [setIsLogged]: (state, { payload: user }) => {
       return user;
     },
+    [sendLogin.fulfilled]: (user, action) => {
+      localStorage.setItem("token", action.payload.token);
+      user.data = action.payload.user;
+      user.isAuthenticated = true;
+    },
+
+    [sendLogin.rejected]: (state, action) => {
+      state.isAuthenticated = false;
+    },
+
     [sendValidation.fulfilled]: (user, action) => {
       user.data = action.payload.user;
       user.validated = true;

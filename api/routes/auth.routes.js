@@ -48,19 +48,17 @@ router.post("/admin", async (req, res) => {
 });
 
 router.post("/validate", validateToken, (req, res) => {
-  const { id: userId } = req.user;
+  const { id: userId } = req.payload;
 
-  User.findByPk(userId).then((user) => {
-    // if (!user) {
-
-    // }
-
-    res.json({
-      ok: true,
-      msg: "el token es valido",
-      user: user.toJSON(),
-    });
-  });
+  User.findByPk(userId)
+    .then((user) => {
+      res.json({
+        ok: true,
+        msg: "el token es valido",
+        user: user.toJSON(),
+      });
+    })
+    .catch(console.log);
 });
 
 router.post("/login", async (req, res) => {
@@ -77,7 +75,7 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({
       where: { email },
-      attributes: ["username", "email", "id", "role", "password"],
+      attributes: ["username", "email", "id", "role", "password", "carritoId"],
     });
 
     if (!user) {
@@ -141,10 +139,12 @@ router.post("/register", async (req, res) => {
       }
     );
 
+    console.log("USER BEFORE", userCreated);
     // userCreated
-    const carrito = Carrito.build({ Unidades: 0 });
+    const carrito = await Carrito.create({ Unidades: 0 });
 
     const carritoDB = await userCreated.setCarrito(carrito);
+    console.log("USER AFTER", userCreated);
 
     console.log("CARRITO CREATED RESPONSE", carritoDB);
 
@@ -152,7 +152,6 @@ router.post("/register", async (req, res) => {
       ok: true,
       msg: "el usuario fue creado",
       userdb: userCreated,
-      carritoDB,
     });
   } catch (error) {
     console.log(error);

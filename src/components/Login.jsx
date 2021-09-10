@@ -11,16 +11,16 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link as routerLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import { sendValidation, setIsLogged } from "../store/isLoggedReducer";
-
-
-
-
-
+import {
+  sendLogin,
+  sendValidation,
+  setIsLogged,
+} from "../store/isLoggedReducer";
+import { Link } from "@material-ui/core";
 
 function Copyright() {
   return (
@@ -70,19 +70,21 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const [email, setEmail] = useState("");
+  const history = useHistory();
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/api/auth/login", { email, password })
-      .then((data) => {
-        console.log(data);
-      });
+    dispatch(sendLogin({ email, password })).then((action) => {
+      if (action.error) {
+        setPassword("");
+      } else {
+        history.push("/products");
+      }
+    });
   };
-
 
   const handelPassword = (e) => {
     const value = e.target.value;
@@ -106,6 +108,9 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          <Link to='/adminLogin'>
+            <Button >Admin?</Button>
+          </Link>
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
               onChange={handleEmail}
@@ -130,6 +135,7 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -149,7 +155,7 @@ function Login() {
             <Grid container>
               <Grid item xs></Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component={routerLink} to="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

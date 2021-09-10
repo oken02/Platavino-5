@@ -34,13 +34,13 @@ function Wine() {
   const classes = useStyles();
 
   return (
-    <>
-      <div className={styles.detailsContainer}>
-        <img
-          className={`${styles.col} ${styles.movieImage}`}
-          src={wine.Img}
-          alt="foto vino"
-        ></img>
+    <div className={styles.detailsContainer}>
+      <img
+        className={`${styles.col} ${styles.movieImage}`}
+        src={wine.Img}
+        alt="foto vino"
+      ></img>
+
 
         <div className={`${styles.col} ${styles.movieDetails}`}>
           <h1 className={styles.firstItem}> </h1>
@@ -82,6 +82,7 @@ function Wine() {
         </div>
       </div>
     </>
+
   );
 }
 

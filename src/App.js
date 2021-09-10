@@ -16,7 +16,11 @@ import { useEffect } from "react";
 
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
+import AdminRegister from "./components/AdminRegister";
+import AdminLogin from "./components/AdminLogin";
+import Header from "./components/Header";
 
+import { Redirect } from "react-router-dom";
 
 function App() {
   let usernameRegister;
@@ -26,10 +30,9 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.error("SEND VALIDATIONNNNNN");
     dispatch(sendValidation());
   }, []);
-
-
 
   const handleClick = (input) => {
     console.log(input);
@@ -41,37 +44,36 @@ function App() {
   };
 
   const noLogin = (user) => {
-    if (user.isAuthenticated) return "/search";
+    if (user.isAuthenticated) return "/products";
   };
 
-
-
   const handleChangeUsernameRegister = (e) => {
-    usernameRegister = e.target.value
-    console.log('se cambio username')
-  }
+    usernameRegister = e.target.value;
+    console.log("se cambio username");
+  };
   const handleChangePasswordRegister = (e) => {
-    passwordRegister = e.target.value
-    console.log('se cambio pass')
-  }
+    passwordRegister = e.target.value;
+    console.log("se cambio pass");
+  };
   const handleChangeEmailRegister = (e) => {
-    emailRegister = e.target.value
-    console.log('se cambio mail')
-  }
+    emailRegister = e.target.value;
+    console.log("se cambio mail");
+  };
 
   const handleSubmitRegisterForm = (e) => {
-    e.preventDefault()
-    axios.post('http://localhost:3001/api/auth/register', {
-      email: emailRegister,
-      username: usernameRegister,
-      password: passwordRegister
-    })
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/auth/register", {
+        email: emailRegister,
+        username: usernameRegister,
+        password: passwordRegister,
+      })
       .then((data) => {
-        dispatch(setUsers(data.data))
+        dispatch(setUsers(data.data));
+        history.push("/login");
       })
       .catch(e => console.log(e))
   }
-
 
   return (
     <div>
@@ -83,9 +85,32 @@ function App() {
           </Protector>
         </Route>
 
-        <Route exact path="/Register">
+        <Route exact path="/adminLogin">
           <Protector evaluate={noLogin}>
-            <Register handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitRegisterForm} />
+            <AdminLogin />
+          </Protector>
+        </Route>
+
+        <Route exact path="/">
+          <Protector evaluate={noLogin}>
+            <Header />
+          </Protector>
+        </Route>
+
+        <Route exact path="/register">
+          <Protector evaluate={noLogin}>
+            <Register
+              handleChangeEmailRegister={handleChangeEmailRegister}
+              handleChangePasswordRegister={handleChangePasswordRegister}
+              handleChangeUsernameRegister={handleChangeUsernameRegister}
+              handleSubmitRegisterForm={handleSubmitRegisterForm}
+            />
+          </Protector>
+        </Route>
+
+        <Route exact path="/adminRegister">
+          <Protector evaluate={noLogin}>
+            <AdminRegister handleChangeEmailRegister={handleChangeEmailRegister} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleSubmitRegisterForm={handleSubmitAdminRegisterForm} />
           </Protector>
         </Route>
 
@@ -107,14 +132,9 @@ function App() {
           </Protector>
         </Route>
 
-        <Route
-          exact
-          path="/singleProduct"
-          render={() => {
-            return <Wine />;
-          }}
-        />
+        <Redirect to="/products" />
       </Switch>
+
       <Footer />
     </div>
   );

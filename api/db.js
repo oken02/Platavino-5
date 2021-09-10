@@ -1,9 +1,4 @@
-
-
-
-
 const Sequelize = require("sequelize");
-
 
 //https://sequelize.org/master/manual/getting-started.html
 // Option 2: Passing parameters separately (other dialects)
@@ -13,8 +8,9 @@ const db = new Sequelize("platavino5", null, null, {
   logging: false,
 });
 
-
 module.exports = db;
+
+// module.exports = db;
 
 // const { Sequelize } = require("sequelize");
 
@@ -25,4 +21,3 @@ module.exports = db;
 // });
 
 // module.exports = db;
-
