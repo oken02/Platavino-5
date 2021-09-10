@@ -3,8 +3,8 @@ const Carrito = require("./Carrito");
 const Vino = require("./Vino");
 const Orden = require("./Orden");
 
-User.hasOne(Carrito);
-Carrito.belongsTo(User);
+Carrito.hasOne(User);
+User.belongsTo(Carrito);
 
 Vino.belongsToMany(Carrito, { through: "CarritoVino" });
 Carrito.belongsToMany(Vino, { through: "CarritoVino" });

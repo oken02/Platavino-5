@@ -21,14 +21,6 @@ router.post("/", async (req, res) => {
   res.send({ carrito });
 });
 
-router.get("/:id", async (req, res) => {
-  const user = await User.findByPk(userID);
-
-  const vinos = await user.getVinos();
-
-  return res.json({ vinos });
-});
-
 router.post("/:carritoID", async (req, res) => {
   const carritoID = req.params.carritoID;
   const vino = req.body;
@@ -36,13 +28,10 @@ router.post("/:carritoID", async (req, res) => {
   console.log("RE BODY", req.body);
 
   try {
-    //   const user = User.create({ id: carritoID });
-    //   user.
+    const carrito = await Carrito.findByPk(carritoID);
 
-    // const carrito = await Carrito.findByPk(carritoID);
+    // const carrito = Carrito.build({ id: carritoID });
 
-    const carrito = Carrito.build({ id: carritoID });
-    
     console.log(carrito.toJSON());
     const vinoCreated = await carrito.addVino(vino.id);
 
@@ -52,6 +41,51 @@ router.post("/:carritoID", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+router.post("/:carritoID/:vinoID", async (req, res) => {
+  const { carritoID, vinoID } = req.params;
+
+  const carrito = await Carrito.findByPk(carritoID);
+
+  const vinoDB = await carrito.addVino(vinoID);
+
+  console.log(vinoDB);
+
+  res.json({ ok: true, carrito, vinoDB });
+});
+
+router.get("/:carritoID", async (req, res) => {
+  const { carritoID } = req.params;
+
+  const carrito = await Carrito.findByPk(carritoID);
+
+  if (!carrito) {
+    return res.status(404).json({ ok: false, msg: "ese carrito no existe" });
+  }
+
+  const vinosDB = await carrito.getVinos();
+
+  res.json({ vinosDB, length: vinosDB.length });
+});
+
+router.delete("/:carritoID/:vinoID", async (req, res) => {
+  const { carritoID, vinoID } = req.params;
+
+  const carrito = await Carrito.findByPk(carritoID);
+
+  if (!carrito) {
+    return res.status(404).json({ ok: false, msg: "ese carrito no existe" });
+  }
+
+  const r = await carrito.removeVino(vinoID);
+
+  console.log("DELETED ", r);
+  return res.json({
+    ok: true,
+    msg: "se eliminó el vino",
+    r,
+  });
 });
 
 module.exports = router;
