@@ -67,8 +67,12 @@ function App() {
       })
       .then((data) => {
         dispatch(setUsers(data.data));
+        history.push("/login");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        console.log(e);
+        handleChangeEmailRegister({ target: { value: "" } });
+      });
   };
 
   return (

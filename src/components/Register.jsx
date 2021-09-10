@@ -12,7 +12,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Link } from "@material-ui/core";
 
 function Copyright() {
   return (
@@ -47,7 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Register({ handleChangeEmailRegister, handleChangePasswordRegister, handleChangeUsernameRegister, handleSubmitRegisterForm }) {
+function Register({
+  handleChangeEmailRegister,
+  handleChangePasswordRegister,
+  handleChangeUsernameRegister,
+  handleSubmitRegisterForm,
+}) {
   const classes = useStyles();
 
   return (
@@ -60,7 +66,11 @@ function Register({ handleChangeEmailRegister, handleChangePasswordRegister, han
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmitRegisterForm}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmitRegisterForm}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -120,7 +130,7 @@ function Register({ handleChangeEmailRegister, handleChangePasswordRegister, han
           {/* </Link> */}
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link component={RouterLink} to="/login" variant="body2">
                 Already have an account? Sign in
               </Link>
             </Grid>
