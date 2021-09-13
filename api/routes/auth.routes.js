@@ -34,7 +34,23 @@ router.put("/promover/:id", [validateToken, justAdmin], async (req, res) => {
 });
 
 router.post("/admin", async (req, res) => {
+  const { email, username, password } = req.body;
+
+  if (!email || !username || !password) {
+    return res.status(400).json({
+      ok: false,
+      msg: "debes enviar todos los campos para crear un usuario",
+    });
+  }
   try {
+    const user = await User.findOne({ where: { email: email } });
+
+    if (user) {
+      return res
+        .status(400)
+        .json({ ok: false, msg: "el email ya se registró con otro usuario" });
+    }
+
     const admin = await User.create({
       ...req.body,
       role: "admin",

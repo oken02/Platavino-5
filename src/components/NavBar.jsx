@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import Button from "@material-ui/core/Button";
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Icon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -82,7 +83,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function NavBar({ handleClick }) {
+export default function NavBar({ handleClick, handleClickLogout }) {
+    const userLogged = useSelector((state) => {
+        return state.user.isAuthenticated
+    })
+    const userRole = useSelector((state) => {
+        return state.user.data.role
+    })
+
+    console.log('estado de usuarios', userLogged)
 
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -169,7 +178,6 @@ export default function NavBar({ handleClick }) {
         <div className={`{classes.grow} navBar`} >
             <AppBar position="static">
                 <Toolbar>
-                    <Button onClick={() => { handleClick({ unidades: 2 }) }}>Click</Button>
                     <IconButton
                         edge="start"
                         className={classes.menuButton}
@@ -194,6 +202,9 @@ export default function NavBar({ handleClick }) {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
+                    {userRole === 'admin' ? <Link to='addProducts'>
+                        <Icon color="secondary">add_circle</Icon>
+                    </Link> : null}
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
                         <IconButton aria-label="show 4 new mails" color="inherit">
@@ -216,14 +227,17 @@ export default function NavBar({ handleClick }) {
                         >
                             <AccountCircle />
                         </IconButton>
-                        <div className='divButton'>
+                        {!userLogged ? <div className='divButton'>
                             <Link to='/login'>
                                 <Button >Log In</Button>
                             </Link>
                             <Link to='/register'>
                                 <Button >Register</Button>
                             </Link>
-                        </div>
+                        </div> : <Link to='/register'>
+                            <Button onClick={handleClickLogout}>Log Out</Button>
+                        </Link>}
+
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton

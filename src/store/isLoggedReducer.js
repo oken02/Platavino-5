@@ -19,7 +19,8 @@ export const sendLogin = createAsyncThunk("SEND_LOGIN", (credd) => {
     .then(({ data }) => data);
 });
 
-export const logout = createAction("SET_IS_LOGGED");
+export const setIsLogged = createAction("SET_IS_LOGGED");
+export const sendLogout = createAction('SEND_LOGOUT')
 
 const isLoggedReducer = createReducer(
   {
@@ -31,13 +32,13 @@ const isLoggedReducer = createReducer(
     [setIsLogged]: (state, { payload: user }) => {
       return user;
     },
-    [logout]: (state, action) => {
-      localStorage.removeItem("token");
-      state.isAuthenticated = false;
-      state.data = {};
-      // return user;
-    },
 
+    [sendLogout]: (state, { payload: user }) => {
+      localStorage.removeItem('token')
+      state.data = {}
+      state.validated = true;
+      state.isAuthenticated = false;
+    },
     [sendLogin.fulfilled]: (user, action) => {
       localStorage.setItem("token", action.payload.token);
       user.data = action.payload.user;

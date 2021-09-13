@@ -11,7 +11,7 @@ import Login from "./components/Login";
 
 import Register from "./components/Register";
 import Protector from "./components/Protector";
-import { sendValidation } from "./store/isLoggedReducer";
+import { sendLogout, sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
 
 import axios from "axios";
@@ -20,6 +20,8 @@ import AdminRegister from "./components/AdminRegister";
 import AdminLogin from "./components/AdminLogin";
 import Header from "./components/Header";
 import { NotFound } from "./components/NotFound";
+import { useSelector } from 'react-redux';
+
 
 import { Redirect } from "react-router-dom";
 import { SimpleNavBar } from "./components/SimpleNavBar";
@@ -34,6 +36,7 @@ import { MyMenu } from "./Layout/MyMenu";
 import { MyCart } from "./Layout/MyCart";
 import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
+import AddProducts from "./components/AddProducts";
 
 function App() {
   let usernameRegister;
@@ -41,6 +44,9 @@ function App() {
   let emailRegister;
   const history = useHistory();
   const dispatch = useDispatch();
+  const userLooged = useSelector((state) => {
+    return state.users.isAuthenticated
+  })
 
   useEffect(() => {
     dispatch(sendValidation());
@@ -49,11 +55,10 @@ function App() {
   const handleSubmitAdminRegisterForm = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/auth/register", {
+      .post("http://localhost:3001/api/auth/admin", {
         email: emailRegister,
         username: usernameRegister,
         password: passwordRegister,
-        role: "admin",
       })
       .then((data) => {
         dispatch(setUsers(data.data));
@@ -103,6 +108,14 @@ function App() {
       .catch((e) => console.log(e));
   };
 
+  const handleAdminClick = () => {
+    history.push('/adminRegister')
+  }
+
+  const handleClickLogout = () => {
+    dispatch(sendLogout())
+  }
+
   return (
     <div>
       {/* <SimpleNavBar handleClick={handleClick} /> */}
@@ -118,16 +131,16 @@ function App() {
         </Route>
         <Route exact path="/home">
           <Header />
+
         </Route>
         <Route exact path="/register">
-          <Protector evaluate={noLogin}>
-            <Register
-              handleChangeEmailRegister={handleChangeEmailRegister}
-              handleChangePasswordRegister={handleChangePasswordRegister}
-              handleChangeUsernameRegister={handleChangeUsernameRegister}
-              handleSubmitRegisterForm={handleSubmitRegisterForm}
-            />
-          </Protector>
+          <Register
+            handleAdminClick={handleAdminClick}
+            handleChangeEmailRegister={handleChangeEmailRegister}
+            handleChangePasswordRegister={handleChangePasswordRegister}
+            handleChangeUsernameRegister={handleChangeUsernameRegister}
+            handleSubmitRegisterForm={handleSubmitRegisterForm}
+          />
         </Route>
         <Route exact path="/adminRegister">
           <Protector evaluate={noLogin}>
