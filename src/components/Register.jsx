@@ -53,6 +53,7 @@ function Register({
   handleChangePasswordRegister,
   handleChangeUsernameRegister,
   handleSubmitRegisterForm,
+  handleAdminClick,
 }) {
   const classes = useStyles();
 
@@ -68,8 +69,9 @@ function Register({
         </Typography>
 
         <Link to='/adminRegister'>
-          <Button >Admin?</Button>
+          <Button onClick={handleAdminClick}>Admin?</Button>
         </Link>
+
         <form className={classes.form} noValidate onSubmit={handleSubmitRegisterForm}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
