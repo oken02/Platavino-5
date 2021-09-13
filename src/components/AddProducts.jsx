@@ -11,17 +11,23 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
+import { Link as routerLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "axios";
-import { setIsLogged } from "../store/isLoggedReducer";
+
+import {
+    sendLogin,
+    sendValidation,
+    setIsLogged,
+} from "../store/isLoggedReducer";
+import { Link } from "@material-ui/core";
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {"Copyright © "}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                Platavino 5
             </Link>{" "}
             {new Date().getFullYear()}
             {"."}
@@ -62,21 +68,34 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function AdminLogin() {
+function Login() {
+    let requiredInfo = ['Pais de origen', 'Bodega', 'Precio', 'Varietal', 'Color', 'ml', 'Descripcion', 'img', 'Stock']
+    const [email, setEmail] = useState("");
+    const history = useHistory();
+    const [password, setPassword] = useState("");
     const dispatch = useDispatch();
     const classes = useStyles();
 
-    const handelPassword = (e) => { };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        dispatch(sendLogin({ email, password })).then((action) => {
+            if (action.error) {
+                setPassword("");
+            } else {
+                history.push("/products");
+            }
+        });
+    };
+
+    const handelPassword = (e) => {
+        const value = e.target.value;
+        setPassword(value);
+    };
 
     const handleEmail = (e) => {
         const value = e.target.value;
+        setEmail(value);
     };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        axios.post("/api/auth/login").then(dispatch(setIsLogged));
-    };
-
 
     return (
         <Grid container component="main" className={classes.root}>
@@ -88,59 +107,39 @@ function AdminLogin() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Admin Sign in
+                        ¿Want to add a wine?
                     </Typography>
-                    <form onSubmit={handleSubmit} className={classes.form} noValidate>
-                        <TextField
-                            onChange={handleEmail}
-                            variant="outlined"
-                            margin="normal"
-                            required
+                    <form onSubmit={handleSubmit} className={`${classes.form} reqInfoContainer`} noValidate>
+                        {requiredInfo.map((info) => {
+                            return (
+                                <TextField
+                                    onChange={handleEmail}
+                                    variant="outlined"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label={`${info}`}
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    className='input'
+                                />
+                            )
+                        })}
+
+                        <Button
+                            type="submit"
                             fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus
-                        />
-                        <TextField
-                            onChange={handelPassword}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Link to="/products">
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                                className={classes.submit}
-                            >
-                                Admin Sign In
-                            </Button>
-                        </Link>
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Add a wine!
+                        </Button>
+
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
+                            <Grid item xs></Grid>
                         </Grid>
                         <Box mt={5}>
                             <Copyright />
@@ -152,4 +151,4 @@ function AdminLogin() {
     );
 }
 
-export default AdminLogin;
+export default Login;

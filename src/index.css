@@ -90,3 +90,14 @@ code {
   /* height: 100%; */
   margin-top: 155px;
 }
+
+.reqInfoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.reqInfoContainer .input {
+  /* border: 2px solid red; */
+  width: 48%;
+}
