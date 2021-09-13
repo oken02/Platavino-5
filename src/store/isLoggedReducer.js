@@ -1,3 +1,4 @@
+import { Satellite } from "@material-ui/icons";
 import {
   createAction,
   createAsyncThunk,
@@ -18,6 +19,8 @@ export const sendLogin = createAsyncThunk("SEND_LOGIN", (credd) => {
     .then(({ data }) => data);
 });
 
+export const logout = createAction("SET_IS_LOGGED");
+
 const isLoggedReducer = createReducer(
   {
     validated: false,
@@ -28,6 +31,13 @@ const isLoggedReducer = createReducer(
     [setIsLogged]: (state, { payload: user }) => {
       return user;
     },
+    [logout]: (state, action) => {
+      localStorage.removeItem("token");
+      state.isAuthenticated = false;
+      state.data = {};
+      // return user;
+    },
+
     [sendLogin.fulfilled]: (user, action) => {
       localStorage.setItem("token", action.payload.token);
       user.data = action.payload.user;

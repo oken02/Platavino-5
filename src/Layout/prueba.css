@@ -1,0 +1,5 @@
+.div:hover p:first-child {
+  /* background-color: #fff !important; */
+  display: block !important;
+  color: blue;
+}
