@@ -1,0 +1,12 @@
+img {
+    height: 100%;
+  }
+  .vinoDesc {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .carousel-inner .carousel-item {
+    height: 100%;
+  }

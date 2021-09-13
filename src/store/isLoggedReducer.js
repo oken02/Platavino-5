@@ -1,3 +1,4 @@
+import { Satellite } from "@material-ui/icons";
 import {
   createAction,
   createAsyncThunk,
@@ -18,6 +19,7 @@ export const sendLogin = createAsyncThunk("SEND_LOGIN", (credd) => {
     .then(({ data }) => data);
 });
 
+export const setIsLogged = createAction("SET_IS_LOGGED");
 export const sendLogout = createAction('SEND_LOGOUT')
 
 const isLoggedReducer = createReducer(
@@ -30,6 +32,7 @@ const isLoggedReducer = createReducer(
     [setIsLogged]: (state, { payload: user }) => {
       return user;
     },
+
     [sendLogout]: (state, { payload: user }) => {
       localStorage.removeItem('token')
       state.data = {}

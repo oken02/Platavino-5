@@ -24,6 +24,18 @@ import { useSelector } from 'react-redux';
 
 
 import { Redirect } from "react-router-dom";
+import { SimpleNavBar } from "./components/SimpleNavBar";
+import { AdminDrawer } from "./Layout/AdminDrawer";
+import { MyContainer } from "./Layout/MyContainer";
+import { Mylogin } from "./Layout/MyLogin";
+import { MyProfile } from "./Layout/MyProfile";
+import { Box, Container } from "@material-ui/core";
+import { MyHome } from "./Layout/MyHome";
+import { MyAppBar } from "./Layout/MyAppBar";
+import { MyMenu } from "./Layout/MyMenu";
+import { MyCart } from "./Layout/MyCart";
+import { VinoProduct } from "./Layout/VinoProduct";
+import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
 
 function App() {
@@ -106,32 +118,21 @@ function App() {
 
   return (
     <div>
-      <NavBar handleClick={handleClick} handleClickLogout={handleClickLogout} />
-      <Switch>
-        <Route exact path="/login">
+      {/* <SimpleNavBar handleClick={handleClick} /> */}
+      {/* <Route exact path="/login">
           <Protector evaluate={noLogin}>
             <Login />
           </Protector>
         </Route>
-
         <Route exact path="/adminLogin">
           <Protector evaluate={noLogin}>
             <AdminLogin />
           </Protector>
         </Route>
-
-        <Route exact path='/addProducts'>
-          <Protector evaluate={protector}>
-            <AddProducts />
-          </Protector>
-        </Route>
-
         <Route exact path="/home">
-          {/* <Protector evaluate={protector}> */}
           <Header />
-          {/* </Protector> */}
-        </Route>
 
+        </Route>
         <Route exact path="/register">
           <Register
             handleAdminClick={handleAdminClick}
@@ -141,7 +142,6 @@ function App() {
             handleSubmitRegisterForm={handleSubmitRegisterForm}
           />
         </Route>
-
         <Route exact path="/adminRegister">
           <Protector evaluate={noLogin}>
             <AdminRegister
@@ -152,35 +152,45 @@ function App() {
             />
           </Protector>
         </Route>
-
         <Route exact path="/products">
           <Protector evaluate={protector}>
             <Grids />
           </Protector>
         </Route>
-
         <Route exact path="/carrito">
           <Protector evaluate={protector}>
             <Cart />
           </Protector>
         </Route>
-
         <Route exact path="/singleProduct">
           <Protector evaluate={protector}>
             <Wine />
           </Protector>
         </Route>
-
         <Route exact path="/notFound">
           <NotFound />
         </Route>
+        <Redirect exact from="/" to="/home" /> */}
+      {/* mis rutas */}
 
-        <Redirect exact from="/" to="/home" />
+      <div>
+        <MyAppBar />
 
-        <Route path="*" component={NotFound} />
+        <Box mt={4}></Box>
+        <Container maxWidth="lg">
+          <Switch>
+            <Route path="/home" component={MyHome} />
+            <Route path="/prueba" component={Mylogin} />
+            <Route path="/perfil" component={MyProfile} />
+            <Route path="/admin" component={AdminDrawer} />
+            <Route path="/cart" component={MyCart} />
+            <Route path="/vino/:id" component={SingleWine} />
 
-
-      </Switch>
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </Container>
+        <Box mt={4}></Box>
+      </div>
 
       <Footer />
     </div>
