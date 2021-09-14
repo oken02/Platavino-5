@@ -81,6 +81,7 @@ export function SingleWine() {
     Varietal,
     Precio,
     Descripcion,
+    ml,
     id,
   } = selectedWine;
   return (
@@ -111,7 +112,7 @@ export function SingleWine() {
           >
             {/* <Typography variant="h4">Live From Space</Typography> */}
             <Heading as="h3" size="lg">
-              {Varietal}
+              {Bodega}
             </Heading>
             <Box mt={1}></Box>
             <Rating name="stars" value={4} readOnly />
@@ -127,22 +128,34 @@ export function SingleWine() {
             <Grid container>
               <Grid item md={6} lg={6} className={classes.tags}>
                 <Tag size="lg">
-                  <p style={{ paddingRight: "4rem" }}>Color</p> {Color}
+                  <p style={{ paddingRight: "4rem" }}>
+                    <strong>Color</strong>
+                  </p>
+                  {Color}
                 </Tag>
                 <Box mt={1}></Box>
 
                 <Tag size="lg">
-                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                  <p style={{ paddingRight: "4rem" }}>
+                    <strong>Pais </strong>
+                  </p>
+                  {PaisDeOrigen}
                 </Tag>
                 <Box mt={1}></Box>
 
                 <Tag size="lg">
-                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                  <p style={{ paddingRight: "4rem" }}>
+                    <strong>Varietal</strong>
+                  </p>
+                  {Varietal}
                 </Tag>
                 <Box mt={1}></Box>
 
                 <Tag size="lg">
-                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                  <p style={{ paddingRight: "4rem" }}>
+                    <strong>Ml</strong>
+                  </p>
+                  {ml}
                 </Tag>
               </Grid>
             </Grid>
