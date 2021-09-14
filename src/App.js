@@ -38,6 +38,7 @@ import { MyCart } from "./Layout/MyCart";
 import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
+import Results from "./Layout/Results";
 
 function App() {
   let usernameRegister;
@@ -187,6 +188,7 @@ function App() {
             <Route path="/admin" component={AdminDrawer} />
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
+            <Route path="/results" component={Results} />
 
             <Route path="*" component={NotFound} />
           </Switch>

@@ -21,12 +21,17 @@ import {
   MenuCommand,
   MenuDivider,
   Heading,
+  Input,
+  Flex,
+  Spacer,
+  Tooltip,
 } from "@chakra-ui/react";
 
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
 import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMenu/float";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { Form } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   offset: theme.mixins.toolbar,
+  input: {
+    margin: "auto",
+  },
 }));
 
 export function MyAppBar() {
@@ -69,45 +77,28 @@ export function MyAppBar() {
             Admin
           </Button> */}
 
-          <NavMenu gutter={1} useStyles={useFloatNavigationMenuStyles}>
-            <NavItem active as={Link} to="/home">
-              Vinos
-            </NavItem>
-            {/* <NavItem as={Link} to={"/menu"}> */}
-            <NavItem as={Link} to="/home">
-              Categorias
-            </NavItem>
-            <NavItem as={Link} to="/cart">
-              Carrito
-            </NavItem>
-            <NavItem as={Link} to="/perfil">
-              Perfil
-            </NavItem>
-          </NavMenu>
 
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label="Options"
-              icon={<HamburgerIcon />}
-              variant="outline"
-            />
-            <MenuList>
-              {/* <MenuItem icon={<AddIcon />} command="⌘T">
-                New Tab
-              </MenuItem>
-              <MenuItem icon={<ExternalLinkIcon />} command="⌘N">
-                New Window
-              </MenuItem>
-              <MenuItem icon={<RepeatIcon />} command="⌘⇧N">
-                Open Closed Tab
-              </MenuItem>
-              <MenuItem icon={<EditIcon />} command="⌘O">
-                Open File...
-              </MenuItem> */}
-            </MenuList>
-          </Menu>
-        </Toolbar>
+            <NavMenu gutter={1} useStyles={useFloatNavigationMenuStyles}>
+              <NavItem active as={Link} to="/home">
+                Vinos
+              </NavItem>
+
+              <NavItem as={Link} to="/home">
+                Categorias
+              </NavItem>
+              <NavItem as={Link} to="/cart">
+                Carrito
+              </NavItem>
+              <NavItem as={Link} to="/perfil">
+                Perfil
+              </NavItem>
+            </NavMenu>
+          </Toolbar>
+          <Spacer />
+          <Form className={classes.input}>
+            <Input variant="filled" placeholder="Find your wine" />
+          </Form>
+        </Flex>
       </AppBar>
     </div>
   );

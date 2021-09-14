@@ -24,6 +24,12 @@ import { Tag } from "@chakra-ui/tag";
 import { Rating } from "@material-ui/lab";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import { useSelector, useDispatch } from "react-redux";
+import { Tag } from "@chakra-ui/tag";
+import { Rating } from "@material-ui/lab";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import { setCarrito } from "../store/addToCarrito";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,10 +68,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function SingleWine() {
+  const selectedWine = useSelector((state) => state.selectedProduct);
   const classes = useStyles();
   const theme = useTheme();
-
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const {
+    Img,
+    Bodega,
+    Color,
+    PaisDeOrigen,
+    Varietal,
+    Precio,
+    Descripcion,
+    id,
+  } = selectedWine;
   return (
+    /*
     <div>
       <Grid container className={classes.vinoInfo} spacing={4}>
         <Grid item sm={6}>
@@ -144,6 +163,89 @@ export function SingleWine() {
             {/* <Typography variant="h5">$ 1135.00</Typography> */}
             <Box mt={1}></Box>
 
+*/
+    <Grid container className={classes.vinoInfo} spacing={4}>
+      <Grid item sm={6}>
+        <Box>
+          <img
+            style={{
+              width: "100%",
+              height: "70vh",
+              objectFit: "contain",
+              borderRadius: "16px",
+            }}
+            src={Img}
+            alt=""
+          />
+        </Box>
+      </Grid>
+      <Grid item sm={6} style={{ height: "100%" }}>
+        <Box
+          height="100%"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          pr={4}
+        >
+          {/* <Typography variant="h4">Live From Space</Typography> */}
+          <Heading as="h3" size="lg">
+            {Varietal}
+          </Heading>
+          <Box mt={1}></Box>
+          <Rating name="stars" value={4} readOnly />
+          <Box mt={1}></Box>
+
+          <BoxCh fontSize="lg">{`$ ${Precio}`} </BoxCh>
+
+          <Box mt={1}></Box>
+
+          <Text fontSize="md">{Descripcion}</Text>
+          <Box mt={1}></Box>
+
+          <Grid container>
+            <Grid item md={6} lg={6} className={classes.tags}>
+              <Tag size="lg">
+                <p style={{ paddingRight: "4rem" }}>Color</p> {Color}
+              </Tag>
+              <Box mt={1}></Box>
+
+              <Tag size="lg">
+                <p style={{ paddingRight: "4rem" }}>Color</p> Red
+              </Tag>
+              <Box mt={1}></Box>
+
+              <Tag size="lg">
+                <p style={{ paddingRight: "4rem" }}>Color</p> Red
+              </Tag>
+              <Box mt={1}></Box>
+
+              <Tag size="lg">
+                <p style={{ paddingRight: "4rem" }}>Color</p> Red
+              </Tag>
+            </Grid>
+          </Grid>
+
+          <Box mt={1}></Box>
+
+          <Box mt={1}></Box>
+
+          <Box display="flex">
+            <ButtonGroup
+              display="flex"
+              flex={1}
+              variant="outline"
+              spacing="6"
+              isAttached
+              // mx={4}
+              // marginX=
+              // mx={3}
+            >
+              <IconButton
+                flex={1}
+                aria-label="Add to friends"
+                icon={<MinusIcon color="purple" />}
+              />
+
             <Box display="flex">
               <ButtonGroup
                 display="flex"
@@ -161,6 +263,7 @@ export function SingleWine() {
                   icon={<MinusIcon color="purple" />}
                 />
 
+/*
                 <BoxCh
                   // bg="purple"
                   borderWidth="1px"
@@ -186,6 +289,27 @@ export function SingleWine() {
                 Comprar
               </Button>
             </Box>
+            /*
+              {/* <Button>Cancel</Button> */}
+              <IconButton
+                flex={1}
+                aria-label="Add to friends"
+                icon={<AddIcon color="purple" />}
+              />
+            </ButtonGroup>
+            <Button
+              mx={4}
+              flex={1}
+              colorScheme="purple"
+              size="md"
+              onClick={() => {
+                dispatch(setCarrito(selectedWine));
+                history.push("/cart");
+              }}
+            >
+              Comprar
+            </Button>
+          </Box>
 
             {/* <Button variant="contained" size="large" color="secondary">
             COMPRAR
