@@ -20,8 +20,7 @@ import AdminRegister from "./components/AdminRegister";
 import AdminLogin from "./components/AdminLogin";
 import Header from "./components/Header";
 import { NotFound } from "./components/NotFound";
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 import { Redirect } from "react-router-dom";
 import { SimpleNavBar } from "./components/SimpleNavBar";
@@ -33,6 +32,8 @@ import { Box, Container } from "@material-ui/core";
 import { MyHome } from "./Layout/MyHome";
 import { MyAppBar } from "./Layout/MyAppBar";
 import { MyMenu } from "./Layout/MyMenu";
+import { PlatavinoBox } from "./Layout/PlatavinoBox";
+
 import { MyCart } from "./Layout/MyCart";
 import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
@@ -45,8 +46,8 @@ function App() {
   const history = useHistory();
   const dispatch = useDispatch();
   const userLooged = useSelector((state) => {
-    return state.users.isAuthenticated
-  })
+    return state.users.isAuthenticated;
+  });
 
   useEffect(() => {
     dispatch(sendValidation());
@@ -109,12 +110,12 @@ function App() {
   };
 
   const handleAdminClick = () => {
-    history.push('/adminRegister')
-  }
+    history.push("/adminRegister");
+  };
 
   const handleClickLogout = () => {
-    dispatch(sendLogout())
-  }
+    dispatch(sendLogout());
+  };
 
   return (
     <div>
@@ -174,6 +175,7 @@ function App() {
       {/* mis rutas */}
 
       <div>
+        <PlatavinoBox />
         <MyAppBar />
 
         <Box mt={4}></Box>
@@ -192,7 +194,7 @@ function App() {
         <Box mt={4}></Box>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

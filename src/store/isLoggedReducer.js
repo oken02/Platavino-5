@@ -7,7 +7,7 @@ import {
 import axios from "axios";
 import { login } from "../utils/login";
 
-export const setIsLogged = createAction("SET_IS_LOGGED");
+// export const setIsLogged = createAction("SET_IS_LOGGED");
 
 export const sendValidation = createAsyncThunk("SEND_VALIDATION", () => {
   return login().then(({ data }) => data);

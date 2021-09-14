@@ -20,6 +20,7 @@ import {
   MenuIcon,
   MenuCommand,
   MenuDivider,
+  Heading,
 } from "@chakra-ui/react";
 
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
@@ -48,6 +49,10 @@ export function MyAppBar() {
       <div className={classes.offset} />
       <AppBar position="fixed" color="white">
         <Toolbar>
+          <Heading mr="2" as="h6" size="xs">
+            Platavino 5
+          </Heading>
+
           <IconButton
             edge="start"
             className={classes.menuButton}
