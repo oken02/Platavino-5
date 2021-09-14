@@ -29,15 +29,22 @@ export const removeCarrito = createAsyncThunk(
       .then((res) => wine);
   }
 );
+export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
+  return axios.get(`http://localhost:3001/api/carritos/${id}`).then((res) => {
+    return res.data;
+  });
+});
 
 const carritoReducer = createReducer([], {
   [setCarrito.fulfilled]: (state, { payload }) => {
     return [...state, payload];
   },
   [removeCarrito.fulfilled]: (state, { payload }) => {
-    console.log(payload);
     return state.filter((wine) => wine.id !== payload.id);
     // return [...state, payload];
+  },
+  [getCart.fulfilled]: (state, { payload }) => {
+    return payload.vinosDB;
   },
 });
 
