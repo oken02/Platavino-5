@@ -7,8 +7,6 @@ import {
 import axios from "axios";
 import { login } from "../utils/login";
 
-export const setIsLogged = createAction("SET_IS_LOGGED");
-
 export const sendValidation = createAsyncThunk("SEND_VALIDATION", () => {
   return login().then(({ data }) => data);
 });
@@ -20,7 +18,7 @@ export const sendLogin = createAsyncThunk("SEND_LOGIN", (credd) => {
 });
 
 export const setIsLogged = createAction("SET_IS_LOGGED");
-export const sendLogout = createAction('SEND_LOGOUT')
+export const sendLogout = createAction("SEND_LOGOUT");
 
 const isLoggedReducer = createReducer(
   {
@@ -34,8 +32,8 @@ const isLoggedReducer = createReducer(
     },
 
     [sendLogout]: (state, { payload: user }) => {
-      localStorage.removeItem('token')
-      state.data = {}
+      localStorage.removeItem("token");
+      state.data = {};
       state.validated = true;
       state.isAuthenticated = false;
     },

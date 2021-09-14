@@ -5,16 +5,14 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const setProducts = createAction("SET_SELECTED_PRODUCTS");
+export const setProducts = createAsyncThunk("SET_SELECTED_PRODUCTS", () => {
+  return axios.get("http://localhost:3001/api/vinos").then((res) => res.data);
+});
 
 const ProductsReducer = createReducer([], {
-  [setProducts]: (state, { payload: products }) => {
-    return products;
+  [setProducts.fulfilled]: (state, { payload }) => {
+    return payload;
   },
-  //   [setProduct.fulfilled]: (state, { payload: products }) => {
-  //     console.log(products);
-  // return products;
-  //   },
 });
 
 export default ProductsReducer;

@@ -20,8 +20,7 @@ import AdminRegister from "./components/AdminRegister";
 import AdminLogin from "./components/AdminLogin";
 import Header from "./components/Header";
 import { NotFound } from "./components/NotFound";
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 import { Redirect } from "react-router-dom";
 import { SimpleNavBar } from "./components/SimpleNavBar";
@@ -37,6 +36,7 @@ import { MyCart } from "./Layout/MyCart";
 import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
+import Results from "./Layout/Results";
 
 function App() {
   let usernameRegister;
@@ -45,8 +45,8 @@ function App() {
   const history = useHistory();
   const dispatch = useDispatch();
   const userLooged = useSelector((state) => {
-    return state.users.isAuthenticated
-  })
+    return state.users.isAuthenticated;
+  });
 
   useEffect(() => {
     dispatch(sendValidation());
@@ -109,12 +109,12 @@ function App() {
   };
 
   const handleAdminClick = () => {
-    history.push('/adminRegister')
-  }
+    history.push("/adminRegister");
+  };
 
   const handleClickLogout = () => {
-    dispatch(sendLogout())
-  }
+    dispatch(sendLogout());
+  };
 
   return (
     <div>
@@ -185,6 +185,7 @@ function App() {
             <Route path="/admin" component={AdminDrawer} />
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
+            <Route path="/results" component={Results} />
 
             <Route path="*" component={NotFound} />
           </Switch>

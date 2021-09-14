@@ -22,7 +22,7 @@ export const NotFound = () => {
             404
           </h2>
         </div>
-        <p>
+        <p >
           The page you are looking for might have been removed had its name
           changed or is temporarily unavailable.
           <Link to="/products" className="a">

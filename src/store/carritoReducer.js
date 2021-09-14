@@ -1,11 +1,18 @@
-// import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
+import axios from "axios";
+// export const getCart = createAction("GET_CART");
 
-// export const setCarrito = createAction("SET_CARRITO");
+export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
+  return axios.get(`http://localhost:3001/api/carritos/${id}`).then((res) => {
+    return res.data;
+  });
+});
 
-// const carritoReducer = createReducer([], {
-//     [setCarrito]: (state, { payload: carrito }) => {
-//         return carrito
-//     },
-// });
+const carritoReducer = createReducer([], {
+  [getCart.fulfilled]: (state, action) => {
+    console.log("esacaaaaaaaa", action);
+    // return action.payload;
+  },
+});
 
-// export default carritoReducer;
+export default carritoReducer;

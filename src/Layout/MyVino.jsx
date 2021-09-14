@@ -70,7 +70,9 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
 }));
 
-export const BlogCardDemo = React.memo(function BlogCard() {
+export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
+  
+  const { Img, PaisDeOrigen, Descripcion, Bodega } = wine;
   const styles = useStyles();
   const { button: buttonStyles, ...contentStyles } =
     useBlogTextInfoContentStyles();
@@ -78,17 +80,15 @@ export const BlogCardDemo = React.memo(function BlogCard() {
 
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
-      {/* <CardMedia
-        className={styles.media}
-        image={
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/2000px-Git_icon.svg.png"
-        }
-      /> */}
-
       <Box px={2} py={2}>
         <img
-          style={{ width: "100%", height: "60vh", objectFit: "cover",borderRadius:"16px" }}
-          src="https://panuts.com/wp-content/uploads/2020/06/Bot-SQ-Vino-Dulce-Borgoña-600x600.jpg"
+          style={{
+            width: "100%",
+            height: "60vh",
+            objectFit: "cover",
+            borderRadius: "16px",
+          }}
+          src={Img}
           alt=""
         />
       </Box>
@@ -96,11 +96,9 @@ export const BlogCardDemo = React.memo(function BlogCard() {
       <CardContent>
         <TextInfoContent
           classes={contentStyles}
-          overline={"28 MAR 2019"}
-          heading={"What is Git ?"}
-          body={
-            "Git is a distributed version control system. Every dev has a working copy of the code and..."
-          }
+          overline={`Pais de origen : ${PaisDeOrigen}`}
+          heading={`Bodega : ${Bodega}`}
+          body={Descripcion}
         />
         <Button className={buttonStyles}>Comprar</Button>
       </CardContent>
