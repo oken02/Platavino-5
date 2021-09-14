@@ -25,6 +25,7 @@ import {
   Flex,
   Spacer,
   Tooltip,
+  Box,
 } from "@chakra-ui/react";
 
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
@@ -34,7 +35,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import { Form } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  menu: {
     flexGrow: 1,
   },
   menuButton: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   offset: theme.mixins.toolbar,
   input: {
-    margin: "auto",
+    // margin: "auto",
   },
 }));
 
@@ -57,18 +58,21 @@ export function MyAppBar() {
       <div className={classes.offset} />
       <AppBar position="fixed" color="white">
         <Toolbar>
-          <Heading mr="2" as="h6" size="xs">
-            Platavino 5
-          </Heading>
+          <Box display="flex" alignItems="center">
+            <Heading mr="2" as="h6" size="xs">
+              Platavino 5
+            </Heading>
 
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <LocalBarIcon />
-          </IconButton>
+            {/* <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            > */}
+              <LocalBarIcon className={classes.menuButton} />
+            {/* </IconButton> */}
+          </Box>
+
           {/* <Typography variant="h6" className={classes.title}>
             Platavino 5
           </Typography>
@@ -77,28 +81,31 @@ export function MyAppBar() {
             Admin
           </Button> */}
 
+          <NavMenu className={classes.menu} gutter={1} useStyles={useFloatNavigationMenuStyles}>
+            <NavItem active as={Link} to="/home">
+              Vinos
+            </NavItem>
 
-            <NavMenu gutter={1} useStyles={useFloatNavigationMenuStyles}>
-              <NavItem active as={Link} to="/home">
-                Vinos
-              </NavItem>
+            <NavItem as={Link} to="/home">
+              Categorias
+            </NavItem>
+            <NavItem as={Link} to="/cart">
+              Carrito
+            </NavItem>
+            <NavItem as={Link} to="/perfil">
+              Perfil
+            </NavItem>
+          </NavMenu>
 
-              <NavItem as={Link} to="/home">
-                Categorias
-              </NavItem>
-              <NavItem as={Link} to="/cart">
-                Carrito
-              </NavItem>
-              <NavItem as={Link} to="/perfil">
-                Perfil
-              </NavItem>
-            </NavMenu>
-          </Toolbar>
-          <Spacer />
-          <Form className={classes.input}>
+          {/* <Spacer /> */}
+          {/* <Form className={classes.input}> */}
+          <Box>
             <Input variant="filled" placeholder="Find your wine" />
-          </Form>
-        </Flex>
+          </Box>
+          {/* </Form> */}
+        </Toolbar>
+
+        {/* </Flex> */}
       </AppBar>
     </div>
   );

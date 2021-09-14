@@ -38,11 +38,14 @@ export const PlatavinoBox = () => {
       {/* <Code children="console.log(welcome)" /> */}
 
       <Code
-      className={classes.tag}
+        className={classes.tag}
+        colorScheme="purple"
+        size="lg" 
+        p="2"
         children={
-          <Tag colorScheme="gray" size="lg" bgColor="transparent">
+          // <Tag colorScheme="gray" size="lg" bgColor="transparent">
             <b>Argentina / Venezuela / Uruguay / Perú</b>
-          </Tag>
+          // </Tag>
         }
       />
 
