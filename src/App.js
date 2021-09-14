@@ -32,6 +32,8 @@ import { Box, Container } from "@material-ui/core";
 import { MyHome } from "./Layout/MyHome";
 import { MyAppBar } from "./Layout/MyAppBar";
 import { MyMenu } from "./Layout/MyMenu";
+import { PlatavinoBox } from "./Layout/PlatavinoBox";
+
 import { MyCart } from "./Layout/MyCart";
 import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
@@ -174,6 +176,7 @@ function App() {
       {/* mis rutas */}
 
       <div>
+        <PlatavinoBox />
         <MyAppBar />
 
         <Box mt={4}></Box>
@@ -193,7 +196,7 @@ function App() {
         <Box mt={4}></Box>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

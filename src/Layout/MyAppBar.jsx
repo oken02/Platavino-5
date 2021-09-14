@@ -20,6 +20,7 @@ import {
   MenuIcon,
   MenuCommand,
   MenuDivider,
+  Heading,
   Input,
   Flex,
   Spacer,
@@ -55,16 +56,27 @@ export function MyAppBar() {
     <div className={classes.root}>
       <div className={classes.offset} />
       <AppBar position="fixed" color="white">
-        <Flex>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <LocalBarIcon />
-            </IconButton>
+        <Toolbar>
+          <Heading mr="2" as="h6" size="xs">
+            Platavino 5
+          </Heading>
+
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <LocalBarIcon />
+          </IconButton>
+          {/* <Typography variant="h6" className={classes.title}>
+            Platavino 5
+          </Typography>
+          <Button color="inherit">Login</Button>
+          <Button component={Link} to="/admin" color="inherit">
+            Admin
+          </Button> */}
+
 
             <NavMenu gutter={1} useStyles={useFloatNavigationMenuStyles}>
               <NavItem active as={Link} to="/home">

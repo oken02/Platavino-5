@@ -7,10 +7,23 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
+
+import GoogleFontLoader from "react-google-font-loader";
+import NoSsr from "@material-ui/core/NoSsr";
+
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+
 import { Box, Grid } from "@material-ui/core";
 import { Heading, Text, Box as BoxCh } from "@chakra-ui/layout";
+import { Input, Textarea } from "@chakra-ui/react";
+
 import { Button, ButtonGroup, IconButton } from "@chakra-ui/button";
+
+import { ReviewCard } from "./ReviewCard";
+import { Tag } from "@chakra-ui/tag";
+import { Rating } from "@material-ui/lab";
+import { AddIcon, MinusIcon } from "@chakra-ui/icons";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { useSelector, useDispatch } from "react-redux";
 import { Tag } from "@chakra-ui/tag";
 import { Rating } from "@material-ui/lab";
@@ -49,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: "space-between",
     },
   },
+  reviews: {
+    margin: "0",
+  },
 }));
 
 export function SingleWine() {
@@ -68,6 +84,86 @@ export function SingleWine() {
     id,
   } = selectedWine;
   return (
+    /*
+    <div>
+      <Grid container className={classes.vinoInfo} spacing={4}>
+        <Grid item sm={6}>
+          <Box>
+            <img
+              style={{
+                width: "100%",
+                height: "70vh",
+                objectFit: "contain",
+                borderRadius: "16px",
+              }}
+              src="https://wongfood.vteximg.com.br/arquivos/ids/339315-1000-1000/479513002-01-9505.jpg?v=637118676758900000"
+              alt=""
+            />
+          </Box>
+        </Grid>
+        <Grid item sm={6} style={{ height: "100%" }}>
+          <Box
+            height="100%"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            pr={4}
+          >
+            {/* <Typography variant="h4">Live From Space</Typography> */}
+            <Heading as="h3" size="lg">
+              Live From Space
+            </Heading>
+            <Box mt={1}></Box>
+            <Rating name="stars" value={4} readOnly />
+            <Box mt={1}></Box>
+
+            <BoxCh fontSize="lg">$ 1135.00 </BoxCh>
+            {/* <Typography variant="subtitle1" color="textSecondary">
+            <Box mt={1}></Box>
+            Balanceado: es el estado ideal de un vino en boca y significa que
+            sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en
+            armonía.
+          </Typography> */}
+            <Box mt={1}></Box>
+
+            <Text fontSize="md">
+              Balanceado: es el estado ideal de un vino en boca y significa que
+              sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en
+              armonía.
+            </Text>
+            <Box mt={1}></Box>
+
+            <Grid container>
+              <Grid item md={6} lg={6} className={classes.tags}>
+                <Tag size="lg">
+                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                </Tag>
+                <Box mt={1}></Box>
+
+                <Tag size="lg">
+                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                </Tag>
+                <Box mt={1}></Box>
+
+                <Tag size="lg">
+                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                </Tag>
+                <Box mt={1}></Box>
+
+                <Tag size="lg">
+                  <p style={{ paddingRight: "4rem" }}>Color</p> Red
+                </Tag>
+              </Grid>
+
+              {/* <Grid item md={6}></Grid> */}
+            </Grid>
+
+            <Box mt={1}></Box>
+
+            {/* <Typography variant="h5">$ 1135.00</Typography> */}
+            <Box mt={1}></Box>
+
+*/
     <Grid container className={classes.vinoInfo} spacing={4}>
       <Grid item sm={6}>
         <Box>
@@ -150,20 +246,50 @@ export function SingleWine() {
                 icon={<MinusIcon color="purple" />}
               />
 
-              <BoxCh
-                // bg="purple"
-                borderWidth="1px"
-                borderRadius="lg"
-                px={4}
-                d="flex"
-                alignItems="center"
-                justifyContent="center"
+            <Box display="flex">
+              <ButtonGroup
+                display="flex"
                 flex={1}
-                color="purple"
+                variant="outline"
+                spacing="6"
+                isAttached
+                // mx={4}
+                // marginX=
+                // mx={3}
               >
-                2
-              </BoxCh>
+                <IconButton
+                  flex={1}
+                  aria-label="Add to friends"
+                  icon={<MinusIcon color="purple" />}
+                />
 
+/*
+                <BoxCh
+                  // bg="purple"
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  px={4}
+                  d="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  flex={1}
+                  color="purple"
+                >
+                  2
+                </BoxCh>
+
+                {/* <Button>Cancel</Button> */}
+                <IconButton
+                  flex={1}
+                  aria-label="Add to friends"
+                  icon={<AddIcon color="purple" />}
+                />
+              </ButtonGroup>
+              <Button mx={4} flex={1} colorScheme="purple" size="md">
+                Comprar
+              </Button>
+            </Box>
+            /*
               {/* <Button>Cancel</Button> */}
               <IconButton
                 flex={1}
@@ -185,36 +311,112 @@ export function SingleWine() {
             </Button>
           </Box>
 
-          {/* <Button variant="contained" size="large" color="secondary">
+            {/* <Button variant="contained" size="large" color="secondary">
             COMPRAR
           </Button> */}
-        </Box>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+
+      {/* REVIEWS */}
+      <Heading
+        my="10"
+        // borderWidth="1px"
+        p="3"
+        textAlign="center"
+        as="h4"
+        size="md"
+        // borderColor="purple"
+        border="1px solid purple"
+        borderRadius="lg"
+        color="purple.700"
+      >
+        Reviews
+      </Heading>
+
+      <Grid container spacing={3} className={classes.reviews}>
+        <Grid item lg={6} md={6}>
+          <>
+            <NoSsr>
+              <GoogleFontLoader
+                fonts={[{ font: "Ubuntu", weights: [400, 700] }]}
+              />
+            </NoSsr>
+            <Grid container spacing={4}>
+              <Grid item xs={12} md={6} lg={4}>
+                <ReviewCard
+                  thumbnail={
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQHCBAj8nRJkEwjWg5TpNuSZZG9iscsf43V1mfx0LZHNDYW3S_&usqp=CAU"
+                  }
+                  title={"APEX Legends: Assemble!"}
+                  description={
+                    <>
+                      <b>Shining Alpaca</b> and 3 others are already members of
+                      this group.
+                    </>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <ReviewCard
+                  thumbnail={
+                    "https://cm1.narvii.com/7153/05204b8d8dcbb652dd1a8ceaafde997bc1909468_00.jpg"
+                  }
+                  title={"League of Legends Official"}
+                  description={
+                    "You are already a member of this group since April 5th 2019."
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} md={6} lg={4}>
+                <ReviewCard
+                  thumbnail={
+                    "https://bazar-react.vercel.app/assets/images/faces/7.png"
+                  }
+                  title={"Jannie Schumm"}
+                  description={
+                    <>
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                      Varius massa id ut mattis. Facilisis vitae gravida egestas
+                      ac account.
+                    </>
+                  }
+                />
+              </Grid>
+            </Grid>
+          </>
+        </Grid>
+
+        <Grid item lg={6} md={6}>
+          <Heading my="3" as="h5" size="md">
+            Write a Review for this wine
+          </Heading>
+          <form>
+            <FormControl id="first-name" isRequired>
+              <FormLabel>Your Rating</FormLabel>
+              <Rating
+                name="customized-empty"
+                defaultValue={2}
+                precision={0.5}
+                emptyIcon={<StarBorderIcon fontSize="inherit" />}
+              />
+            </FormControl>
+
+            <FormControl id="first-name">
+              <FormLabel>Your Review</FormLabel>
+              <Textarea
+                // value={"hi"}
+                // onChange={handleInputChange}
+                placeholder="Here is a sample placeholder"
+                size="sm"
+              />
+            </FormControl>
+            <Button mt={4} colorScheme="purple" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
-
-// <Card className={classes.root} elevation={0}>
-//   <Box className={classes.cover}>
-//     <img
-//       style={{ width: "100%", objectFit: "cover" }}
-//       src="https://wongfood.vteximg.com.br/arquivos/ids/339315-1000-1000/479513002-01-9505.jpg?v=637118676758900000"
-//       alt=""
-//     />
-//   </Box>
-//   {/* <CardMedia
-//     className={classes.cover}
-//     image="https://wongfood.vteximg.com.br/arquivos/ids/339315-1000-1000/479513002-01-9505.jpg?v=637118676758900000"
-//     title="Live from space album cover"
-//   /> */}
-//   <div className={classes.details}>
-//     <CardContent className={classes.content}>
-//       <Typography variant="h4">Live From Space</Typography>
-//       <Typography variant="subtitle1" color="textSecondary">
-//         Balanceado: es el estado ideal de un vino en boca y significa que
-//         sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en
-//         armonía.
-//       </Typography>
-//     </CardContent>
-//   </div>
-// </Card>

@@ -1,6 +1,7 @@
 import React from "react";
 
 const Carousel = ({ children: vinos = [] }) => {
+  u;
   const buttonActiveProps = {};
   return (
     <div>
@@ -37,14 +38,9 @@ const Carousel = ({ children: vinos = [] }) => {
         </div>
 
         <div class="carousel-inner" style="height: 100%">
-
-
-          {
-            vinos.map
-          }
+          {vinos.map}
 
           <div class="carousel-item">
-
             <div class="card mb-3" style="width: 100%; height: 100%">
               <div class="row g-0" style="height: 100%">
                 <div class="col-md-8">
@@ -67,7 +63,6 @@ const Carousel = ({ children: vinos = [] }) => {
               </div>
             </div>
           </div>
-
         </div>
         <button
           class="carousel-control-prev"
