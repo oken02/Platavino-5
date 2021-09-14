@@ -7,7 +7,8 @@ const { Op } = require("sequelize");
 
 const { justAdmin } = require("../middlewares/justAdmin");
 const { validateToken } = require("../utils/jwt");
-const { RestoreSharp } = require("@material-ui/icons");
+const CartItem = require("../models/CartItem");
+
 const router = express.Router();
 
 /*
@@ -42,6 +43,39 @@ router.post("/:carritoID", async (req, res) => {
     console.log(error);
   }
 });
+
+// router.post("/:vinoId", [validateToken], async (req, res) => {
+//   const { carritoId, id } = req.payload;
+//   const { vinoId } = req.params;
+
+//   console.log("RE BODY", { carritoId, id,vinoId });
+
+//   try {
+//     const [cartItem, created] = await CartItem.findOrCreate({
+//       where: { carritoId, vinoId },
+//       defaults: {
+//         cantidad: 1,
+//         // carritoId,
+//       },
+//     });
+//     // const carrito = Carrito.build({ id: carritoId });
+
+//     // const vinoCreated = await carrito.createCartItem({ cantidad: 1, vinoId });
+
+//     // console.log(vinoCreated);
+
+//     // return res.json({ vinoCreated });
+//     return res.send([cartItem, created]);
+//     // res.send("ok")
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+
+
+//
+//
 
 router.post("/:carritoID/:vinoID", async (req, res) => {
   const { carritoID, vinoID } = req.params;

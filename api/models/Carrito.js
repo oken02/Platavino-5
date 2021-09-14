@@ -6,6 +6,8 @@ const Carrito = db.define('carrito', {
     // Unidades:{
     //     type: S.INTEGER,
     // },
+
+    
     
 });
 
