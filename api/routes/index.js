@@ -6,6 +6,7 @@ const vinosRouter = require("./vinosRoute");
 const categoriesRouter = require("./categoriesRoute");
 
 const reviewsRouter = require("./review.routes");
+const ordensRouter = require("./ordens.routes");
 
 //LLEGAREMOS A LA RUTA "VINOS" A TRAVÉS DE LA RUTA "http://localhost:3001/api/..."
 //LLEGAREMOS A LA RUTA "CATEGORIAS" A TRAVÉS DE LA RUTA "http://localhost:3001/api/..."
@@ -20,5 +21,6 @@ router.use("/auth", authRouter);
 router.use("/users", usersRouter);
 router.use("/carritos", carritosRouter);
 router.use("/reviews", reviewsRouter);
+router.use("/ordens", ordensRouter);
 
 module.exports = router;

@@ -103,8 +103,11 @@ router.post("/login", async (req, res) => {
     const validLogin = await bcrypt.compare(password, user.password);
 
     if (validLogin) {
-      
-      const token = generateToken({ id: user.id, role: user.role,carritoId:user.carritoId });
+      const token = generateToken({
+        id: user.id,
+        role: user.role,
+        carritoId: user.carritoId,
+      });
 
       // delete user.dataValues.password;
 
