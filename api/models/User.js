@@ -22,6 +22,11 @@ const User = db.define("user", {
     type: S.STRING,
     defaultValue: "user",
   },
+
+  cartHistory: {
+    type: S.STRING,
+    defaultValue: "",
+  },
 });
 
 module.exports = User;

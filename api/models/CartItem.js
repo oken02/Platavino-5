@@ -10,6 +10,10 @@ CartItem.init(
       allowNull: false,
     },
   },
+
+
+  // vinoId:7
+
   {
     sequelize, // We need to pass the connection instance
     modelName: "CartItem", // We need to choose the model name
