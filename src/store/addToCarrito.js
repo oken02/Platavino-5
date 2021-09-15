@@ -9,6 +9,9 @@ import axios from "axios";
 
 export const setCarrito = createAsyncThunk("SET_CARRITO", (wine, thunkAPI) => {
   const { user } = thunkAPI.getState();
+
+  console.log("user", user);
+
   const { carritoId } = user.data;
   if (!user.data.id) throw new Error("You need to be logged in");
   return axios

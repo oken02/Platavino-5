@@ -7,8 +7,6 @@ import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
 
-import Login from "./components/Login";
-
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
@@ -39,7 +37,7 @@ import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
 import Results from "./Layout/Results";
-
+import Login from "./components/Login";
 function App() {
   let usernameRegister;
   let passwordRegister;
@@ -189,6 +187,19 @@ function App() {
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
+            <Route path="/login" component={Login} />
+            <Route
+              path="/register"
+              render={() => (
+                <Register
+                  handleAdminClick={handleAdminClick}
+                  handleChangeEmailRegister={handleChangeEmailRegister}
+                  handleChangePasswordRegister={handleChangePasswordRegister}
+                  handleChangeUsernameRegister={handleChangeUsernameRegister}
+                  handleSubmitRegisterForm={handleSubmitRegisterForm}
+                />
+              )}
+            />
 
             <Route path="*" component={NotFound} />
           </Switch>

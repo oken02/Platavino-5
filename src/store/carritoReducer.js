@@ -10,7 +10,6 @@ export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
 
 const carritoReducer = createReducer([], {
   [getCart.fulfilled]: (state, action) => {
-    console.log("esacaaaaaaaa", action);
     // return action.payload;
   },
 });

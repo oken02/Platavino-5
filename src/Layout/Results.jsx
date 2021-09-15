@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { AllVinos } from "./AllVinos";
-import { FilterSidebar } from "./FilterSidebar";
+import FilterSidebar from "./FilterSidebar";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
