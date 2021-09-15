@@ -20,8 +20,14 @@ Review.belongsTo(User);
 Vino.hasMany(Review);
 Review.belongsTo(Vino);
 
-Orden.belongsTo(CartItem);
-CartItem.hasOne(Orden);
+// Orden.belongsTo(CartItem)
+// User.hasMany(CartItem);
+
+Orden.belongsTo(User);
+User.hasMany(Orden);
+
+Carrito.hasOne(Orden);
+Orden.belongsTo(Carrito);
 
 module.exports = {
   User,
