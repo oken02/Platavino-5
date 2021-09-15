@@ -11,20 +11,17 @@ User.belongsTo(Carrito);
 CartItem.belongsTo(Carrito);
 Carrito.hasMany(CartItem);
 
-
 Vino.hasOne(CartItem);
 CartItem.belongsTo(Vino);
-
-
 
 User.hasMany(Review);
 Review.belongsTo(User);
 
-
 Vino.hasMany(Review);
 Review.belongsTo(Vino);
 
-
+Orden.belongsTo(CartItem);
+CartItem.hasOne(Orden);
 
 module.exports = {
   User,
@@ -32,4 +29,5 @@ module.exports = {
   Vino,
   Orden,
   Review,
+  CartItem,
 };
