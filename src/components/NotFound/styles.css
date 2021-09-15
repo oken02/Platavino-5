@@ -8,7 +8,7 @@ body {
 }
 #notfound {
   position: relative;
-  height: 500px;
+  height: 400px;
   /* color: ; */
 }
 .wine-img {
@@ -48,7 +48,7 @@ body {
 }
 .notfound .notfound-404 h1 {
   font-family: chango, cursive;
-  color: #fff;
+  color: black;
   font-size: 118px;
   margin: 0;
   position: absolute;
@@ -64,7 +64,7 @@ body {
 .notfound h2 {
   font-family: chango, cursive;
   font-size: 68px;
-  color: ghostwhite;
+  color: black;
   font-weight: 400;
   text-transform: uppercase;
   margin: 0;
@@ -74,12 +74,12 @@ body {
   font-family: montserrat, sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: ghostwhite;
+  color: black;
   margin-top: 5px;
 }
 .notfound .a {
   font-family: montserrat, sans-serif;
-  color: #e01818;
+  color: #4a148c;
   font-weight: 400;
   text-decoration: none;
 }
@@ -94,7 +94,7 @@ body {
   }
   .notfound .notfound-404 {
     position: relative;
-    margin-bottom: 15px;
+    margin: 15px auto;;
   }
   .notfound h2 {
     font-size: 42px;
