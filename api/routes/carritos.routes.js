@@ -113,7 +113,7 @@ router.get("/", [validateToken], async (req, res) => {
 
 router.delete("/:vinoId", [validateToken], async (req, res) => {
   const { carritoId, id } = req.payload;
-
+  console.log("delete", req.params.vinoId);
   // const carrito = await Carrito.findByPk(carritoId);
 
   // if (!carrito) {
@@ -122,9 +122,11 @@ router.delete("/:vinoId", [validateToken], async (req, res) => {
 
   // const r = await carrito.removeCartItem(req.params.vinoId);
 
-  CartItem.destroy({where:{
-    id:req.params.vinoId
-  }})
+  CartItem.destroy({
+    where: {
+      id: req.params.vinoId,
+    },
+  });
 
   // console.log("DELETED", r);
   // console.log("DELETED ", r);
@@ -134,9 +136,5 @@ router.delete("/:vinoId", [validateToken], async (req, res) => {
     // r,
   });
 });
-
-
-
-
 
 module.exports = router;

@@ -4,20 +4,27 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const lstoken = localStorage.getItem("token");
 // export const setCarrito = createAction("SET_CARRITO");
 
 export const setCarrito = createAsyncThunk("SET_CARRITO", (wine, thunkAPI) => {
   const { user } = thunkAPI.getState();
 
-  console.log("user", user);
-
   const { carritoId } = user.data;
   if (!user.data.id) throw new Error("You need to be logged in");
   return axios
-    .post(`http://localhost:3001/api/carritos/${carritoId}/${wine.id}`)
+    .post(
+      `http://localhost:3001/api/carritos/${wine.id}`,
+      {},
+      {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        },
+      }
+    )
     .then((res) => {
-      return wine;
+      console.log("data", res.data);
+      return res.data;
     });
 });
 
@@ -28,14 +35,25 @@ export const removeCarrito = createAsyncThunk(
     const { carritoId } = user.data;
     if (!user.data.id) throw new Error("no seleccionaste nada");
     return axios
-      .delete(`http://localhost:3001/api/carritos/${carritoId}/${wine.id}`)
-      .then((res) => wine);
+      .delete(`http://localhost:3001/api/carritos/${wine.id}`, {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        },
+      })
+      .then((res) => res.data);
   }
 );
 export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
-  return axios.get(`http://localhost:3001/api/carritos/${id}`).then((res) => {
-    return res.data;
-  });
+  return axios
+    .get(`http://localhost:3001/api/carritos`, {
+      headers: {
+        Authorization: "Bearer " + lstoken,
+      },
+    })
+    .then((res) => {
+      console.log("este es el res", res.data);
+      return res.data;
+    });
 });
 
 const carritoReducer = createReducer([], {
@@ -43,6 +61,7 @@ const carritoReducer = createReducer([], {
     return [...state, payload];
   },
   [removeCarrito.fulfilled]: (state, { payload }) => {
+    console.log(payload);
     return state.filter((wine) => wine.id !== payload.id);
     // return [...state, payload];
   },

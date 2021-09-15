@@ -19,10 +19,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Results() {
+  //aca abajo debe ir en realidad como estado el resultado de la busqueda de la barra de navegacion
   const products = useSelector((state) => state.products);
+  const categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //este useEffect en realidad tiene que dispatchear la action para traer los vinos que se buscaron o por los filtros aplicados
     dispatch(setProducts());
   }, []);
 

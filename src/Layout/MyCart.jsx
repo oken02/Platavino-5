@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core";
 import { FilterSidebar } from "./FilterSidebar";
 import { Card, CardContent, CardActions, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
@@ -48,25 +49,27 @@ export const MyCart = () => {
   const { Img, Descripcion, Precio, Varietal, Color } = cart;
   const classes = useStyles();
   const history = useHistory();
+
   useEffect(() => {
     dispatch(getCart(user.id));
   }, []);
+
   useEffect(() => {
     let suma = cart.map((wine) => wine.Precio);
-
     setTotal(
       suma.reduce(function (previousValue, currentValue) {
         return Number(previousValue) + Number(currentValue);
       }, 0)
     );
-  });
-  console.log("todoo", cart);
+  }, [evt]);
+
+  console.log("soy el cart", cart);
   return (
     <div className={classes.div}>
       <Grid container spacing={2}>
         {cart.map((card, i) => {
           return (
-            <Grid item style={{ width: "95%" }}>
+            <Grid item key={i} style={{ width: "95%" }}>
               <Paper elevation={1}>
                 <Box p={2}>
                   <Grid container>

@@ -9,6 +9,9 @@ import TextInfoContent from "@mui-treasury/components/content/textInfo";
 import { useBlogTextInfoContentStyles } from "@mui-treasury/styles/textInfoContent/blog";
 import { useOverShadowStyles } from "@mui-treasury/styles/shadow/over";
 import { Box } from "@material-ui/core";
+import { setCarrito } from "../store/addToCarrito";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   root: {
@@ -71,12 +74,13 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 }));
 
 export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
-  
   const { Img, PaisDeOrigen, Descripcion, Bodega } = wine;
   const styles = useStyles();
   const { button: buttonStyles, ...contentStyles } =
     useBlogTextInfoContentStyles();
   const shadowStyles = useOverShadowStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
@@ -100,7 +104,15 @@ export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
           heading={`Bodega : ${Bodega}`}
           body={Descripcion}
         />
-        <Button className={buttonStyles}>Comprar</Button>
+        <Button
+          className={buttonStyles}
+          onClick={() => {
+            dispatch(setCarrito(wine));
+            history.push("/cart");
+          }}
+        >
+          Comprar
+        </Button>
       </CardContent>
     </Card>
   );

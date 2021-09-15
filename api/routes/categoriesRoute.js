@@ -20,7 +20,7 @@ const { Op } = require("sequelize");
 
 router.get("/", (req, res, next) => {
   const fields = req.query;
-
+  console.log(fields);
   if (fields.Precio) {
     let [min, max] = fields.Precio.split("-");
     // console.log("MIN", min, "MAX", max);

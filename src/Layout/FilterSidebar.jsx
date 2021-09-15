@@ -72,27 +72,24 @@ import React, { useEffect, useState } from "react";
 import { Box, Divider } from "@material-ui/core";
 import Menu from "@mui-treasury/components/menu/collapsible";
 import { useGatsbyCollapsibleMenuStyles } from "@mui-treasury/styles/collapsibleMenu/gatsby";
-import { setPrecio } from "../store/CategoriesReducer";
+import { setCategories } from "../store/CategoriesReducer";
 import { useDispatch } from "react-redux";
 
 const FilterSidebar = () => {
-  let initialValue = {
-    Precio: "",
-    Varietal: "",
-    PaisDeOrigen: "",
-    Color: "",
-  };
-  
   const [indPrecio, setIndPrecio] = useState(-1);
   const [indVarietal, setIndVarietal] = useState(-1);
   const [indPais, setIndPais] = useState(-1);
   const [indColor, setIndColor] = useState(-1);
-  const [fields, setFields] = useState(initialValue);
+  const [fields, setFields] = useState({});
   const dispatch = useDispatch();
 
   const handleClick = (key, value) => {
     setFields({ ...fields, [key]: value });
   };
+
+  useEffect(() => {
+    dispatch(setCategories(fields));
+  }, [fields]);
 
   return (
     <Box minWidth={245}>

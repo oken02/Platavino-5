@@ -1,25 +1,25 @@
 import { createAsyncThunk, createReducer } from "@reduxjs/toolkit";
 import axios from "axios";
-// export const getCart = createAction("GET_CART");
 
-export const setPrecio = createAsyncThunk("SET_PRECIO", (precio, thunkAPI) => {
-  //   return axios.get(`http://localhost:3001/api/carritos/${id}`).then((res) => {
-  //     return res.data;
-  //   });
-  return precio;
-});
+export const setCategories = createAsyncThunk(
+  "SET_CATEGORIES",
+  (categories, thunkAPI) => {
+    const { Precio, PaisDeOrigen, Varietal, Color } = categories;
+    return axios
+      .get(
+        `http://localhost:3001/api/categorias?Precio=${Precio}&PaisDeOrigen=${PaisDeOrigen}&Varietal=${Varietal}&Color=${Color}`
+      )
+      .then((res) => res.data);
+  }
+);
 
-let initialValue = {
-  Precio: "",
-  Varietal: "",
-  PaisDeOrigen: "",
-  Color: "",
-};
-
-const CategoriesReducer = createReducer(initialValue, {
-  [setPrecio.fulfilled]: (state, { payload }) => {
-    console.log("esacaaaaaaaa", payload);
-  },
-});
+const CategoriesReducer = createReducer(
+  {},
+  {
+    [setCategories.fulfilled]: (state, { payload }) => {
+      return payload;
+    },
+  }
+);
 
 export default CategoriesReducer;
