@@ -1,5 +1,7 @@
 const express = require("express");
 const User = require("../models/User");
+const Vino = require("../models/Vino");
+
 const Carrito = require("../models/Carrito");
 
 const bcrypt = require("bcrypt");
@@ -71,15 +73,21 @@ router.get("/", [validateToken], async (req, res) => {
 
   console.log("PAYLOAD", req.payload);
 
+  try {
+  } catch (error) {}
+
   const carrito = await Carrito.findByPk(carritoId);
 
   if (!carrito) {
     return res.status(404).json({ ok: false, msg: "ese carrito no existe" });
   }
 
-  const vinosDB = await carrito.getCartItems();
+  const vinosDB = await carrito.getCartItems({
+    include: Vino,
+    attributes: ["id", "cantidad", "carritoId"],
+  });
 
-  res.json({ vinosDB, 0: vinosDB.length });
+  res.json({ vinosDB, length: vinosDB.length });
 });
 
 //
@@ -122,9 +130,11 @@ router.delete("/:vinoId", [validateToken], async (req, res) => {
 
   // const r = await carrito.removeCartItem(req.params.vinoId);
 
-  CartItem.destroy({where:{
-    id:req.params.vinoId
-  }})
+  CartItem.destroy({
+    where: {
+      id: req.params.vinoId,
+    },
+  });
 
   // console.log("DELETED", r);
   // console.log("DELETED ", r);
@@ -134,9 +144,5 @@ router.delete("/:vinoId", [validateToken], async (req, res) => {
     // r,
   });
 });
-
-
-
-
 
 module.exports = router;
