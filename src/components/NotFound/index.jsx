@@ -25,7 +25,7 @@ export const NotFound = () => {
         <p >
           The page you are looking for might have been removed had its name
           changed or is temporarily unavailable.
-          <Link to="/products" className="a">
+          <Link to="/home" className="a">
             GO TO THE WINES
           </Link>
         </p>
