@@ -1,37 +1,82 @@
 import { IconButton } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import { useDispatch, useSelector } from "react-redux";
+import { changeUserRole, deleteUser, setUsers } from "../store/usersReducer";
+import axios from "axios";
 
 export const SimpleTable = () => {
+  const dispatch = useDispatch()
+  const lstoken = localStorage.getItem("token");
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/api/users",)
+      .then((data) => {
+        dispatch(setUsers(data.data.users))
+      })
+      .catch(e => console.log(e))
+  }, []);
+
+  const users = useSelector((state) => {
+    return state.users
+  })
+
+  users.map((user) => {
+    return console.log(user.username)
+  })
+
+  const handleAdminPermisoClick = (id) => {
+    axios.put(`http://localhost:3001/api/auth/promover/${id}`, {}, {
+      headers: {
+        Authorization: "Bearer " + lstoken,
+      }
+    })
+      .then((data) => {
+        dispatch(changeUserRole(data.data))
+      })
+      .catch(e => console.log(e))
+  }
+
+  const handleDeleteUser = (id) => {
+    axios.delete(`http://localhost:3001/api/users/${id}`)
+      .then((data) => {
+        dispatch(deleteUser(data))
+      })
+      .catch(e => console.log('aca', e))
+  }
+
   return (
-    <table class="table table-hover table-borderless">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Email</th>
-          <th scope="col">Acciones</th>
-          <th scope="col">Apellidos</th>
-        </tr>
-      </thead>
-      <tbody>
-        {[1, 2, 3, 4, 5].map((n, idx) => (
+    <div className='simpleTable'>
+      <table className="table table-hover table-borderless">
+        <thead>
           <tr>
-            <th scope="row">{idx + 1}</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-              <IconButton color="primary" aria-label="add an alarm">
-                <EditOutlinedIcon />
-              </IconButton>
-              <IconButton color="primary" aria-label="add an alarm">
-                <DeleteOutlineOutlinedIcon />
-              </IconButton>
-            </td>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Acciones</th>
+            <th scope="col">Rol</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {users.map((n, idx) => (
+            <tr>
+              <th scope="row">{idx + 1}</th>
+              <td>{n.username}</td>
+              <td>{n.email}</td>
+              <td>
+                <IconButton onClick={() => handleAdminPermisoClick(n.id)} color="primary" aria-label="add an alarm">
+                  <EditOutlinedIcon />
+                </IconButton>
+                <IconButton onClick={() => handleDeleteUser(n.id)} color="primary" aria-label="add an alarm">
+                  <DeleteOutlineOutlinedIcon />
+                </IconButton>
+              </td>
+              <td>{n.role}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };

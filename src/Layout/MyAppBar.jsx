@@ -33,6 +33,7 @@ import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMen
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -50,8 +51,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function MyAppBar() {
+export function MyAppBar({ handleClickLogout }) {
   const classes = useStyles();
+  const isLogged = useSelector((state) => {
+    return state.user.isAuthenticated
+  })
+  const username = useSelector((state) => {
+    return state.user.data.username
+  })
+  const userRole = useSelector((state) => {
+    return state.user.data.role
+  })
 
   return (
     <div className={classes.root}>
@@ -69,7 +79,7 @@ export function MyAppBar() {
               color="inherit"
               aria-label="menu"
             > */}
-              <LocalBarIcon className={classes.menuButton} />
+            <LocalBarIcon className={classes.menuButton} />
             {/* </IconButton> */}
           </Box>
 
@@ -85,23 +95,34 @@ export function MyAppBar() {
             <NavItem active as={Link} to="/home">
               Vinos
             </NavItem>
-
             <NavItem as={Link} to="/home">
               Categorias
             </NavItem>
             <NavItem as={Link} to="/cart">
               Carrito
             </NavItem>
-            <NavItem as={Link} to="/perfil">
-              Perfil
-            </NavItem>
           </NavMenu>
-
-          {/* <Spacer /> */}
-          {/* <Form className={classes.input}> */}
+          <Link to='/addProduct'>
+            <Button className={classes.menu} useStyles={useFloatNavigationMenuStyles}>Add wine</Button>
+          </Link>
           <Box>
             <Input variant="filled" placeholder="Find your wine" />
           </Box>
+          {isLogged ? <div className='userButton'>
+            <Link to='/perfil'>
+              <Button>{username}</Button>
+            </Link>
+            <Link to='/perfil'>
+              <Button onClick={handleClickLogout}>Log Out</Button>
+            </Link>
+          </div> : <div className='userButton'>
+            <Link to='/login'>
+              <Button>Sign In</Button>
+            </Link>
+            <Link to='/register'>
+              <Button>Register</Button>
+            </Link>
+          </div>}
           {/* </Form> */}
         </Toolbar>
 

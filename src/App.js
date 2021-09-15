@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar";
 import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
-
+import EditProduct from "./components/EditProduct";
 import Login from "./components/Login";
 
 import Register from "./components/Register";
@@ -39,6 +39,7 @@ import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
 import Results from "./Layout/Results";
+import AddProduct from "./components/AddProducts";
 
 function App() {
   let usernameRegister;
@@ -83,20 +84,21 @@ function App() {
 
   const handleChangeUsernameRegister = (e) => {
     usernameRegister = e.target.value;
-    console.log("se cambio username");
+    console.log(usernameRegister);
   };
   const handleChangePasswordRegister = (e) => {
     passwordRegister = e.target.value;
-    console.log("se cambio pass");
+    console.log(passwordRegister);
   };
 
   const handleChangeEmailRegister = (e) => {
     emailRegister = e.target.value;
-    console.log("se cambio mail");
+    console.log(emailRegister);
   };
 
   const handleSubmitRegisterForm = (e) => {
     e.preventDefault();
+    console.log(emailRegister, usernameRegister, passwordRegister)
     axios
       .post("http://localhost:3001/api/auth/register", {
         email: emailRegister,
@@ -107,7 +109,7 @@ function App() {
         dispatch(setUsers(data.data));
         history.push("/login");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log('aca en el front', e.response));
   };
 
   const handleAdminClick = () => {
@@ -177,19 +179,21 @@ function App() {
 
       <div>
         <PlatavinoBox />
-        <MyAppBar />
+        <MyAppBar handleClickLogout={handleClickLogout} />
 
         <Box mt={4}></Box>
         <Container maxWidth="lg">
           <Switch>
             <Route path="/home" component={MyHome} />
-            <Route path="/prueba" component={Mylogin} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
             <Route path="/cart" component={MyCart} />
+            <Route path="/login" component={Login} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
-
+            <Route path='/register' render={() => <Register handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} />} />
+            <Route path='/editProduct' component={EditProduct} />
+            <Route path='/addProduct' component={AddProduct} />
             <Route path="*" component={NotFound} />
           </Switch>
         </Container>

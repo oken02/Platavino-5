@@ -19,7 +19,7 @@ router.get("/", /*[validateToken, justAdmin]*/ async (req, res) => {
     const users = await User.findAll({
       // attributes: ["username", "email", "id", "role"],
     });
-    res.json({ ok: true, users });
+    res.json(users.data.users);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -30,7 +30,7 @@ router.delete("/:id", [validateToken, justAdmin], async (req, res) => {
   const { id } = req.params;
 
   try {
-    if (id != req.payload.id) {
+    if (id !== req.payload.id) {
       const resDB = await User.destroy({ where: { id }, limit: 1 });
       console.log("DELETE RES", resDB);
     }
@@ -38,10 +38,11 @@ router.delete("/:id", [validateToken, justAdmin], async (req, res) => {
     // const resDB = await userToDelete.destroy();
     res.json({ msg: "usuario eliminado" });
   } catch (error) {
-    console.log(error);
+    console.log('aca en back', error);
     res.sendStatus(500);
   }
 });
+
 
 router.put("/:id", [validateToken], async (req, res) => {
   const { id } = req.params;
@@ -50,7 +51,7 @@ router.put("/:id", [validateToken], async (req, res) => {
 
   const { id: tokenID, role } = req.payload;
 
-  if (tokenID != id) {
+  if (tokenID !== id) {
     return res
       .status(401)
       .json({ msg: "no puedes editar el perfil de otro" });

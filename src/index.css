@@ -14,90 +14,21 @@ code {
     monospace;
 }
 
-.navBar {
-  height: 10vh;
-}
-
-.footer {
-  /* margin-top: -30px; */
-  /* height: 600px; */
-  background-color: white !important;
-  border-top: 1px solid rgba(0, 0, 0, 0.164);
+.userButton {
   display: flex;
-  align-items: flex-end;
-  /* border: solid 2px red; */
+  margin-left: 15px;
 }
 
-.toolbarFooter {
-  display: flex;
-  background-color: white;
-  color: rgba(0, 0, 0, 0.5);
-
+.divider {
+  border: solid 2px red;
+  margin-top: 100px;
 }
 
-.divButton {
-  /* border: solid red 2px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 50px;
-
+.simpleTable {
+  display: flex !important;
+  margin-left: -125px !important;
 }
 
-.divButton button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 50px;
-  color: white;
-}
-
-.logoPhrase {
-  width: 100%;
-}
-
-.logoContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -33px !important;
-  background-color: transparent !important;
-  /* z-index: -1; */
-  /* border: solid red 2px; */
-  height: 90vh !important;
-  box-shadow: none !important;
-}
-
-.hola {
-  /* border: solid red 2px; */
-  background-color: transparent !important;
-  box-shadow: none !important;
-  height: 300px !important;
-}
-/* 
-.hola img:first{
-  border: solid red 2px; 
-  height: 90vh;
-} */
-
-.chau {
-  /* border:  solid red 2px; */
-  height: 90vh;
-  margin-top: -33px !important;
-}
-
-.chau img {
-  /* height: 100%; */
-  margin-top: 155px;
-}
-
-.reqInfoContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.reqInfoContainer .input {
-  /* border: 2px solid red; */
-  width: 48%;
+.simple {
+  margin-left: -125px !important;
 }

@@ -7,8 +7,8 @@ const vinosRouter = require("./vinosRoute")
 const categoriesRouter = require("./categoriesRoute")
 
 
-router.use("/vinos",vinosRouter )
-router.use("/categorias",categoriesRouter)
+router.use("/vinos", vinosRouter)
+router.use("/categorias", categoriesRouter)
 
 
 
@@ -17,6 +17,23 @@ router.use("/categorias",categoriesRouter)
 const authRouter = require("./auth.routes");
 const usersRouter = require("./users.routes");
 const carritosRouter = require("./carritos.routes");
+const { User } = require("../models");
+
+router.put('/addAdmin/:id', (req, res, next) => {
+    User.update(
+        { role: 'admin' },
+        {
+            where: {
+                id: req.params.id
+            }
+        }
+    )
+        .then((data) => {
+            res.send(data)
+        })
+        .catch(e => console.log(e))
+})
+
 
 
 
