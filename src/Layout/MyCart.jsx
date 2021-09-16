@@ -67,8 +67,6 @@ export const MyCart = () => {
       <Grid container spacing={2}>
         {cart.length
           ? cart.map((card, i) => {
-              console.log("este es el card de map", card);
-
               return (
                 <Grid item key={i} style={{ width: "95%" }}>
                   <Paper elevation={1}>
