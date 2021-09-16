@@ -19,14 +19,14 @@ const router = express.Router();
 
 */
 
-router.post("/:vinoId", [validateToken], async (req, res) => {
+router.post("/:vinoId", [validateToken], async (req, res, next) => {
   const { id: userId } = req.payload;
   const { vinoId } = req.params;
   const { cantidad } = req.body;
 
   try {
     const user = await User.findByPk(userId);
-    console.log("RE BODY", user.carritoId, id, vinoId);
+    // console.log("RE BODY", user.carritoId, id, vinoId);
 
     const [cartItem, created] = await CartItem.findOrCreate({
       where: { carritoId: user.carritoId, vinoId },
@@ -49,6 +49,7 @@ router.get("/", [validateToken], async (req, res) => {
 
   try {
     const user = await User.findByPk(userId);
+
     const carrito = await Carrito.findByPk(user.carritoId);
 
     const vinosDB = await carrito.getCartItems({
