@@ -38,8 +38,6 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
     }
     promedio /= reviews.length.toFixed(1);
 
-    console.log("revvvv", reviews.length);
-
     const vino = await Vino.update(
       { stars: promedio, valoraciones: reviews.length },
       { where: { id: vinoId }, returning: true }

@@ -26,37 +26,8 @@ router.put("/promover/:id", [validateToken, justAdmin], async (req, res) => {
     const resDB = await user.save();
     res.json(resDB);
   }
-  // console.log("RES  DB", resDB);
   return res.sendStatus(200);
 });
-
-
-
-// router.post("/admin", async (req, res) => {
-//   const { email, username, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ where: { email: email } });
-
-//     if (user) {
-//       return res
-//         .status(400)
-//         .json({ ok: false, msg: "el email ya se registró con otro usuario" });
-//     }
-
-//     const admin = await User.create({
-//       ...req.body,
-//       role: "admin",
-//       password: await bcrypt.hash(req.body.password, 12),
-//     });
-//     res.send({ ok: "true", admin });
-//   } catch (error) {
-//     console.log(error);
-//     res.sendStatus(500);
-//   }
-// });
-
-
 
 
 router.post("/validate", validateToken, (req, res) => {

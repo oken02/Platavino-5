@@ -14,9 +14,10 @@ const authRouter = require("./auth.routes");
 const usersRouter = require("./users.routes");
 const carritosRouter = require("./carritos.routes");
 
+
+
 router.use("/vinos", vinosRouter);
 router.use("/categorias", categoriesRouter);
-
 router.use("/auth", authRouter);
 router.use("/users", usersRouter);
 router.use("/carritos", carritosRouter);
