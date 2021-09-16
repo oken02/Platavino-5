@@ -7,6 +7,7 @@ const Carrito = db.define('carrito', {
     //     type: S.INTEGER,
     // },
     
+    
 });
 
 module.exports = Carrito;

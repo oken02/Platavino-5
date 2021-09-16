@@ -14,7 +14,36 @@ code {
     monospace;
 }
 
-.userButton {
+
+.navBar {
+  height: 10vh;
+}
+
+.footer {
+  /* margin-top: -30px; */
+  /* height: 600px; */
+  background-color: white !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.164);
+  display: flex;
+  align-items: flex-end;
+  /* border: solid 2px red; */
+}
+
+.toolbarFooter {
+  display: flex;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.divButton {
+  /* border: solid red 2px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.divButton button {
   display: flex;
   margin-left: 15px;
 }
@@ -48,6 +77,28 @@ code {
 
 }
 
-.contenedor1 {
-  /* border: solid red 2px; */
+
+
+.chau img {
+  /* height: 100%; */
+  margin-top: 155px;
+}
+
+.reqInfoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.reqInfoContainer .input {
+  /* border: 2px solid red; */
+  width: 48%;
+}
+.review-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* border: 2px red solid; */
+  margin: 10px;
+  height: 300px;
+  width: 200px;
 }

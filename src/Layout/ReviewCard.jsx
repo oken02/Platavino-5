@@ -46,7 +46,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const ReviewCard = ({ thumbnail, title, description }) => {
+export const ReviewCard = ({ thumbnail, title, description, puntaje }) => {
   const styles = useStyles();
   return (
     <div className={styles.root}>
@@ -56,7 +56,7 @@ export const ReviewCard = ({ thumbnail, title, description }) => {
           <Info position={"middle"} useStyles={useApexInfoStyles}>
             <InfoTitle>{title}</InfoTitle>
             {/* <InfoSubtitle>{subtitle}</InfoSubtitle> */}
-            <Rating name="size-small" defaultValue={2} size="small" />
+            <Rating name="size-small" defaultValue={puntaje} size="small" />
           </Info>
         </Row>
         <Box

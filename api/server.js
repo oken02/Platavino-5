@@ -4,7 +4,7 @@ const models = require("./models/index");
 const cors = require("cors");
 const db = require("./db");
 // const db = require("./config/db");
-const { Carrito, Orden, User, Vino } = require("./models/index");
+// const { Carrito, Orden, User, Vino, Review } = require("./models");
 
 const app = express();
 // logging middleware
@@ -21,8 +21,10 @@ app.use("/api", (req, res) => {
 });
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
+
 app.use((err, req, res, next) => {
-  res.status(500).send(err);
+  console.log(err);
+  res.status(500).send({ ok: false, msg: "server error", err: err.message });
 });
 
 db.sync({ force: false })

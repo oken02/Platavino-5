@@ -1,6 +1,6 @@
-
 const express = require("express");
 const router = express.Router();
+
 
 const vinosRouter = require("./vinosRoute")
 
@@ -11,6 +11,10 @@ router.use("/vinos", vinosRouter)
 router.use("/categorias", categoriesRouter)
 
 
+const categoriesRouter = require("./categoriesRoute");
+
+const reviewsRouter = require("./review.routes");
+const ordensRouter = require("./ordens.routes");
 
 //LLEGAREMOS A LA RUTA "VINOS" A TRAVÉS DE LA RUTA "http://localhost:3001/api/..."
 //LLEGAREMOS A LA RUTA "CATEGORIAS" A TRAVÉS DE LA RUTA "http://localhost:3001/api/..."
@@ -37,11 +41,12 @@ router.put('/addAdmin/:id', (req, res, next) => {
 
 
 
+router.use("/vinos", vinosRouter);
+router.use("/categorias", categoriesRouter);
 router.use("/auth", authRouter);
 router.use("/users", usersRouter);
 router.use("/carritos", carritosRouter);
-
-
-
+router.use("/reviews", reviewsRouter);
+router.use("/ordens", ordensRouter);
 
 module.exports = router;
