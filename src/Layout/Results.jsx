@@ -5,12 +5,13 @@ import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../store/ProductsReducer";
+import { setCategories } from "../store/CategoriesReducer";
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
   },
   space: {
-    width: "45%",
+    maxWidth: "45%",
     marginRight: "15px",
   },
   paper: {
@@ -20,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Results() {
   //aca abajo debe ir en realidad como estado el resultado de la busqueda de la barra de navegacion
-  const products = useSelector((state) => state.products);
+
   const categories = useSelector((state) => state.categories);
   const dispatch = useDispatch();
 
   useEffect(() => {
     //este useEffect en realidad tiene que dispatchear la action para traer los vinos que se buscaron o por los filtros aplicados
-    dispatch(setProducts());
-  }, []);
+    // dispatch(setProducts());
+  }, [categories]);
 
   const classes = useStyles();
   return (
@@ -37,7 +38,8 @@ export default function Results() {
           <FilterSidebar />
         </Paper>
       </Grid>
-      <AllVinos products={products} />
+
+      <AllVinos products={categories} />
     </div>
   );
 }

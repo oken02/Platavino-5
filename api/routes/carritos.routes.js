@@ -59,9 +59,10 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
       defaults: {
         cantidad: cantidad || 1,
       },
+      include: Vino,
     });
 
-    return res.send([cartItem, created]);
+    return res.send(CartItem);
     // res.send("ok")
   } catch (error) {
     console.log(error);

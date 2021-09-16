@@ -55,6 +55,9 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
   const shadowStyles = useBouncyShadowStyles();
   const history = useHistory();
 
+
+
+  //en algun lado hacer que la imagen se adapte al tamaño sin cortarsee
   return (
     <Card
       onClick={() => {
@@ -65,7 +68,6 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
     >
       <CardMedia classes={mediaStyles} image={Img} />
       <CardContent className={styles.content}>
-        {/* <Typography component="legend">Vino Nose</Typography> */}
         <Heading as="h5" size="sm">
           {Varietal}
         </Heading>
@@ -73,17 +75,6 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
           <Rating name="read-only" value={3} readOnly size="small" />
         </Box>
         <BoxCh>{`$ ${Precio}`}</BoxCh>
-        {/* <TextInfoContent
-          classes={textCardContentStyles}
-          overline={'March 20, 2019'}
-          heading={'What happened in Thailand?'}
-          body={
-            'Kayaks crowd Three Sisters Springs, where people and manatees maintain controversial coexistence.'
-          }
-        />
-        <Button color={'primary'} fullWidth className={styles.cta}>
-          Find Out More <ChevronRightRounded />
-        </Button> */}
       </CardContent>
 
       <Box
@@ -94,15 +85,9 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
         right={0}
         flexDirection="column"
       >
-        {/* <IconButton aria-label="addToCart">
-          <AddShoppingCartIcon />
-        </IconButton> */}
         <IconButton aria-label="add to favorites">
           <FavoriteIcon fontSize="small" />
         </IconButton>
-        {/* <IconButton aria-label="share">
-          <ShareIcon fontSize="small" />
-        </IconButton> */}
       </Box>
     </Card>
   );

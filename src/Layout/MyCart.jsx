@@ -44,129 +44,127 @@ export const MyCart = () => {
   const [total, setTotal] = useState(0);
   const [evt, setEvt] = useState(false);
   const user = useSelector((state) => state.user.data);
-  const cart = useSelector((state) => state.carrito);
   const dispatch = useDispatch();
-  const { Img, Descripcion, Precio, Varietal, Color } = cart;
   const classes = useStyles();
   const history = useHistory();
+  const cart = useSelector((state) => state.carrito);
 
   useEffect(() => {
-    dispatch(getCart(user.id));
+    dispatch(getCart());
   }, []);
 
   useEffect(() => {
-    let suma = cart.map((wine) => wine.Precio);
+    let suma = cart.map((wine) => wine.vino.Precio);
     setTotal(
       suma.reduce(function (previousValue, currentValue) {
         return Number(previousValue) + Number(currentValue);
       }, 0)
     );
-  }, [evt]);
+  }, [cart]);
 
-  console.log("soy el cart", cart);
   return (
     <div className={classes.div}>
       <Grid container spacing={2}>
-        {cart.map((card, i) => {
-          return (
-            <Grid item key={i} style={{ width: "95%" }}>
-              <Paper elevation={1}>
-                <Box p={2}>
-                  <Grid container>
-                    <Grid item md={4}>
-                      <img
-                        style={{ maxWidth: "100px", height: "100px" }}
-                        src={card.Img}
-                        alt=""
-                      />
-                    </Grid>
-                    <Grid
-                      item
-                      container
-                      direction="column"
-                      md={8}
-                      justifyContent="space-between"
-                      alignContent="space-between"
-                    >
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        width="100%"
-                      >
-                        <Text
-                          display="flex"
-                          alignItems="center"
-                          fontWeight="normal"
-                          fontSize="xl"
+        {cart.length
+          ? cart.map((card, i) => {
+              console.log("este es el card de map", card);
+
+              return (
+                <Grid item key={i} style={{ width: "95%" }}>
+                  <Paper elevation={1}>
+                    <Box p={2}>
+                      <Grid container>
+                        <Grid item md={4}>
+                          <img
+                            style={{ maxWidth: "100px", height: "100px" }}
+                            src={card.vino.Img}
+                            alt=""
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          container
+                          direction="column"
+                          md={8}
+                          justifyContent="space-between"
+                          alignContent="space-between"
                         >
-                          {card.Varietal}
-                        </Text>
-                        <IconButton
-                          aria-label="Add to friends"
-                          onClick={() => {
-                            setEvt(!evt);
-                            dispatch(removeCarrito(card));
-                          }}
-                          icon={<CloseIcon />}
-                        />
-                      </Box>
-                      <Box
-                        color="gray"
-                        fontWeight="semibold"
-                        letterSpacing="wide"
-                        fontSize="xs"
-                        textTransform="uppercase"
-                        // ml="2"
-                        flex={1}
-                      >
-                        {card.Color}
-                      </Box>
-                      {/* <Box
-                       // mt="1"
-                       fontWeight="semibold"
-                       as="h4"
-                       lineHeight="tight"
-                       isTruncated
-                     >
-                       vino termometro
-                     </Box> */}
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        width="100%"
-                      >
-                        <BoxCk display="flex" alignItems="center">
-                          {`$ ${card.Precio}.00`}
-                        </BoxCk>
-                        <ButtonGroup variant="outline" spacing="6" isAttached>
-                          <IconButton
-                            aria-label="Add to friends"
-                            icon={<MinusIcon />}
-                          />
-                          <BoxCk
-                            // bg="purple"
-                            borderWidth="1px"
-                            borderRadius="lg"
-                            px={4}
-                            d="flex"
-                            alignItems="center"
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            width="100%"
                           >
-                            2
-                          </BoxCk>
-                          {/* <Button>Cancel</Button> */}
-                          <IconButton
-                            aria-label="Add to friends"
-                            icon={<AddIcon />}
-                          />
-                        </ButtonGroup>
-                      </Box>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Paper>
-            </Grid>
-          );
-        })}
+                            <Text
+                              display="flex"
+                              alignItems="center"
+                              fontWeight="normal"
+                              fontSize="xl"
+                            >
+                              {card.vino.Varietal}
+                            </Text>
+                            <IconButton
+                              aria-label="Add to friends"
+                              onClick={() => {
+                                setEvt(!evt);
+                                dispatch(removeCarrito(card));
+                              }}
+                              icon={<CloseIcon />}
+                            />
+                          </Box>
+                          <Box
+                            color="gray"
+                            fontWeight="semibold"
+                            letterSpacing="wide"
+                            fontSize="xs"
+                            textTransform="uppercase"
+                            // ml="2"
+                            flex={1}
+                          >
+                            {card.vino.Color}
+                          </Box>
+
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            width="100%"
+                          >
+                            <BoxCk display="flex" alignItems="center">
+                              {`$ ${card.vino.Precio}.00`}
+                            </BoxCk>
+                            <ButtonGroup
+                              variant="outline"
+                              spacing="6"
+                              isAttached
+                            >
+                              <IconButton
+                                aria-label="Add to friends"
+                                icon={<MinusIcon />}
+                              />
+                              <BoxCk
+                                // bg="purple"
+                                borderWidth="1px"
+                                borderRadius="lg"
+                                px={4}
+                                d="flex"
+                                alignItems="center"
+                              >
+                                {card.cantidad}
+                              </BoxCk>
+                              {/* <Button>Cancel</Button> */}
+                              <IconButton
+                                aria-label="Add to friends"
+                                icon={<AddIcon />}
+                              />
+                            </ButtonGroup>
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </Paper>
+                </Grid>
+              );
+            })
+          : ""}
       </Grid>
 
       <Card className={(classes.root, classes.column)}>

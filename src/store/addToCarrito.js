@@ -40,9 +40,10 @@ export const removeCarrito = createAsyncThunk(
           Authorization: "Bearer " + lstoken,
         },
       })
-      .then((res) => res.data);
+      .then((res) => wine.id);
   }
 );
+
 export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
   return axios
     .get(`http://localhost:3001/api/carritos`, {
@@ -51,7 +52,6 @@ export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
       },
     })
     .then((res) => {
-      console.log("este es el res", res.data);
       return res.data;
     });
 });
@@ -61,11 +61,10 @@ const carritoReducer = createReducer([], {
     return [...state, payload];
   },
   [removeCarrito.fulfilled]: (state, { payload }) => {
-    console.log(payload);
-    return state.filter((wine) => wine.id !== payload.id);
-    // return [...state, payload];
+    return state.filter((wine) => wine.id !== payload);
   },
   [getCart.fulfilled]: (state, { payload }) => {
+    console.log("soy apyload", payload);
     return payload.vinosDB;
   },
 });
