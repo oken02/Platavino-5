@@ -189,6 +189,19 @@ function App() {
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
+            <Route path="/login" component={Login} />
+            <Route
+              path="/register"
+              render={() => (
+                <Register
+                  handleAdminClick={handleAdminClick}
+                  handleChangeEmailRegister={handleChangeEmailRegister}
+                  handleChangePasswordRegister={handleChangePasswordRegister}
+                  handleChangeUsernameRegister={handleChangeUsernameRegister}
+                  handleSubmitRegisterForm={handleSubmitRegisterForm}
+                />
+              )}
+            />
 
             <Route path="*" component={NotFound} />
           </Switch>
