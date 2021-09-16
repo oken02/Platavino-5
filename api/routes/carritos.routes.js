@@ -19,28 +19,52 @@ const router = express.Router();
 
 */
 
-router.post("/:vinoId", [validateToken], async (req, res) => {
+// router.post("/:vinoId", [validateToken], async (req, res) => {
+//   const { id: userId } = req.payload;
+//   const { vinoId } = req.params;
+//   const { cantidad } = req.body;
+
+//   try {
+//     const user = await User.findByPk(userId);
+
+//     const cartItem = await CartItem.findOrCreate({
+//       where: { carritoId: user.carritoId, vinoId },
+//       defaults: {
+//         cantidad: cantidad || 1,
+//       },
+//       include: Vino,
+//     });
+//     console.log(cartItem)
+//     return res.json(cartItem);
+//     // res.send("ok")
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
+
+router.post('/:vinoId', [validateToken], (req, res) => {
   const { id: userId } = req.payload;
   const { vinoId } = req.params;
   const { cantidad } = req.body;
 
-  try {
-    const user = await User.findByPk(userId);
+  User.findByPk(userId)
+    .then((data) => {
+      CartItem.findOrCreate({
+        where: {
+          carritoId: data,
+          vinoId: vinoId
+        },
+        include: Vino,
+      })
+        .then((data) => {
+          res.send(data)
+        })
+        .catch(e => console.log('FINDORCREATE', e))
+    })
+    .catch(e => console.log('FINDBYPK', e))
+})
 
-    const [cartItem, created] = await CartItem.findOrCreate({
-      where: { carritoId: user.carritoId, vinoId },
-      defaults: {
-        cantidad: cantidad || 1,
-      },
-      include: Vino,
-    });
 
-    return res.send(CartItem);
-    // res.send("ok")
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 router.get("/", [validateToken], async (req, res) => {
   const { id: userId } = req.payload;
@@ -55,7 +79,7 @@ router.get("/", [validateToken], async (req, res) => {
       include: Vino,
       // attributes: ["id", "cantidad", "carritoId"],
     });
-    res.json({ vinosDB, length: vinosDB.length });
+    res.json(vinosDB);
   } catch (error) {
     console.log(error);
   }

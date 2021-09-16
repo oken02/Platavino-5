@@ -28,7 +28,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Rating } from "@material-ui/lab";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { setCarrito } from "../store/addToCarrito";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
 
@@ -151,7 +151,7 @@ export function SingleWine() {
   }, [reviews]);
 
   console.log(review);
-  
+
   return (
     //     /*
     <div>

@@ -56,8 +56,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export function MyAppBar({ handleClickLogout }) {
   const classes = useStyles();
+  const lstoken = localStorage.getItem('token')
   const isLogged = useSelector((state) => {
     return state.user.isAuthenticated
   })
@@ -70,7 +73,11 @@ export function MyAppBar({ handleClickLogout }) {
     return state.user.data.role
   })
   const handleClickUsersPanel = () => {
-    axios.get("http://localhost:3001/api/users",)
+    axios.get("http://localhost:3001/api/users", {
+      headers: {
+        Authorization: `Bearer ${lstoken}`
+      }
+    })
       .then((data) => {
         dispatch(setUsers(data.data))
         history.push('/admin/usuarios')

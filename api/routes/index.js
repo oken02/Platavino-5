@@ -3,15 +3,13 @@ const router = express.Router();
 
 
 const vinosRouter = require("./vinosRoute")
-
-const categoriesRouter = require("./categoriesRoute")
+const categoriesRouter = require("./categoriesRoute");
 
 
 router.use("/vinos", vinosRouter)
 router.use("/categorias", categoriesRouter)
 
 
-const categoriesRouter = require("./categoriesRoute");
 
 const reviewsRouter = require("./review.routes");
 const ordensRouter = require("./ordens.routes");

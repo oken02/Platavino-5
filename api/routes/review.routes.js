@@ -1,5 +1,4 @@
 const express = require("express");
-const { User } = require("../models");
 const Review = require("../models/Review");
 const Vino = require("../models/Vino");
 const User = require("../models/User");
@@ -31,7 +30,7 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
   const vinoId = req.params.vinoId;
   try {
 
-   
+
 
     const review = await Review.create({ ...req.body, vinoId, userId });
 
