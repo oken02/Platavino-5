@@ -21,9 +21,10 @@ app.use("/api", (req, res) => {
 });
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
+
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).send(err);
+  res.status(500).send({ ok: false, msg: "server error", err: err.message });
 });
 
 db.sync({ force: false })

@@ -21,47 +21,14 @@ router.put("/promover/:id", [validateToken, justAdmin], async (req, res) => {
   const { id } = req.params;
   const user = await User.findByPk(id);
 
-  console.log("USER", user);
-  if (!user) {
-    res.sendStatus(404);
+  if (user.role !== "admin") {
+    user.role = "admin";
+    const resDB = await user.save();
+    res.json(resDB);
   }
-
-  user.role = "admin";
-  const resDB = await user.save();
-  console.log("RES  DB", resDB);
-
   return res.sendStatus(200);
 });
 
-router.post("/admin", async (req, res) => {
-  const { email, username, password } = req.body;
-
-  if (!email || !username || !password) {
-    return res.status(400).json({
-      ok: false,
-      msg: "debes enviar todos los campos para crear un usuario",
-    });
-  }
-  try {
-    const user = await User.findOne({ where: { email: email } });
-
-    if (user) {
-      return res
-        .status(400)
-        .json({ ok: false, msg: "el email ya se registró con otro usuario" });
-    }
-
-    const admin = await User.create({
-      ...req.body,
-      role: "admin",
-      password: await bcrypt.hash(req.body.password, 12),
-    });
-    res.send({ ok: "true", admin });
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-});
 
 router.post("/validate", validateToken, (req, res) => {
   const { id: userId } = req.payload;
@@ -127,6 +94,8 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ ok: false, msg: "server error" });
   }
 });
+
+
 
 router.post("/register", async (req, res) => {
   const { email, username, password } = req.body;
