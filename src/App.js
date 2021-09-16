@@ -40,6 +40,8 @@ import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
 import Results from "./Layout/Results";
 import AddProduct from "./components/AddProducts";
+import { SimpleTable } from "./Layout/SimpleTable";
+import { ListUsers } from "./Layout/ListUsers";
 
 function App() {
   let usernameRegister;
@@ -187,6 +189,7 @@ function App() {
             <Route path="/home" component={MyHome} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
+            <Route path="/perfil/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} />
             <Route path="/cart" component={MyCart} />
             <Route path="/login" component={Login} />
             <Route path="/vino/:id" component={SingleWine} />

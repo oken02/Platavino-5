@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 // import MenuIcon from "@material-ui/icons/Menu";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { MyMenu } from "./MyMenu";
 import LocalBarIcon from "@material-ui/icons/LocalBar";
@@ -34,6 +35,9 @@ import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMen
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUsers } from "../store/usersReducer";
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -56,12 +60,22 @@ export function MyAppBar({ handleClickLogout }) {
   const isLogged = useSelector((state) => {
     return state.user.isAuthenticated
   })
+  const dispatch = useDispatch()
+  const history = useHistory()
   const username = useSelector((state) => {
     return state.user.data.username
   })
   const userRole = useSelector((state) => {
     return state.user.data.role
   })
+  const handleClickUsersPanel = () => {
+    axios.get("http://localhost:3001/api/users",)
+      .then((data) => {
+        dispatch(setUsers(data.data))
+        history.push('/admin/usuarios')
+      })
+      .catch(e => console.log(e))
+  }
 
   return (
     <div className={classes.root}>
@@ -101,6 +115,10 @@ export function MyAppBar({ handleClickLogout }) {
             <NavItem as={Link} to="/cart">
               Carrito
             </NavItem>
+            {userRole === 'admin' ?
+              <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
+              : null}
+
           </NavMenu>
           <Link to='/addProduct'>
             <Button className={classes.menu} useStyles={useFloatNavigationMenuStyles}>Add wine</Button>

@@ -17,6 +17,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Heading } from "@chakra-ui/layout";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(({ palette }) => ({
   card: {
@@ -80,6 +81,9 @@ export const MyProfileInfo = React.memo(function ProfileCard() {
     borderColor: "rgba(0, 0, 0, 0.08)",
     height: "50%",
   });
+  const username = useSelector((state) => {
+    return state.user.data.username
+  })
   return (
     <>
       <Heading mb={4} as="h3" size="lg">
@@ -88,8 +92,8 @@ export const MyProfileInfo = React.memo(function ProfileCard() {
       <Card className={cx(styles.card)}>
         <CardContent>
           <Avatar className={styles.avatar} src={"https://i.pravatar.cc/300"} />
-          <h3 className={styles.heading}>Alan Podemski</h3>
-          <span className={styles.subheader}>Poland</span>
+          <h3 className={styles.heading}>{username}</h3>
+          <span className={styles.subheader}>Venezuela</span>
         </CardContent>
         <Divider light />
         <Box display={"flex"}>
@@ -103,12 +107,12 @@ export const MyProfileInfo = React.memo(function ProfileCard() {
           </Box>
 
           <Box p={2} flex={"auto"} className={borderedGridStyles.item}>
-            <p className={styles.statLabel}>Following</p>
-            <p className={styles.statValue}>12</p>
+            <p className={styles.statLabel}>Favourite wines</p>
+            <p className={styles.statValue}>6</p>
           </Box>
           <Box p={2} flex={"auto"} className={borderedGridStyles.item}>
-            <p className={styles.statLabel}>Following</p>
-            <p className={styles.statValue}>12</p>
+            <p className={styles.statLabel}>Friends</p>
+            <p className={styles.statValue}>68</p>
           </Box>
         </Box>
       </Card>

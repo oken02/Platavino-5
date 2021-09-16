@@ -18,12 +18,11 @@ const usersReducer = createReducer([], {
     const index = state.findIndex((user, i) => {
       return user.id === payload.id
     })
-    console.log(payload, state.toJSON())
+    console.log(payload, 'STATE =>', state)
     state[index] = payload
-    return state
   },
   [deleteUser]: (state, { payload: users }) => {
-    return state.filter((user) => user.id !== users.id);
+    return state.filter((user) => user.id !== users);
   }
 });
 

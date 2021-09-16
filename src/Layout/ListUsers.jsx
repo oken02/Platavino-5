@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 
 export const ListUsers = () => {
   return (
-    <div>
+    <div classname='contenedor1'>
       <div className='simple'>
         <Box mb={2} display="flex" justifyContent="space-between">
           <Typography variant="h5">Users</Typography>

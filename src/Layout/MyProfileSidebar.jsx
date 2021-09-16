@@ -61,14 +61,6 @@ export const MyProfileSidebar = () => {
         </Link>
       ),
     },
-    {
-      key: "administratorPanel",
-      label: (
-        <Link className={classes.link} to='admin/usuarios'>
-          <b> Panel de administrador</b>
-        </Link>
-      ),
-    },
   ];
 
   return (

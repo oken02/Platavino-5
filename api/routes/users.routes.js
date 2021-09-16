@@ -19,7 +19,7 @@ router.get("/", /*[validateToken, justAdmin]*/ async (req, res) => {
     const users = await User.findAll({
       // attributes: ["username", "email", "id", "role"],
     });
-    res.json(users.data.users);
+    res.json(users);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

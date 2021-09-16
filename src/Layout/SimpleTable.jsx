@@ -10,14 +10,6 @@ export const SimpleTable = () => {
   const dispatch = useDispatch()
   const lstoken = localStorage.getItem("token");
 
-  useEffect(() => {
-    axios.get("http://localhost:3001/api/users",)
-      .then((data) => {
-        dispatch(setUsers(data.data.users))
-      })
-      .catch(e => console.log(e))
-  }, []);
-
   const users = useSelector((state) => {
     return state.users
   })
@@ -39,11 +31,16 @@ export const SimpleTable = () => {
   }
 
   const handleDeleteUser = (id) => {
-    axios.delete(`http://localhost:3001/api/users/${id}`)
+    const lstoken = localStorage.getItem("token");
+    axios.delete(`http://localhost:3001/api/users/${id}`, {
+      headers: {
+        Authorization: "Bearer " + lstoken,
+      }
+    })
       .then((data) => {
-        dispatch(deleteUser(data))
+        dispatch(deleteUser(id))
       })
-      .catch(e => console.log('aca', e))
+      .catch(e => console.log('aca', e.response))
   }
 
   return (
