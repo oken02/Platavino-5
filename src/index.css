@@ -32,7 +32,6 @@ code {
   display: flex;
   background-color: white;
   color: rgba(0, 0, 0, 0.5);
-
 }
 
 .divButton {
@@ -41,7 +40,6 @@ code {
   justify-content: center;
   align-items: center;
   margin-left: 50px;
-
 }
 
 .divButton button {
@@ -101,3 +99,15 @@ code {
   /* border: 2px solid red; */
   width: 48%;
 }
+.review-container {
+  display: flex;
+  flex-wrap: wrap;
+  /* border: 2px red solid; */
+  margin: 10px;
+  height: 300px;
+  width: 200px;
+}
+
+/* .bruno {
+  /* border: 2px red solid; 
+} */
