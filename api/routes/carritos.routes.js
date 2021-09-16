@@ -63,15 +63,6 @@ router.get("/", [validateToken], async (req, res) => {
 });
 
 router.delete("/:cartItemId", [validateToken], async (req, res) => {
-  const { id } = req.payload;
-
-
-router.delete("/:vinoId", [validateToken], async (req, res) => {
-  const { carritoId, id } = req.payload;
-  console.log("delete", req.params.vinoId);
- 
-
-
   await CartItem.destroy({
     where: {
       id: req.params.cartItemId,
@@ -81,7 +72,6 @@ router.delete("/:vinoId", [validateToken], async (req, res) => {
   return res.json({
     ok: true,
     msg: "se eliminó el vino",
-    // r,
   });
 });
 
