@@ -33,9 +33,10 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
       defaults: {
         cantidad: cantidad || 1,
       },
+      include: Vino,
     });
 
-    return res.send([cartItem, created]);
+    return res.send(CartItem);
     // res.send("ok")
   } catch (error) {
     next();
@@ -63,6 +64,13 @@ router.get("/", [validateToken], async (req, res) => {
 
 router.delete("/:cartItemId", [validateToken], async (req, res) => {
   const { id } = req.payload;
+
+
+router.delete("/:vinoId", [validateToken], async (req, res) => {
+  const { carritoId, id } = req.payload;
+  console.log("delete", req.params.vinoId);
+ 
+
 
   await CartItem.destroy({
     where: {
