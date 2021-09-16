@@ -34,8 +34,9 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
       },
       include: Vino,
     });
-
-    return res.send(CartItem);
+    console.log("CART", cartItem.toJSON());
+    return res.json(await CartItem.findByPk(cartItem.id, { include: Vino }));
+    // return res.send(CartItem);
     // res.send("ok")
   } catch (error) {
     console.log(error);

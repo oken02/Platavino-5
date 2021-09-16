@@ -23,7 +23,7 @@ export const setCarrito = createAsyncThunk("SET_CARRITO", (wine, thunkAPI) => {
       }
     )
     .then((res) => {
-      console.log("data", res.data);
+      console.log("RESPUESTAAA RES", res);
       return res.data;
     });
 });
@@ -58,6 +58,7 @@ export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
 
 const carritoReducer = createReducer([], {
   [setCarrito.fulfilled]: (state, { payload }) => {
+    console.log("PAYLOADDDDDD", payload);
     return [...state, payload];
   },
   [removeCarrito.fulfilled]: (state, { payload }) => {
