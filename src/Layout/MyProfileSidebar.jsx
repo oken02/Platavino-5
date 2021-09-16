@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button,Typography } from "@material-ui/core/";
+import { Box, Button, Typography } from "@material-ui/core/";
 import { useJupiterNestedMenuStyles } from "@mui-treasury/styles/nestedMenu/jupiter";
 import NestedMenu from "@mui-treasury/components/menu/nested";
 import { Link } from "react-router-dom";

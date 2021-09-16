@@ -5,6 +5,7 @@ import CategoriesReducer from "./CategoriesReducer";
 import isLoggedReducer from "./isLoggedReducer";
 import isLogged from "./isLoggedReducer";
 import ProductsReducer from "./ProductsReducer";
+import reviewReducer from "./reviewReducer";
 import selectedProductReducer from "./selectedProductReducer";
 import usersReducer from "./usersReducer";
 
@@ -19,8 +20,6 @@ const store = configureStore({
     users: usersReducer,
     carrito: carritoReducer,
 
-
-    
   },
 });
 

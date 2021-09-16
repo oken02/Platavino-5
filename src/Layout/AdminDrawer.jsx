@@ -77,11 +77,11 @@ export function AdminDrawer(props) {
   };
 
   const drawer = (
-    <div>
-      <div className={classes.toolbar} />
-      <Divider />
-      <List className={classes.ul}>
-        {["Usuarios", "Productos"].map((text, index) => (
+    <div className='divider'>
+      {/* <div className={classes.toolbar} /> */}
+      {/* <Divider /> */}
+      <List className={`${classes.ul}`}>
+        {["Usuarios"].map((text, index) => (
           <ListItem
             // selected
             button
@@ -121,25 +121,6 @@ export function AdminDrawer(props) {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
-          </Typography>
-          <Button component={Link} to="/home">
-            Go to home
-          </Button>
-        </Toolbar>
-      </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
@@ -160,7 +141,7 @@ export function AdminDrawer(props) {
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="css">
-          <Drawer
+          {/* <Drawer
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -168,7 +149,7 @@ export function AdminDrawer(props) {
             open
           >
             {drawer}
-          </Drawer>
+          </Drawer> */}
         </Hidden>
       </nav>
       <main className={classes.content}>
