@@ -26,7 +26,6 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
 
   try {
     const user = await User.findByPk(userId);
-    console.log("RE BODY", user.carritoId, id, vinoId);
 
     const [cartItem, created] = await CartItem.findOrCreate({
       where: { carritoId: user.carritoId, vinoId },
@@ -39,7 +38,7 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
     return res.send(CartItem);
     // res.send("ok")
   } catch (error) {
-    next();
+    console.log(error);
   }
 });
 
