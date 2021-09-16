@@ -31,14 +31,7 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
       { ...req.body, vinoId, userId },
       { include: User }
     );
-    res.json(
-      await Review.findAll({
-        where: {
-          id: review.id,
-        },
-        include: User,
-      })[0]
-    );
+    res.json({ ...review.toJSON(), user: await review.getUser() });
   } catch (error) {
     console.log(error);
   }
