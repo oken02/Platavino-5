@@ -27,7 +27,7 @@ app.use((err, req, res, next) => {
   res.status(500).send({ ok: false, msg: "server error", err: err.message });
 });
 
-db.sync({ force: true })
+db.sync({ force: false })
   .then(() =>
     app.listen(3001, () =>
       console.log("Servidor corriendo en http://localhost:3001")
