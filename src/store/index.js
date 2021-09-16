@@ -18,6 +18,9 @@ const store = configureStore({
     categories: CategoriesReducer,
     users: usersReducer,
     carrito: carritoReducer,
+
+
+    
   },
 });
 
