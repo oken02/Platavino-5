@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -29,16 +29,17 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
 import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMenu/float";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+
 import { setUsers } from "../store/usersReducer";
+import { setSelectedProduct } from "../store/selectedProductReducer";
+import { getBodega } from "../store/CategoriesReducer";
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -57,26 +58,48 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function MyAppBar({ handleClickLogout }) {
+  const [input, setInput] = useState("");
+  let inputLS = localStorage.setItem("input", input);
   const classes = useStyles();
   const isLogged = useSelector((state) => {
-    return state.user.isAuthenticated
-  })
-  const dispatch = useDispatch()
-  const history = useHistory()
+    return state.user.isAuthenticated;
+  });
+  const dispatch = useDispatch();
+  const history = useHistory();
   const username = useSelector((state) => {
-    return state.user.data.username
-  })
+    return state.user.data.username;
+  });
   const userRole = useSelector((state) => {
-    return state.user.data.role
-  })
+    return state.user.data.role;
+  });
   const handleClickUsersPanel = () => {
-    axios.get("http://localhost:3001/api/users",)
+    axios
+      .get("http://localhost:3001/api/users")
       .then((data) => {
-        dispatch(setUsers(data.data))
-        history.push('/admin/usuarios')
+        dispatch(setUsers(data.data));
+        history.push("/admin/usuarios");
       })
-      .catch(e => console.log(e))
-  }
+      .catch((e) => console.log(e));
+  };
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+    let first = value.charAt(0).toUpperCase();
+    let resto = value.slice(1);
+    let finalValue = first + resto;
+    console.log(finalValue);
+    setInput(finalValue);
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .get(`http://localhost:3001/api/categorias/bodega/${input}`)
+      .then(({ data }) => {
+        dispatch(getBodega(data));
+        history.push(`/results`);
+      })
+      .catch((err) => history.push("/notfound"));
+  };
 
   return (
     <div className={classes.root}>
@@ -106,42 +129,60 @@ export function MyAppBar({ handleClickLogout }) {
             Admin
           </Button> */}
 
-          <NavMenu className={classes.menu} gutter={1} useStyles={useFloatNavigationMenuStyles}>
+          <NavMenu
+            className={classes.menu}
+            gutter={1}
+            useStyles={useFloatNavigationMenuStyles}
+          >
             <NavItem active as={Link} to="/home">
               Vinos
             </NavItem>
-            <NavItem as={Link} to="/home">
+            <NavItem as={Link} to="/results">
               Categorias
             </NavItem>
             <NavItem as={Link} to="/cart">
               Carrito
             </NavItem>
-            {userRole === 'admin' ?
+            {userRole === "admin" ? (
               <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
-              : null}
-
+            ) : null}
           </NavMenu>
-          <Link to='/addProduct'>
-            <Button className={classes.menu} useStyles={useFloatNavigationMenuStyles}>Add wine</Button>
+          <Link to="/addProduct">
+            <Button
+              className={classes.menu}
+              useStyles={useFloatNavigationMenuStyles}
+            >
+              Add wine
+            </Button>
           </Link>
           <Box>
-            <Input variant="filled" placeholder="Find your wine" />
+            <form onSubmit={handleSubmit}>
+              <Input
+                onChange={handleChange}
+                variant="filled"
+                placeholder="Find your wine"
+              />
+            </form>
           </Box>
-          {isLogged ? <div className='userButton'>
-            <Link to='/perfil'>
-              <Button>{username}</Button>
-            </Link>
-            <Link to='/perfil'>
-              <Button onClick={handleClickLogout}>Log Out</Button>
-            </Link>
-          </div> : <div className='userButton'>
-            <Link to='/login'>
-              <Button>Sign In</Button>
-            </Link>
-            <Link to='/register'>
-              <Button>Register</Button>
-            </Link>
-          </div>}
+          {isLogged ? (
+            <div className="userButton">
+              <Link to="/perfil">
+                <Button>{username}</Button>
+              </Link>
+              <Link to="/perfil">
+                <Button onClick={handleClickLogout}>Log Out</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="userButton">
+              <Link to="/login">
+                <Button>Sign In</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Register</Button>
+              </Link>
+            </div>
+          )}
           {/* </Form> */}
         </Toolbar>
 

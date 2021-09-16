@@ -5,7 +5,7 @@ import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../store/ProductsReducer";
-import { setCategories } from "../store/CategoriesReducer";
+import { getBodega, setCategories } from "../store/CategoriesReducer";
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
@@ -29,8 +29,8 @@ export default function Results() {
     //este useEffect en realidad tiene que dispatchear la action para traer los vinos que se buscaron o por los filtros aplicados
     // dispatch(setProducts());
   }, [categories]);
-
   const classes = useStyles();
+
   return (
     <div className={classes.div}>
       <Grid item className={classes.space}>
