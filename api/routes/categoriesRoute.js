@@ -8,22 +8,11 @@ const { Op } = require("sequelize");
 //OBTENDREMOS TODOS LOS VINOS QUE COINCIDAN CON EL PAIS BUSCADO
 // router.get("/pais", (req, res, next) => {
 
-//   Vinos.findAll({
-//     where: {
-//       PaisDeOrigen: req.body.PaisDeOrigen,
-//       // precio:
-//     },
-//   })
-//     .then((vinos) => res.send(vinos))
-//     .catch(next);
-// });
-
 router.get("/", (req, res, next) => {
   const fields = req.query;
   console.log(fields);
   if (fields.Precio) {
     let [min, max] = fields.Precio.split("-");
-    // console.log("MIN", min, "MAX", max);
     if (!min) min = 0;
     if (!max) max = 10000000;
 

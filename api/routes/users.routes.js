@@ -14,7 +14,7 @@ const router = express.Router();
 
  */
 
-router.get("/", /*[validateToken, justAdmin]*/ async (req, res) => {
+router.get("/", [validateToken, justAdmin], async (req, res) => {
   try {
     const users = await User.findAll({
       // attributes: ["username", "email", "id", "role"],
@@ -51,31 +51,21 @@ router.put("/:id", [validateToken], async (req, res) => {
   const { id: tokenID, role } = req.payload;
 
   if (tokenID != id) {
-    return res
-      .status(401)
-      .json({ msg: "no puedes editar el perfil de otro" });
+    return res.status(401).json({ msg: "no puedes editar el perfil de otro" });
   }
 
   try {
     const user = await User.findByPk(id);
 
     if (user) {
-      // if (role !== "admin" && body.role === "admin") {
-      //   res.status(401).json({ msg: "solo admins pueden editar el role" });
-      // }
       if (body.password) {
         body.password = await bcrypt.hash(body.password, 12);
       }
-
-      // body.password = !body.password || (await bcrypt.hash(body.password, 12));
 
       if (body.email && body.email != user.email) {
         const userDB = await User.findOne({
           where: {
             email: body.email,
-            // id: {
-            //   [Op.not]: [id],
-            // },
           },
         });
 

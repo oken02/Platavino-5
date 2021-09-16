@@ -1,19 +1,44 @@
-const { User } = require("./models");
+const { User, Carrito } = require("./models");
 const Vino = require("./models/Vino");
 const bcrypt = require("bcrypt");
 
 (async () => {
+  const promises = [];
+
+  const c = await Carrito.create();
+
   const p1 = User.create({
     username: "bruno",
     email: "bruno@gmail.com",
     password: await bcrypt.hash("bruno", 12),
+    carritoId: c.dataValues.id,
   });
+  promises.push(p1);
+
+  const cart = await Carrito.create();
 
   const p2 = User.create({
     username: "kevin",
     email: "kevin@gmail.com",
     password: await bcrypt.hash("kevin", 12),
+    carritoId: cart.dataValues.id,
   });
+
+  console.log("CART.ID", cart.id, "CART:DATAVALUES:ID", cart.dataValues.id);
+
+  promises.push(p2);
+
+  const cartAdmin = await Carrito.create();
+
+  const admin = User.create({
+    username: "admin",
+    email: "admin@gmail.com",
+    role: "admin",
+    password: await bcrypt.hash("admin", 12),
+    carritoId: cartAdmin.dataValues.id,
+  });
+
+  promises.push(admin);
 
   const p3 = Vino.bulkCreate([
     {
@@ -232,7 +257,7 @@ const bcrypt = require("bcrypt");
       Stock: 5,
     },
   ]);
-  await Promise.all([p1, p2, p3]);
+  await Promise.all(promises);
   console.log("SEED EXITOSO!!!");
   return;
 })();
