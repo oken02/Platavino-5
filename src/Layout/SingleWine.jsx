@@ -87,6 +87,7 @@ export function SingleWine() {
       })
       .catch((e) => console.log(e));
   };
+
   const selectedWine = useSelector((state) => state.selectedProduct);
   const classes = useStyles();
   const theme = useTheme();
@@ -109,6 +110,7 @@ export function SingleWine() {
   const [reviews, setReviews] = useState([]);
   const isLogged = useSelector((state) => state.user.data);
   const review = useSelector((state) => state.review);
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     console.log("Cambio el valor input");
@@ -148,7 +150,7 @@ export function SingleWine() {
     axios
       .get(`http://localhost:3001/api/reviews/${id}`)
       .then((res) => setReviews(res.data));
-  }, [reviews]);
+  }, []);
 
   console.log(review);
 
@@ -333,7 +335,7 @@ export function SingleWine() {
             {reviews.map((rev, i) => {
               console.log("rev", rev);
               return (
-                <Grid container className="bruno" spacing={4}>
+                <Grid key={i} container className="bruno" spacing={4}>
                   <Grid item xs={12} md={6} lg={4}>
                     <ReviewCard
                       thumbnail={
