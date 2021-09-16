@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -30,6 +30,8 @@ import { Rating } from "@material-ui/lab";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
 import { setCarrito } from "../store/addToCarrito";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
+import { getReview } from "../store/reviewReducer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +86,54 @@ export function SingleWine() {
     ml,
     id,
   } = selectedWine;
+  const lstoken = localStorage.getItem("token");
+  const [comentario, setComentario] = useState("");
+  const [puntaje, setPuntaje] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const isLogged = useSelector((state) => state.user.data);
+  const review = useSelector((state) => state.review);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    console.log("Cambio el valor input");
+    setComentario(value);
+  };
+
+  const handleClick = (e) => {
+    const starts = e.target.value;
+    console.log("valor estrellas", starts);
+    setPuntaje(starts);
+  };
+  const handleSubmit = (e) => {
+    console.log(id);
+    e.preventDefault();
+    axios
+      .post(
+        `http://localhost:3001/api/reviews/${id}`,
+        { comentario, puntaje },
+        {
+          headers: {
+            Authorization: "Bearer " + lstoken,
+          },
+        }
+      )
+      .then((data) =>
+        setReviews(() => {
+          console.log("setReview", [...reviews, data.data]);
+          return [...reviews, data.data];
+        })
+      );
+  };
+
+  useEffect(() => {
+    // axios
+    //   .get(`http://localhost:3001/api/reviews/${id}`)
+    //   .then((res) => dispatch(getReview(res.data)));
+    axios
+      .get(`http://localhost:3001/api/reviews/${id}`)
+      .then((res) => setReviews(res.data));
+  }, [reviews]);
+
+  console.log(review);
   return (
     //     /*
     <div>
@@ -240,56 +290,35 @@ export function SingleWine() {
         Reviews
       </Heading>
 
-      <Grid container spacing={3} className={classes.reviews}>
-        <Grid item lg={6} md={6}>
+      <Grid container spacing={3} className={` ${classes.reviews} `}>
+        <Grid item lg={6} md={6} className="review-container">
           <>
             <NoSsr>
               <GoogleFontLoader
                 fonts={[{ font: "Ubuntu", weights: [400, 700] }]}
               />
             </NoSsr>
-            <Grid container spacing={4}>
-              <Grid item xs={12} md={6} lg={4}>
-                <ReviewCard
-                  thumbnail={
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRQHCBAj8nRJkEwjWg5TpNuSZZG9iscsf43V1mfx0LZHNDYW3S_&usqp=CAU"
-                  }
-                  title={"APEX Legends: Assemble!"}
-                  description={
-                    <>
-                      <b>Shining Alpaca</b> and 3 others are already members of
-                      this group.
-                    </>
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} md={6} lg={4}>
-                <ReviewCard
-                  thumbnail={
-                    "https://cm1.narvii.com/7153/05204b8d8dcbb652dd1a8ceaafde997bc1909468_00.jpg"
-                  }
-                  title={"League of Legends Official"}
-                  description={
-                    "You are already a member of this group since April 5th 2019."
-                  }
-                />
-              </Grid>
-              <Grid item xs={12} md={6} lg={4}>
-                <ReviewCard
-                  thumbnail={
-                    "https://bazar-react.vercel.app/assets/images/faces/7.png"
-                  }
-                  title={"Jannie Schumm"}
-                  description={
-                    <>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      Varius massa id ut mattis. Facilisis vitae gravida egestas
-                      ac account.
-                    </>
-                  }
-                />
-              </Grid>
-            </Grid>
+            {reviews.map((rev, i) => {
+              console.log("rev", rev);
+              return (
+                <Grid container className="bruno" spacing={4}>
+                  <Grid item xs={12} md={6} lg={4}>
+                    <ReviewCard
+                      thumbnail={
+                        "https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
+                      }
+                      title={rev.user.username}
+                      description={
+                        <>
+                          <b>{rev.comentario}</b>
+                        </>
+                      }
+                      puntaje={rev.puntaje}
+                    />
+                  </Grid>
+                </Grid>
+              );
+            })}
           </>
         </Grid>
 
@@ -297,14 +326,16 @@ export function SingleWine() {
           <Heading my="3" as="h5" size="md">
             Write a Review for this wine
           </Heading>
-          <form>
+          <form onSubmit={handleSubmit}>
             <FormControl id="first-name" isRequired>
               <FormLabel>Your Rating</FormLabel>
               <Rating
                 name="customized-empty"
-                defaultValue={2}
+                Required
+                defaultValue={3}
                 precision={0.5}
                 emptyIcon={<StarBorderIcon fontSize="inherit" />}
+                onClick={handleClick}
               />
             </FormControl>
 
@@ -312,7 +343,7 @@ export function SingleWine() {
               <FormLabel>Your Review</FormLabel>
               <Textarea
                 // value={"hi"}
-                // onChange={handleInputChange}
+                onChange={handleInputChange}
                 placeholder="Here is a sample placeholder"
                 size="sm"
               />
