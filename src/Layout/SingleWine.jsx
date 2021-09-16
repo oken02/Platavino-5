@@ -7,7 +7,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-
 import GoogleFontLoader from "react-google-font-loader";
 import NoSsr from "@material-ui/core/NoSsr";
 
@@ -32,6 +31,7 @@ import { setCarrito } from "../store/addToCarrito";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,12 +69,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 export function SingleWine() {
+  const history = useHistory()
+  const selected = useSelector((state) => {
+    return state.selectedProduct.id
+  })
+  const userLogged = useSelector((state) => {
+    return state.user.data.role
+  })
+
+  const handleClickDelete = () => {
+    axios.delete(`http://localhost:3001/api/vinos/borrar/${selected}`)
+      .then(() => {
+        console.log('eliminado')
+        history.push('/home')
+      })
+      .catch(e => console.log(e))
+  }
   const selectedWine = useSelector((state) => state.selectedProduct);
   const classes = useStyles();
   const theme = useTheme();
   const dispatch = useDispatch();
-  const history = useHistory();
   const {
     Img,
     Bodega,
@@ -86,6 +102,7 @@ export function SingleWine() {
     ml,
     id,
   } = selectedWine;
+
   const lstoken = localStorage.getItem("token");
   const [comentario, setComentario] = useState("");
   const [puntaje, setPuntaje] = useState("");
@@ -134,6 +151,7 @@ export function SingleWine() {
   }, [reviews]);
 
   console.log(review);
+  
   return (
     //     /*
     <div>
@@ -221,9 +239,9 @@ export function SingleWine() {
                 variant="outline"
                 spacing="6"
                 isAttached
-                // mx={4}
-                // marginX=
-                // mx={3}
+              // mx={4}
+              // marginX=
+              // mx={3}
               >
                 <IconButton
                   flex={1}
@@ -264,6 +282,14 @@ export function SingleWine() {
               >
                 Comprar
               </Button>
+              {userLogged && userLogged === 'admin' ? <div>
+                <Button onClick={() => {
+                  handleClickDelete()
+                }}>Delete product</Button>
+                <Link to='/editProduct'>
+                  <Button>Edit product</Button>
+                </Link>
+              </div> : null}
             </Box>
 
             {/* <Button variant="contained" size="large" color="secondary">

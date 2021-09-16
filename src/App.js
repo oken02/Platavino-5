@@ -7,6 +7,10 @@ import Grids from "./components/Grids";
 import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
 
+import EditProduct from "./components/EditProduct";
+
+
+
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
@@ -37,7 +41,14 @@ import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
 import AddProducts from "./components/AddProducts";
 import Results from "./Layout/Results";
+
+import AddProduct from "./components/AddProducts";
+import { SimpleTable } from "./Layout/SimpleTable";
+import { ListUsers } from "./Layout/ListUsers";
+
+
 import Login from "./components/Login";
+
 function App() {
   let usernameRegister;
   let passwordRegister;
@@ -81,20 +92,21 @@ function App() {
 
   const handleChangeUsernameRegister = (e) => {
     usernameRegister = e.target.value;
-    console.log("se cambio username");
+    console.log(usernameRegister);
   };
   const handleChangePasswordRegister = (e) => {
     passwordRegister = e.target.value;
-    console.log("se cambio pass");
+    console.log(passwordRegister);
   };
 
   const handleChangeEmailRegister = (e) => {
     emailRegister = e.target.value;
-    console.log("se cambio mail");
+    console.log(emailRegister);
   };
 
   const handleSubmitRegisterForm = (e) => {
     e.preventDefault();
+    console.log(emailRegister, usernameRegister, passwordRegister)
     axios
       .post("http://localhost:3001/api/auth/register", {
         email: emailRegister,
@@ -105,7 +117,7 @@ function App() {
         dispatch(setUsers(data.data));
         history.push("/login");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log('aca en el front', e.response));
   };
 
   const handleAdminClick = () => {
@@ -118,75 +130,24 @@ function App() {
 
   return (
     <div>
-      {/* <SimpleNavBar handleClick={handleClick} /> */}
-      {/* <Route exact path="/login">
-          <Protector evaluate={noLogin}>
-            <Login />
-          </Protector>
-        </Route>
-        <Route exact path="/adminLogin">
-          <Protector evaluate={noLogin}>
-            <AdminLogin />
-          </Protector>
-        </Route>
-        <Route exact path="/home">
-          <Header />
-
-        </Route>
-        <Route exact path="/register">
-          <Register
-            handleAdminClick={handleAdminClick}
-            handleChangeEmailRegister={handleChangeEmailRegister}
-            handleChangePasswordRegister={handleChangePasswordRegister}
-            handleChangeUsernameRegister={handleChangeUsernameRegister}
-            handleSubmitRegisterForm={handleSubmitRegisterForm}
-          />
-        </Route>
-        <Route exact path="/adminRegister">
-          <Protector evaluate={noLogin}>
-            <AdminRegister
-              handleChangeEmailRegister={handleChangeEmailRegister}
-              handleChangePasswordRegister={handleChangePasswordRegister}
-              handleChangeUsernameRegister={handleChangeUsernameRegister}
-              handleSubmitRegisterForm={handleSubmitAdminRegisterForm}
-            />
-          </Protector>
-        </Route>
-        <Route exact path="/products">
-          <Protector evaluate={protector}>
-            <Grids />
-          </Protector>
-        </Route>
-        <Route exact path="/carrito">
-          <Protector evaluate={protector}>
-            <Cart />
-          </Protector>
-        </Route>
-        <Route exact path="/singleProduct">
-          <Protector evaluate={protector}>
-            <Wine />
-          </Protector>
-        </Route>
-        <Route exact path="/notFound">
-          <NotFound />
-        </Route>
-        <Redirect exact from="/" to="/home" /> */}
-      {/* mis rutas */}
-
       <div>
         <PlatavinoBox />
-        <MyAppBar />
+        <MyAppBar handleClickLogout={handleClickLogout} />
 
         <Box mt={4}></Box>
         <Container maxWidth="lg">
           <Switch>
             <Route path="/home" component={MyHome} />
-            <Route path="/prueba" component={Mylogin} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
+            <Route path="/perfil/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} />
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
+
+            <Route path='/editProduct' component={EditProduct} />
+            <Route path='/addProduct' component={AddProduct} />
+
             <Route path="/login" component={Login} />
             <Route
               path="/register"

@@ -29,6 +29,7 @@ const isLoggedReducer = createReducer(
   },
   {
     [setIsLogged]: (state, { payload: user }) => {
+      console.log(state)
       return user;
     },
 
