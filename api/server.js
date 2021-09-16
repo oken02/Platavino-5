@@ -18,16 +18,17 @@ app.use("/api", routes);
 
 app.use("/api", (req, res) => {
   res.sendStatus(404);
-});    
+});
 
 // error middleware -> https://expressjs.com/es/guide/error-handling.html
+
 app.use((err, req, res, next) => {
   console.log(err);
-  res.status(500).send(err);
-});   
- 
-db.sync({ force: false })
-  .then(() =>  
+  res.status(500).send({ ok: false, msg: "server error", err: err.message });
+});
+
+db.sync({ force: true })
+  .then(() =>
     app.listen(3001, () =>
       console.log("Servidor corriendo en http://localhost:3001")
     )

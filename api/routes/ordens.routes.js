@@ -13,10 +13,18 @@ const { Orden, Vino } = require("../models");
 const router = express.Router();
 
 /*
-
     /api/ordens
-
 */
+
+router.get("/", [validateToken], async (req, res) => {
+  const { id: userId } = req.payload;
+
+  const user = User.build({ id: userId });
+
+  const ordens = await user.getOrdens();
+
+  res.json(ordens);
+});
 
 router.post("/", [validateToken], async (req, res) => {
   const { id: userId } = req.payload;

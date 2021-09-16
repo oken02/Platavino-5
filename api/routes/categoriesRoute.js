@@ -23,7 +23,6 @@ router.get("/", (req, res, next) => {
 
   if (fields.Precio) {
     let [min, max] = fields.Precio.split("-");
-    // console.log("MIN", min, "MAX", max);
     if (!min) min = 0;
     if (!max) max = 10000000;
 
