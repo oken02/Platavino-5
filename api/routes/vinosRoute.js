@@ -1,6 +1,8 @@
 const express = require("express");
+const { justAdmin } = require("../middlewares/justAdmin");
 const router = express.Router();
 const Vinos = require("../models/Vino");
+const { validateToken } = require("../utils/jwt");
 
 //LLEGAREMOS A LAS RUTAS A TRAVÉS DE LA RUTA "http://localhost:3001/api/vinos/..."
 
@@ -11,9 +13,8 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-
 //RUTA PARA CREAR UN NUEVO VINO
-router.post("/nuevo", (req, res, next) => {
+router.post("/nuevo", [validateToken, justAdmin], (req, res, next) => {
   Vinos.create(req.body)
     .then((product) => res.status(201).send(product))
     .catch(next);
@@ -34,7 +35,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 //RUTA QUE NOS LLEVA A UN VINO A TRAVÉS DE SU ID Y NOS PERMITE EDITAR SUS DATOS
-router.put("/edit/:id", (req, res, next) => {
+router.put("/edit/:id", [validateToken, justAdmin], (req, res, next) => {
   Vinos.update(req.body, {
     where: {
       id: req.params.id,
@@ -49,7 +50,7 @@ router.put("/edit/:id", (req, res, next) => {
 });
 
 //RUTA QUE NOS PERMITE ELIMINAR UN VINO A TRAVÉS DE SU ID
-router.delete("/borrar/:id", (req, res, next) => {
+router.delete("/borrar/:id", [validateToken, justAdmin], (req, res, next) => {
   Vinos.destroy({
     where: {
       id: req.params.id,

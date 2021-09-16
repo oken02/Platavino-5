@@ -8,30 +8,18 @@ const { Op } = require("sequelize");
 //OBTENDREMOS TODOS LOS VINOS QUE COINCIDAN CON EL PAIS BUSCADO
 // router.get("/pais", (req, res, next) => {
 
-//   Vinos.findAll({
-//     where: {
-//       PaisDeOrigen: req.body.PaisDeOrigen,
-//       // precio:
-//     },
-//   })
-//     .then((vinos) => res.send(vinos))
-//     .catch(next);
-// });
-
 router.get("/", (req, res, next) => {
   const fields = req.query;
-
+  console.log(fields);
   if (fields.Precio) {
-    const arr = fields.Precio.split("-");
-    // console.log("MIN", min, "MAX", max);
-    if (!arr[0]) arr[0] = 0;
-    if (!arr[1]) arr[1] = 10000000;
+    let [min, max] = fields.Precio.split("-");
+    if (!min) min = 0;
+    if (!max) max = 10000000;
 
     fields.Precio = {
-      [Op.between]: [parseInt(arr[0]), parseInt(arr[1])],
+      [Op.between]: [parseInt(min), parseInt(max)],
     };
   }
-
 
   Vinos.findAll({
     where: fields,
@@ -39,9 +27,6 @@ router.get("/", (req, res, next) => {
     .then((vinos) => res.send(vinos))
     .catch(next);
 });
-
-
-
 
 //OBTENDREMOS TODOS LOS VINOS QUE TENGAN EL MISMO PRECIO QUE PASAREMOS EN EL BODY
 

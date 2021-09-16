@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import carritoReducer from "./addToCarrito";
+import CategoriesReducer from "./CategoriesReducer";
 import isLoggedReducer from "./isLoggedReducer";
 import isLogged from "./isLoggedReducer";
 import ProductsReducer from "./ProductsReducer";
@@ -14,12 +15,11 @@ const store = configureStore({
     //Aca irian los reducer de cada estado que necesitemos
     products: ProductsReducer,
     selectedProduct: selectedProductReducer,
-
     user: isLoggedReducer,
-
+    categories: CategoriesReducer,
     users: usersReducer,
     carrito: carritoReducer,
-    review: reviewReducer,
+
   },
 });
 
