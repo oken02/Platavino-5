@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import GoogleFontLoader from "react-google-font-loader";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import NoSsr from "@material-ui/core/NoSsr";
 
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -33,6 +33,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
 import { Link } from "react-router-dom";
+import { setSelectedProduct } from "../store/selectedProductReducer";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -69,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function SingleWine() {
+export function SingleWine({ match }) {
   const history = useHistory();
   const selected = useSelector((state) => {
     return state.selectedProduct.id;
@@ -83,16 +84,16 @@ export function SingleWine() {
       .delete(`http://localhost:3001/api/vinos/borrar/${selected}`, {
         headers: {
           Authorization: "Bearer " + lstoken,
-        }
+        },
       })
       .then(() => {
         console.log("eliminado");
-        toast.success('Vino eliminado correctamente!')
+        toast.success("Vino eliminado correctamente!");
         history.push("/home");
       })
       .catch((e) => {
-        toast.error("Oops, no se pudo eliminar el vino...")
-        console.log(e)
+        toast.error("Oops, no se pudo eliminar el vino...");
+        console.log(e);
       });
   };
 
@@ -146,6 +147,7 @@ export function SingleWine() {
       .then((data) =>
         setReviews(() => {
           console.log("setReview", [...reviews, data.data]);
+          setComentario("");
           return [...reviews, data.data];
         })
       )
@@ -156,6 +158,10 @@ export function SingleWine() {
     axios
       .get(`http://localhost:3001/api/reviews/${id}`)
       .then((res) => setReviews(res.data));
+
+    axios
+      .get(`http://localhost:3001/api/vinos/${match}`)
+      .then((res) => dispatch(setSelectedProduct(res.data)));
   }, []);
 
   console.log(review);
@@ -248,9 +254,9 @@ export function SingleWine() {
                 variant="outline"
                 spacing="6"
                 isAttached
-              // mx={4}
-              // marginX=
-              // mx={3}
+                // mx={4}
+                // marginX=
+                // mx={3}
               >
                 <IconButton
                   flex={1}
@@ -384,6 +390,7 @@ export function SingleWine() {
               <FormLabel>Your Review</FormLabel>
               <Textarea
                 // value={"hi"}
+                {...comentario}
                 onChange={handleInputChange}
                 placeholder="Here is a sample placeholder"
                 size="sm"
