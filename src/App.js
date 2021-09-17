@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
 
 import EditProduct from "./components/EditProduct";
-import SingleRowSelectionGrid from './components/OrdenList'
+import SingleRowSelectionGrid from "./components/OrdenList";
 
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
@@ -46,11 +46,11 @@ import AddProduct from "./components/AddProducts";
 import { SimpleTable } from "./Layout/SimpleTable";
 import { ListUsers } from "./Layout/ListUsers";
 
-
 import Login from "./components/Login";
 import { Checkout } from "./components/Checkout";
 import Confirmada from "./components/OrdenList";
 import OrdenList from "./components/OrdenList";
+import { ContactUs } from "./Layout/EmailForm";
 
 function App() {
   let usernameRegister;
@@ -73,12 +73,12 @@ function App() {
         email: emailRegister,
         username: usernameRegister,
         password: passwordRegister,
-        role: 'admin'
+        role: "admin",
       })
       .then((data) => {
         dispatch(setUsers(data.data));
-        toast.success('Usuario registrado!')
-        history.push('/login')
+        toast.success("Usuario registrado!");
+        history.push("/login");
       })
       .catch((e) => console.log(e.response));
   };
@@ -112,7 +112,7 @@ function App() {
 
   const handleSubmitRegisterForm = (e) => {
     e.preventDefault();
-    console.log(emailRegister, usernameRegister, passwordRegister)
+    console.log(emailRegister, usernameRegister, passwordRegister);
     axios
       .post("http://localhost:3001/api/auth/register", {
         email: emailRegister,
@@ -123,7 +123,7 @@ function App() {
         dispatch(setUsers(data.data));
         history.push("/login");
       })
-      .catch((e) => console.log('aca en el front', e.response));
+      .catch((e) => console.log("aca en el front", e.response));
   };
 
   const handleAdminClick = () => {
@@ -146,23 +146,42 @@ function App() {
             <Route path="/home" component={MyHome} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
-            <Route path="/perfil/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} />
+            <Route
+              path="/perfil/admin/usuarios"
+              render={() => {
+                <div>
+                  <ListUsers
+                    handleSubmitRegisterForm={handleSubmitRegisterForm}
+                    handleChangePasswordRegister={handleChangePasswordRegister}
+                    handleChangeUsernameRegister={handleChangeUsernameRegister}
+                    handleChangeEmailRegister={handleChangeEmailRegister}
+                  />{" "}
+                  <SimpleTable />{" "}
+                </div>;
+              }}
+            />
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
-            <Route path='/checkout' component={Checkout} />
-            <Route path='/ordenHistory' component={SingleRowSelectionGrid} />
-            <Route path='/adminRegister' render={() => {
-              return <AdminRegister
-                handleSubmitAdminRegisterForm={handleSubmitAdminRegisterForm}
-                handleChangePasswordRegister={handleChangePasswordRegister}
-                handleChangeUsernameRegister={handleChangeUsernameRegister}
-                handleChangeEmailRegister={handleChangeEmailRegister}
-
-              />
-            }} />
-            <Route path='/editProduct' component={EditProduct} />
-            <Route path='/addProduct' component={AddProduct} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/ordenHistory" component={SingleRowSelectionGrid} />
+            <Route
+              path="/adminRegister"
+              render={() => {
+                return (
+                  <AdminRegister
+                    handleSubmitAdminRegisterForm={
+                      handleSubmitAdminRegisterForm
+                    }
+                    handleChangePasswordRegister={handleChangePasswordRegister}
+                    handleChangeUsernameRegister={handleChangeUsernameRegister}
+                    handleChangeEmailRegister={handleChangeEmailRegister}
+                  />
+                );
+              }}
+            />
+            <Route path="/editProduct" component={EditProduct} />
+            <Route path="/addProduct" component={AddProduct} />
 
             <Route path="/login" component={Login} />
             <Route
@@ -177,6 +196,7 @@ function App() {
                 />
               )}
             />
+            <Route path="/send" component={ContactUs} />
 
             <Route path="*" component={NotFound} />
           </Switch>
