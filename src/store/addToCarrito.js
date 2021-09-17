@@ -55,6 +55,25 @@ export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
       return res.data;
     });
 });
+export const increaseAmount = createAsyncThunk(
+  "INCREASE_AMOUNT",
+  ({ card, amount, execute }) => {
+    console.log("AMOUNTTTTTTTTTTTTTTTTTT", { card, amount });
+    return axios
+      .put(
+        `http://localhost:3001/api/carritos/${card.id}`,
+        {
+          newCantidad: amount,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
+      .then(({ data }) => ({ card, amount }));
+  }
+);
 
 const carritoReducer = createReducer([], {
   [setCarrito.fulfilled]: (state, { payload }) => {
@@ -67,6 +86,17 @@ const carritoReducer = createReducer([], {
   [getCart.fulfilled]: (state, { payload }) => {
     console.log("soy apyload", payload);
     return payload.vinosDB;
+  },
+  [increaseAmount.fulfilled]: (state, { payload }) => {
+    console.log("INCREMENTADO", payload.card);
+    // payload.execute();
+
+    const car = state.findIndex((c) => {
+      return c.id == payload.card.id;
+    });
+    state[car].cantidad = payload.amount;
+    console.log("PROXIIII", state);
+    // return state;
   },
 });
 
