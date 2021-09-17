@@ -258,7 +258,7 @@ export function SingleWine({ match }) {
                 // marginX=
                 // mx={3}
               >
-                <IconButton
+                {/* <IconButton
                   flex={1}
                   aria-label="Add to friends"
                   icon={<MinusIcon color="purple" />}
@@ -278,11 +278,12 @@ export function SingleWine({ match }) {
                 </BoxCh>
 
                 {/* <Button>Cancel</Button> */}
-                <IconButton
+                {/* <IconButton
                   flex={1}
                   aria-label="Add to friends"
                   icon={<AddIcon color="purple" />}
-                />
+                />{" "} */}
+                {/* */}
               </ButtonGroup>
 
               <Button
