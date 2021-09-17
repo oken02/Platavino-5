@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: "15px",
   },
   paper: {
-    height: "100vh",
+    minHeight: "100vh",
   },
 }));
 

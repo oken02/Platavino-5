@@ -76,9 +76,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
+
   const isLogged = useSelector((state) => {
     return state.user.data.username
   })
+
+  const [leyenda, setLeyenda] = useState("");
+  const [error, setError] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,6 +105,13 @@ function Login() {
   const handleEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
+    // if ((value.includes("@") && value.includes(".")) || !value) {
+    //   setError(false);
+    //   setLeyenda("");
+    // } else {
+    //   setError(true);
+    //   setLeyenda("email invalido");
+    // }
   };
 
   return (
@@ -115,8 +127,8 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Link to='/adminLogin'>
-            <Button >Admin?</Button>
+          <Link to="/adminLogin">
+            <Button>Admin?</Button>
           </Link>
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
@@ -130,6 +142,8 @@ function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={error}
+              helperText={leyenda}
             />
             <TextField
               onChange={handelPassword}
