@@ -21,8 +21,14 @@ router.get("/", [validateToken], async (req, res) => {
 
   const user = User.build({ id: userId });
 
-  const ordens = await user.getOrdens();
-
+  const ordens = await user.getOrdens({
+    include: {
+      model: Carrito,
+      include: { model: CartItem, include: { model: Vino } },
+    },
+  });
+  // const cartItems = CartItem.findAll({where:carritoId:})
+  console.log('ESTO ES LA RTA DEL BACK', ordens)
   res.json(ordens);
 });
 
