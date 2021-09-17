@@ -97,9 +97,13 @@ export const Checkout = () => {
         }
       )
       .then((data) => {
+        toast.success('Compra realizada correctamente!')
         history.push("/ordenHistory");
       })
-      .catch((e) => console.log(e.response));
+      .catch((e) => {
+        toast.error("Oops, no se pudo completar la compra...")
+        console.log(e.response)
+      });
   };
   const cartItems = useSelector((state) => {
     return state.carrito;
@@ -199,7 +203,7 @@ export const Checkout = () => {
                       id="firstName"
                       placeholder=""
                       //   value=""
-                      // required
+                      required
                     />
                     <div class="invalid-feedback">
                       Valid first name is required.
@@ -216,8 +220,8 @@ export const Checkout = () => {
                       class="form-control"
                       id="lastName"
                       placeholder=""
-                      value=""
-                      // required
+                      // value=""
+                      required
                     />
                     <div class="invalid-feedback">
                       Valid last name is required.
@@ -253,7 +257,7 @@ export const Checkout = () => {
                       class="form-control"
                       id="address"
                       placeholder="1234 Main St"
-                      // required
+                      required
                     />
                     <div class="invalid-feedback">
                       Please enter your shipping address.
@@ -297,7 +301,7 @@ export const Checkout = () => {
                       type="radio"
                       class="form-check-input"
                       checked
-                      // required
+                      required
                     />
                     <label class="form-check-label" for="credit">
                       Credit card
@@ -309,7 +313,7 @@ export const Checkout = () => {
                       name="paymentMethod"
                       type="radio"
                       class="form-check-input"
-                      // required
+                      required
                     />
                     <label class="form-check-label" for="debit">
                       Debit card
@@ -321,7 +325,7 @@ export const Checkout = () => {
                       name="paymentMethod"
                       type="radio"
                       class="form-check-input"
-                      // required
+                      required
                     />
                     <label class="form-check-label" for="paypal">
                       PayPal
@@ -339,7 +343,7 @@ export const Checkout = () => {
                       class="form-control"
                       id="cc-name"
                       placeholder=""
-                      // required
+                      required
                     />
                     <small class="text-muted">
                       Full name as displayed on card
@@ -356,7 +360,7 @@ export const Checkout = () => {
                       class="form-control"
                       id="cc-number"
                       placeholder=""
-                      // required
+                      required
                     />
                     <div class="invalid-feedback">
                       Credit card number is required
@@ -372,7 +376,7 @@ export const Checkout = () => {
                       class="form-control"
                       id="cc-expiration"
                       placeholder=""
-                      // required
+                      required
                     />
                     <div class="invalid-feedback">Expiration date required</div>
                   </div>
@@ -386,7 +390,7 @@ export const Checkout = () => {
                       class="form-control"
                       id="cc-cvv"
                       placeholder=""
-                      // required
+                      required
                     />
                     <div class="invalid-feedback">Security code required</div>
                   </div>
