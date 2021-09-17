@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
 import { Link } from "@material-ui/core";
 // import { addProduct, editProduct } from "../store/ProductsReducer";
@@ -109,13 +110,18 @@ function EditProduct() {
         })
             .then((data) => {
                 // dispatch(editProduct(data))
-                history.push('/home')
+                toast.success('Vino editado!')
+                history.push('/')
             })
-            .catch((e) => console.log('ERROR EN POSTEO', e))
+            .catch((e) => {
+                toast.error("Oops, no se pudo editar el vino...")
+                console.log('ERROR EN POSTEO', e)
+            })
     };
 
     return (
         <Grid container component="main" className={classes.root}>
+            <Toaster />
             <CssBaseline />
             <Grid item xs={false} sm={4} md={7} className={classes.image} />
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>

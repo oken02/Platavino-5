@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as routerLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
 
 import {
@@ -21,6 +22,7 @@ import {
   setIsLogged,
 } from "../store/isLoggedReducer";
 import { Link } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
@@ -74,8 +76,14 @@ function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  const isLogged = useSelector((state) => {
+    return state.user.data.username
+  })
+
   const [leyenda, setLeyenda] = useState("");
   const [error, setError] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -83,7 +91,8 @@ function Login() {
       if (action.error) {
         setPassword("");
       } else {
-        history.push("/products");
+        history.push("/");
+        return toast.success(`Bienvenido, has iniciado sesion!`)
       }
     });
   };
@@ -108,6 +117,7 @@ function Login() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      <Toaster />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>

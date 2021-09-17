@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Link } from "@material-ui/core";
+import toast, { Toaster } from 'react-hot-toast';
 import { addProduct } from "../store/ProductsReducer";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
@@ -110,13 +111,18 @@ function AddProduct() {
       )
       .then((data) => {
         dispatch(addProduct(data));
-        history.push("/home");
+        toast.success('Vino agregado correctamente!')
+        history.push("/");
       })
-      .catch((e) => console.log("ERROR EN POSTEO", e));
+      .catch((e) => {
+        toast.error("Oops, no se pudo agregar el vino...")
+        console.log("ERROR EN POSTEO", e)
+      });
   };
 
   return (
     <Grid container component="main" className={classes.root}>
+      <Toaster />
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
