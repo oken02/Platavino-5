@@ -32,6 +32,7 @@ const useStyles = makeStyles(() => ({
       display: "flex",
     },
     borderRadius: "10px",
+    cursor: "pointer",
   },
   content: {
     padding: 24,
@@ -54,8 +55,6 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
   const textCardContentStyles = useN01TextInfoContentStyles();
   const shadowStyles = useBouncyShadowStyles();
   const history = useHistory();
-
-
 
   //en algun lado hacer que la imagen se adapte al tamaño sin cortarsee
   return (
@@ -85,9 +84,9 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
         right={0}
         flexDirection="column"
       >
-        <IconButton aria-label="add to favorites">
+        {/* <IconButton aria-label="add to favorites">
           <FavoriteIcon fontSize="small" />
-        </IconButton>
+        </IconButton> */}
       </Box>
     </Card>
   );
