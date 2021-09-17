@@ -237,7 +237,7 @@ function App() {
               )}
             />
 
-            <Redirect to="/home" />
+            <Redirect to="/" />
 
             <Route path="/send" component={ContactUs} />
 

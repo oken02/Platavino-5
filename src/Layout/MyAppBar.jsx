@@ -166,7 +166,7 @@ export function MyAppBar({ handleClickLogout }) {
                   {userRole === 'admin' ? <Link to='/addProduct'><MenuItem>agregar un vino</MenuItem></Link> : null}
                 </MenuList>
               </Menu>
-              <Link to="/perfil">
+              <Link to="/">
                 <Button onClick={handleClickLogout}>Log Out</Button>
               </Link>
             </div>
