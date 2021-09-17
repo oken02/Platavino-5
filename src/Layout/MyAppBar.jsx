@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 // import MenuIcon from "@material-ui/icons/Menu";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import { MyMenu } from "./MyMenu";
 import LocalBarIcon from "@material-ui/icons/LocalBar";
@@ -34,6 +35,10 @@ import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMen
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUsers } from "../store/usersReducer";
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -51,8 +56,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function MyAppBar() {
+
+
+export function MyAppBar({ handleClickLogout }) {
   const classes = useStyles();
+  const lstoken = localStorage.getItem('token')
+  const isLogged = useSelector((state) => {
+    return state.user.isAuthenticated
+  })
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const username = useSelector((state) => {
+    return state.user.data.username
+  })
+  const userRole = useSelector((state) => {
+    return state.user.data.role
+  })
+  const handleClickUsersPanel = () => {
+    axios.get("http://localhost:3001/api/users", {
+      headers: {
+        Authorization: `Bearer ${lstoken}`
+      }
+    })
+      .then((data) => {
+        dispatch(setUsers(data.data))
+        history.push('/admin/usuarios')
+      })
+      .catch(e => console.log(e))
+  }
 
   return (
     <div className={classes.root}>
@@ -70,7 +101,7 @@ export function MyAppBar() {
               color="inherit"
               aria-label="menu"
             > */}
-              <LocalBarIcon className={classes.menuButton} />
+            <LocalBarIcon className={classes.menuButton} />
             {/* </IconButton> */}
           </Box>
 
@@ -86,7 +117,6 @@ export function MyAppBar() {
             <NavItem active as={Link} to="/home">
               Vinos
             </NavItem>
-
             <NavItem as={Link} to="/home">
               Categorias
             </NavItem>
@@ -96,13 +126,32 @@ export function MyAppBar() {
             <NavItem as={Link} to="/perfil">
               Perfil
             </NavItem>
-          </NavMenu>
+            {userRole === 'admin' ?
+              <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
+              : null}
 
-          {/* <Spacer /> */}
-          {/* <Form className={classes.input}> */}
+          </NavMenu>
+          <Link to='/addProduct'>
+            <Button className={classes.menu} useStyles={useFloatNavigationMenuStyles}>Add wine</Button>
+          </Link>
           <Box>
             <Input variant="filled" placeholder="Find your wine" />
           </Box>
+          {isLogged ? <div className='userButton'>
+            <Link to='/perfil'>
+              <Button>{username}</Button>
+            </Link>
+            <Link to='/perfil'>
+              <Button onClick={handleClickLogout}>Log Out</Button>
+            </Link>
+          </div> : <div className='userButton'>
+            <Link to='/login'>
+              <Button>Sign In</Button>
+            </Link>
+            <Link to='/register'>
+              <Button>Register</Button>
+            </Link>
+          </div>}
           {/* </Form> */}
         </Toolbar>
 

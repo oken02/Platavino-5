@@ -26,7 +26,14 @@ router.put("/promover/:id", [validateToken, justAdmin], async (req, res) => {
     const resDB = await user.save();
     res.json(resDB);
   }
-  return res.sendStatus(200);
+
+
+  user.role = "admin";
+  const resDB = await user.save();
+  console.log("RES  DB", resDB);
+
+  res.send(user)
+
 });
 
 

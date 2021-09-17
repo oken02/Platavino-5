@@ -11,8 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Link } from "@material-ui/core";
-import { addProduct } from "../store/ProductsReducer";
+// import { addProduct, editProduct } from "../store/ProductsReducer";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 function Copyright() {
@@ -61,20 +62,23 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function AddProduct() {
+function EditProduct() {
     const dispatch = useDispatch()
-    const classes = useStyles();
     const history = useHistory()
+    const classes = useStyles();
+    const selectedWine = useSelector((state) => {
+        return state.selectedProduct
+    })
     const [values, setValues] = useState({
-        paisDeOrigen: "",
-        bodega: "",
-        precio: '',
-        varietal: '',
-        color: '',
-        ml: '',
-        descripcion: '',
-        img: '',
-        stock: ''
+        paisDeOrigen: selectedWine.PaisDeOrigen,
+        bodega: selectedWine.Bodega,
+        precio: selectedWine.Precio,
+        varietal: selectedWine.Varietal,
+        color: selectedWine.Color,
+        ml: selectedWine.ml,
+        descripcion: selectedWine.Descripcion,
+        img: selectedWine.Img,
+        stock: selectedWine.Stock
     })
 
     const handleChange = (e) => {
@@ -87,7 +91,7 @@ function AddProduct() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:3001/api/vinos/nuevo`, {
+        axios.put(`http://localhost:3001/api/vinos/edit/${selectedWine.id}`, {
             PaisDeOrigen: values.paisDeOrigen,
             Bodega: values.bodega,
             Precio: values.precio,
@@ -99,7 +103,7 @@ function AddProduct() {
             Stock: values.stock
         })
             .then((data) => {
-                dispatch(addProduct(data))
+                // dispatch(editProduct(data))
                 history.push('/home')
             })
             .catch((e) => console.log('ERROR EN POSTEO', e))
@@ -115,7 +119,7 @@ function AddProduct() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        ¿Want to add a wine?
+                        ¿Want to edit a wine?
                     </Typography>
                     <form onSubmit={handleSubmit} className={`${classes.form} reqInfoContainer`} noValidate>
                         <TextField
@@ -125,7 +129,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Pais de origen'
+                            label={selectedWine.PaisDeOrigen}
                             name='paisDeOrigen'
                             autoComplete="email"
                             autoFocus
@@ -138,7 +142,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Bodega'
+                            label={selectedWine.Bodega}
                             name='bodega'
                             autoComplete="email"
                             autoFocus
@@ -151,7 +155,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Precio'
+                            label={`$${selectedWine.Precio}`}
                             name='precio'
                             autoComplete="email"
                             autoFocus
@@ -164,7 +168,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Varietal'
+                            label={selectedWine.Varietal}
                             name='varietal'
                             autoComplete="email"
                             autoFocus
@@ -177,7 +181,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Color'
+                            label={selectedWine.Color}
                             name='color'
                             autoComplete="email"
                             autoFocus
@@ -190,7 +194,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='ml'
+                            label={`${selectedWine.ml}ml`}
                             name='ml'
                             autoComplete="email"
                             autoFocus
@@ -203,7 +207,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Descripcion'
+                            label={`${selectedWine.Descripcion.slice(0, 20)}...`}
                             name='descripcion'
                             autoComplete="email"
                             autoFocus
@@ -216,7 +220,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Imagen'
+                            label={`${selectedWine.Img.slice(0, 20)}...`}
                             name='img'
                             autoComplete="email"
                             autoFocus
@@ -229,7 +233,7 @@ function AddProduct() {
                             required
                             fullWidth
                             id="email"
-                            label='Stock'
+                            label={`${selectedWine.Stock}`}
                             name='stock'
                             autoComplete="email"
                             autoFocus
@@ -242,7 +246,7 @@ function AddProduct() {
                             color="primary"
                             className={classes.submit}
                         >
-                            Add a wine!
+                            Edit a wine!
                         </Button>
 
                         <Grid container>
@@ -258,4 +262,4 @@ function AddProduct() {
     );
 }
 
-export default AddProduct;
+export default EditProduct;

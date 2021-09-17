@@ -8,6 +8,7 @@ import { Switch, Route } from "react-router-dom";
 import { MyProfileEdit } from "./MyProfileEdit";
 import { Heading } from "@chakra-ui/layout";
 import { Sidebar2 } from "./Sidebar2";
+import { NewSidebar } from "./NewSidebar";
 
 export const MyProfile = () => {
   return (
@@ -17,6 +18,7 @@ export const MyProfile = () => {
           <Paper>
             <MyProfileSidebar />
             {/* <Sidebar2 /> */}
+            {/* <NewSidebar/> */}
 
           </Paper>
         </Grid>

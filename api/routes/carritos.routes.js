@@ -19,28 +19,58 @@ const router = express.Router();
 
 */
 
-router.post("/:vinoId", [validateToken], async (req, res, next) => {
+// router.post("/:vinoId", [validateToken], async (req, res, next) => {
+
+router.post("/:vinoId", [validateToken], async (req, res) => {
   const { id: userId } = req.payload;
   const { vinoId } = req.params;
   const { cantidad } = req.body;
 
   try {
     const user = await User.findByPk(userId);
-    // console.log("RE BODY", user.carritoId, id, vinoId);
 
-    const [cartItem, created] = await CartItem.findOrCreate({
+    const cartItem = await CartItem.findOrCreate({
       where: { carritoId: user.carritoId, vinoId },
       defaults: {
         cantidad: cantidad || 1,
       },
+      include: Vino,
     });
+    console.log(cartItem[0].vino);
 
-    return res.send([cartItem, created]);
+    // return res.json({ ...cartItem});
+    return res.json(await CartItem.findByPk(cartItem[0].id, { include: Vino }));
+
     // res.send("ok")
   } catch (error) {
-    next();
+    console.log(error);
   }
 });
+
+// router.post('/:vinoId', [validateToken], (req, res) => {
+//   const { id: userId } = req.payload;
+//   const { vinoId } = req.params;
+//   const { cantidad } = req.body;
+
+//   try {
+//     const user = await User.findByPk(userId);
+//     // console.log("RE BODY", user.carritoId, id, vinoId);
+//   User.findByPk(userId)
+//     .then((data) => {
+//       CartItem.findOrCreate({
+//         where: {
+//           carritoId: data,
+//           vinoId: vinoId
+//         },
+//         include: Vino,
+//       })
+//         .then((data) => {
+//           res.send(data)
+//         })
+//         .catch(e => console.log('FINDORCREATE', e))
+//     })
+//     .catch(e => console.log('FINDBYPK', e))
+// })
 
 router.get("/", [validateToken], async (req, res) => {
   const { id: userId } = req.payload;
@@ -53,18 +83,16 @@ router.get("/", [validateToken], async (req, res) => {
     const carrito = await Carrito.findByPk(user.carritoId);
 
     const vinosDB = await carrito.getCartItems({
-      include: Vino,
+      // include: Vino,
       // attributes: ["id", "cantidad", "carritoId"],
     });
-    res.json({ vinosDB, length: vinosDB.length });
+    res.json(vinosDB);
   } catch (error) {
     console.log(error);
   }
 });
 
 router.delete("/:cartItemId", [validateToken], async (req, res) => {
-  const { id } = req.payload;
-
   await CartItem.destroy({
     where: {
       id: req.params.cartItemId,
@@ -74,13 +102,14 @@ router.delete("/:cartItemId", [validateToken], async (req, res) => {
   return res.json({
     ok: true,
     msg: "se eliminó el vino",
-    // r,
   });
 });
 
 router.put("/:cartItemId", [validateToken], async (req, res) => {
   const { cartItemId } = req.params;
   const { newCantidad } = req.body;
+
+  console.log("NEW CANT", newCantidad);
 
   const cartItemUpdated = await CartItem.update(
     {
@@ -90,7 +119,15 @@ router.put("/:cartItemId", [validateToken], async (req, res) => {
       where: {
         id: cartItemId,
       },
+
+      returning: true,
     }
+  );
+
+  console.log("ITEM UPDATED", cartItemUpdated);
+  console.log(
+    "CART ITEM =>" + cartItemId + "",
+    await CartItem.findByPk(cartItemId)
   );
 
   res.json(cartItemUpdated);

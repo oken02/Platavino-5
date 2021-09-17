@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Button,Typography } from "@material-ui/core/";
+import { Box, Button, Typography } from "@material-ui/core/";
 import { useJupiterNestedMenuStyles } from "@mui-treasury/styles/nestedMenu/jupiter";
 import NestedMenu from "@mui-treasury/components/menu/nested";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFirebaseBtnStyles } from "@mui-treasury/styles/button/firebase";
 
@@ -19,6 +19,7 @@ const useStyles = makeStyles(({ transitions, palette }) => ({
     display: "flex",
     alignItems: "center",
     zIndex: 10,
+    fontSize: ".9rem",
   },
   box: {
     "& a:hover": {
@@ -35,31 +36,42 @@ const com = () => {
 export const MyProfileSidebar = () => {
   const classes = useStyles();
   const styles = useFirebaseBtnStyles();
+  const history = useHistory();
+
+  const redirect = (path) => () => {
+    history.push(path);
+  };
 
   const getMenus = () => [
     {
       key: "orders",
-      label: (
-        <Link className={classes.link} to="/perfil/orders">
-          Orders
-        </Link>
-      ),
+      label: <p onClick={redirect("/perfil/orders")}>Orders</p>,
     },
     {
       key: "profile",
-      label: (
-        <Link className={classes.link} to="/perfil/info">
-          Profile Info
-        </Link>
-      ),
+      label: <p onClick={redirect("/perfil/info")}>Profile</p>,
     },
     {
       key: "editProfile",
-      label: (
-        <Link className={classes.link} to="/perfil/edit">
-          Edit profile
-        </Link>
-      ),
+      label: <p onClick={redirect("/perfil/edit")}>Edit profile</p>,
+    },
+    {
+      key: "admin",
+      label: "Admin Section",
+      subMenus: [
+        {
+          key: "users",
+          label: <p onClick={redirect("/admin/users")}>Users</p>,
+        },
+        {
+          key: "products",
+          label: <p onClick={redirect("/admin/products")}>Products</p>,
+        },
+        {
+          key: "categories",
+          label: <p onClick={redirect("/admin/categories")}>Categories</p>,
+        },
+      ],
     },
   ];
 

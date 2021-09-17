@@ -17,6 +17,7 @@ import { MyContainer } from "./Layout/MyContainer";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import { deepPurple, purple } from "@material-ui/core/colors";
 import { ChakraProvider } from "@chakra-ui/react"
+import { Checkout } from "./Layout/Checkout";
 
 const theme = createTheme({
   palette: {

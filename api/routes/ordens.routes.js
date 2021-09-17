@@ -21,9 +21,29 @@ router.get("/", [validateToken], async (req, res) => {
 
   const user = User.build({ id: userId });
 
-  const ordens = await user.getOrdens();
+  const ordens = await user.getOrdens({
+    include: {
+      model: Carrito,
+      include: { model: CartItem, include: { model: Vino } },
+    },
+  });
+  // const cartItems = CartItem.findAll({where:carritoId:})
 
   res.json(ordens);
+});
+
+router.get("/:ordenId", [validateToken], async (req, res) => {
+  // const { id: userId } = req.payload;
+  const { ordenId } = req.params;
+
+  const orden = await Orden.findByPk(ordenId, {
+    include: {
+      model: Carrito,
+      include: { model: CartItem, include: { model: Vino } },
+    },
+  });
+
+  res.json(orden);
 });
 
 router.post("/", [validateToken], async (req, res) => {

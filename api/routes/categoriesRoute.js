@@ -10,7 +10,7 @@ const { Op } = require("sequelize");
 
 router.get("/", (req, res, next) => {
   const fields = req.query;
-
+  console.log(fields);
   if (fields.Precio) {
     let [min, max] = fields.Precio.split("-");
     if (!min) min = 0;
@@ -74,6 +74,8 @@ router.get("/bodega/:name", async (req, res, next) => {
 
   res.send(vinos);
 });
+
+
 
 //OBTENDREMOS TODOS LOS VINOS QUE TENGAN EL MISMO VARIETAL QUE PASAMOS COMO PARÁMETRO DE RUTA
 router.get("/:varietal", (req, res, next) => {
