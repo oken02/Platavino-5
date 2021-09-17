@@ -8,13 +8,13 @@ import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
 
 import EditProduct from "./components/EditProduct";
-import SingleRowSelectionGrid from './components/OrdenList'
+import SingleRowSelectionGrid from "./components/OrdenList";
 
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
@@ -46,7 +46,6 @@ import AddProduct from "./components/AddProducts";
 import { SimpleTable } from "./Layout/SimpleTable";
 import { ListUsers } from "./Layout/ListUsers";
 
-
 import Login from "./components/Login";
 import { Checkout } from "./components/Checkout";
 import Confirmada from "./components/OrdenList";
@@ -56,6 +55,8 @@ function App() {
   let usernameRegister;
   let passwordRegister;
   let emailRegister;
+  const [error, setError] = useState("");
+  const [leyenda, setLeyenda] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const userLooged = useSelector((state) => {
@@ -73,12 +74,12 @@ function App() {
         email: emailRegister,
         username: usernameRegister,
         password: passwordRegister,
-        role: 'admin'
+        role: "admin",
       })
       .then((data) => {
         dispatch(setUsers(data.data));
-        toast.success('Usuario registrado!')
-        history.push('/login')
+        toast.success("Usuario registrado!");
+        history.push("/login");
       })
       .catch((e) => console.log(e.response));
   };
@@ -108,11 +109,21 @@ function App() {
   const handleChangeEmailRegister = (e) => {
     emailRegister = e.target.value;
     console.log(emailRegister);
+    if (
+      (emailRegister.includes("@") && emailRegister.includes(".")) ||
+      !emailRegister
+    ) {
+      setError(false);
+      setLeyenda("");
+    } else {
+      setError(true);
+      setLeyenda("email invalido");
+    }
   };
 
   const handleSubmitRegisterForm = (e) => {
     e.preventDefault();
-    console.log(emailRegister, usernameRegister, passwordRegister)
+    console.log(emailRegister, usernameRegister, passwordRegister);
     axios
       .post("http://localhost:3001/api/auth/register", {
         email: emailRegister,
@@ -123,7 +134,7 @@ function App() {
         dispatch(setUsers(data.data));
         history.push("/login");
       })
-      .catch((e) => console.log('aca en el front', e.response));
+      .catch((e) => console.log("aca en el front", e.response));
   };
 
   const handleAdminClick = () => {
@@ -146,23 +157,44 @@ function App() {
             <Route path="/home" component={MyHome} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
-            <Route path="/perfil/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} />
+            <Route
+              path="/perfil/admin/usuarios"
+              render={() => {
+                <div>
+                  <ListUsers
+                    handleSubmitRegisterForm={handleSubmitRegisterForm}
+                    handleChangePasswordRegister={handleChangePasswordRegister}
+                    handleChangeUsernameRegister={handleChangeUsernameRegister}
+                    handleChangeEmailRegister={handleChangeEmailRegister}
+                  />{" "}
+                  <SimpleTable />{" "}
+                </div>;
+              }}
+            />
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
-            <Route path='/checkout' component={Checkout} />
-            <Route path='/ordenHistory' component={SingleRowSelectionGrid} />
-            <Route path='/adminRegister' render={() => {
-              return <AdminRegister
-                handleSubmitAdminRegisterForm={handleSubmitAdminRegisterForm}
-                handleChangePasswordRegister={handleChangePasswordRegister}
-                handleChangeUsernameRegister={handleChangeUsernameRegister}
-                handleChangeEmailRegister={handleChangeEmailRegister}
-
-              />
-            }} />
-            <Route path='/editProduct' component={EditProduct} />
-            <Route path='/addProduct' component={AddProduct} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/ordenHistory" component={SingleRowSelectionGrid} />
+            <Route
+              path="/adminRegister"
+              render={() => {
+                return (
+                  <AdminRegister
+                    handleSubmitAdminRegisterForm={
+                      handleSubmitAdminRegisterForm
+                    }
+                    handleChangePasswordRegister={handleChangePasswordRegister}
+                    handleChangeUsernameRegister={handleChangeUsernameRegister}
+                    handleChangeEmailRegister={handleChangeEmailRegister}
+                    error={error}
+                    leyenda={leyenda}
+                  />
+                );
+              }}
+            />
+            <Route path="/editProduct" component={EditProduct} />
+            <Route path="/addProduct" component={AddProduct} />
 
             <Route path="/login" component={Login} />
             <Route
@@ -174,10 +206,12 @@ function App() {
                   handleChangePasswordRegister={handleChangePasswordRegister}
                   handleChangeUsernameRegister={handleChangeUsernameRegister}
                   handleSubmitRegisterForm={handleSubmitRegisterForm}
+                  error={error}
+                  leyenda={leyenda}
                 />
               )}
             />
-
+            <Redirect to="/home" />
             <Route path="*" component={NotFound} />
           </Switch>
         </Container>

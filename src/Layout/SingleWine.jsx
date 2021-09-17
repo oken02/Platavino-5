@@ -139,7 +139,8 @@ export function SingleWine() {
           console.log("setReview", [...reviews, data.data]);
           return [...reviews, data.data];
         })
-      );
+      )
+      .catch((err) => history.push("/login"));
   };
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -54,6 +54,8 @@ function Register({
   handleChangeUsernameRegister,
   handleSubmitRegisterForm,
   handleAdminClick,
+  error,
+  leyenda,
 }) {
   const classes = useStyles();
 
@@ -68,13 +70,17 @@ function Register({
           Register
         </Typography>
 
-        <Link to='/adminRegister'>
+        <Link to="/adminRegister">
           <Button onClick={handleAdminClick}>Admin?</Button>
         </Link>
 
-        <form className={classes.form} noValidate onSubmit={handleSubmitRegisterForm}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmitRegisterForm}
+        >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
                 name="username"
@@ -97,6 +103,8 @@ function Register({
                 name="email"
                 autoComplete="email"
                 onChange={handleChangeEmailRegister}
+                error={error}
+                helperText={leyenda}
               />
             </Grid>
             <Grid item xs={12}>
