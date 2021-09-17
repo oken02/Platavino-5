@@ -32,7 +32,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
 import { Link } from "react-router-dom";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -144,9 +143,6 @@ export function SingleWine() {
   };
 
   useEffect(() => {
-    // axios
-    //   .get(`http://localhost:3001/api/reviews/${id}`)
-    //   .then((res) => dispatch(getReview(res.data)));
     axios
       .get(`http://localhost:3001/api/reviews/${id}`)
       .then((res) => setReviews(res.data));
