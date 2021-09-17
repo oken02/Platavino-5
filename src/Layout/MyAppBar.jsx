@@ -59,6 +59,10 @@ const useStyles = makeStyles((theme) => ({
 
 export function MyAppBar({ handleClickLogout }) {
   const [input, setInput] = useState("");
+
+  const lstoken = localStorage.getItem("token");
+  let inputLS = localStorage.setItem("input", input);
+
   const classes = useStyles();
   const isLogged = useSelector((state) => {
     return state.user.isAuthenticated;
@@ -73,7 +77,11 @@ export function MyAppBar({ handleClickLogout }) {
   });
   const handleClickUsersPanel = () => {
     axios
-      .get("http://localhost:3001/api/users")
+      .get("http://localhost:3001/api/users", {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        }
+      })
       .then((data) => {
         dispatch(setUsers(data.data));
         history.push("/admin/usuarios");
@@ -110,25 +118,8 @@ export function MyAppBar({ handleClickLogout }) {
             <Heading mr="2" as="h6" size="xs">
               Platavino 5
             </Heading>
-
-            {/* <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            > */}
             <LocalBarIcon className={classes.menuButton} />
-            {/* </IconButton> */}
           </Box>
-
-          {/* <Typography variant="h6" className={classes.title}>
-            Platavino 5
-          </Typography>
-          <Button color="inherit">Login</Button>
-          <Button component={Link} to="/admin" color="inherit">
-            Admin
-          </Button> */}
-
           <NavMenu
             className={classes.menu}
             gutter={1}
@@ -142,6 +133,9 @@ export function MyAppBar({ handleClickLogout }) {
             </NavItem>
             <NavItem as={Link} to="/cart">
               Carrito
+            </NavItem>
+            <NavItem as={Link} to="/ordenHistory">
+              Historial de ordenes
             </NavItem>
             {userRole === "admin" ? (
               <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>

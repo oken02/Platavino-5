@@ -66,6 +66,7 @@ function EditProduct() {
     const dispatch = useDispatch()
     const history = useHistory()
     const classes = useStyles();
+    const lstoken = localStorage.getItem("token");
     const selectedWine = useSelector((state) => {
         return state.selectedProduct
     })
@@ -101,6 +102,10 @@ function EditProduct() {
             Descripcion: values.descripcion,
             Img: values.img,
             Stock: values.stock
+        }, {
+            headers: {
+                Authorization: "Bearer " + lstoken,
+            }
         })
             .then((data) => {
                 // dispatch(editProduct(data))
