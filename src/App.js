@@ -51,6 +51,11 @@ import { Checkout } from "./components/Checkout";
 import Confirmada from "./components/OrdenList";
 import OrdenList from "./components/OrdenList";
 
+import { ContactUs } from "./Layout/EmailForm";
+
+import Front from "./components/Front";
+
+
 function App() {
   let usernameRegister;
   let passwordRegister;
@@ -78,10 +83,16 @@ function App() {
       })
       .then((data) => {
         dispatch(setUsers(data.data));
-        toast.success("Usuario registrado!");
-        history.push("/login");
+
+
+        toast.success('Administrador registrado exitosamente!')
+        history.push('/login')
+
       })
-      .catch((e) => console.log(e.response));
+      .catch((e) => {
+        toast.error("Oops, no se pudo registrar el administrador...")
+        console.log(e.response)
+      });
   };
 
   const handleClick = (input) => {
@@ -132,9 +143,16 @@ function App() {
       })
       .then((data) => {
         dispatch(setUsers(data.data));
+        toast.success('Usuario registrado exitosamente!')
         history.push("/login");
       })
-      .catch((e) => console.log("aca en el front", e.response));
+
+      .catch((e) => {
+        toast.error("Oops, no se pudo registrar el usuario...")
+        console.log('aca en el front', e.response)
+      });
+
+
   };
 
   const handleAdminClick = () => {
@@ -142,11 +160,16 @@ function App() {
   };
 
   const handleClickLogout = () => {
+    toast('Adios!', {
+      icon: '👏',
+    });
     dispatch(sendLogout());
+    history.push('/')
   };
 
   return (
     <div>
+      <Toaster />
       <div>
         <PlatavinoBox />
         <MyAppBar handleClickLogout={handleClickLogout} />
@@ -154,6 +177,7 @@ function App() {
         <Box mt={4}></Box>
         <Container maxWidth="lg">
           <Switch>
+            <Route exact path='/' component={Front} />
             <Route path="/home" component={MyHome} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
@@ -187,8 +211,10 @@ function App() {
                     handleChangePasswordRegister={handleChangePasswordRegister}
                     handleChangeUsernameRegister={handleChangeUsernameRegister}
                     handleChangeEmailRegister={handleChangeEmailRegister}
+
                     error={error}
                     leyenda={leyenda}
+
                   />
                 );
               }}
@@ -211,7 +237,12 @@ function App() {
                 />
               )}
             />
+
             <Redirect to="/home" />
+
+            <Route path="/send" component={ContactUs} />
+
+
             <Route path="*" component={NotFound} />
           </Switch>
         </Container>
