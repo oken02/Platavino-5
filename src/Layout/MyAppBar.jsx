@@ -7,9 +7,12 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 // import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router";
+import toast, { Toaster } from 'react-hot-toast';
 import { Link } from "react-router-dom";
+import { ArrowDownIcon } from "@chakra-ui/icons";
 import { MyMenu } from "./MyMenu";
 import LocalBarIcon from "@material-ui/icons/LocalBar";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
   Menu,
   MenuButton,
@@ -28,6 +31,7 @@ import {
   Tooltip,
   Box,
 } from "@chakra-ui/react";
+
 
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
 import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMenu/float";
@@ -109,14 +113,17 @@ export function MyAppBar({ handleClickLogout }) {
       .catch((err) => history.push("/notfound"));
   };
 
+
   return (
     <div className={classes.root}>
       <div className={classes.offset} />
-      <AppBar position="fixed" color="white">
+      <AppBar position="fixed" color="white" className='navBar'>
         <Toolbar>
           <Box display="flex" alignItems="center">
             <Heading mr="2" as="h6" size="xs">
-              Platavino 5
+              <Link to='/'>
+                Platavino 5
+              </Link>
             </Heading>
             <LocalBarIcon className={classes.menuButton} />
           </Box>
@@ -134,21 +141,8 @@ export function MyAppBar({ handleClickLogout }) {
             <NavItem as={Link} to="/cart">
               Carrito
             </NavItem>
-            <NavItem as={Link} to="/ordenHistory">
-              Historial de ordenes
-            </NavItem>
-            {userRole === "admin" ? (
-              <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
-            ) : null}
           </NavMenu>
-          <Link to="/addProduct">
-            <Button
-              className={classes.menu}
-              useStyles={useFloatNavigationMenuStyles}
-            >
-              Add wine
-            </Button>
-          </Link>
+          <Toaster />
           <Box>
             <form onSubmit={handleSubmit}>
               <Input
@@ -161,9 +155,17 @@ export function MyAppBar({ handleClickLogout }) {
           </Box>
           {isLogged ? (
             <div className="userButton">
-              <Link to="/perfil">
-                <Button>{username}</Button>
-              </Link>
+              <Menu>
+                <MenuButton as={Button}>
+                  {username} {<ChevronDownIcon />}
+                </MenuButton>
+                <MenuList>
+                  <Link to='/perfil/info'> <MenuItem>Perfil</MenuItem></Link>
+                  <Link to='/ordenHistory'> <MenuItem>Historial de ordenes</MenuItem></Link>
+                  {userRole === 'admin' ? <Link to='/admin/usuarios'><MenuItem onClick={handleClickUsersPanel}>Panel de usuarios</MenuItem></Link> : null}
+                  {userRole === 'admin' ? <Link to='/addProduct'><MenuItem>agregar un vino</MenuItem></Link> : null}
+                </MenuList>
+              </Menu>
               <Link to="/perfil">
                 <Button onClick={handleClickLogout}>Log Out</Button>
               </Link>
@@ -183,6 +185,6 @@ export function MyAppBar({ handleClickLogout }) {
 
         {/* </Flex> */}
       </AppBar>
-    </div>
+    </div >
   );
 }

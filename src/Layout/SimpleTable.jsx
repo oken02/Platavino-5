@@ -2,6 +2,7 @@ import { IconButton } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserRole, deleteUser, setUsers } from "../store/usersReducer";
 import axios from "axios";
@@ -26,8 +27,12 @@ export const SimpleTable = () => {
     })
       .then((data) => {
         dispatch(changeUserRole(data.data))
+        toast.success('Rol modificado!')
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        toast.error("Oops, no se pudo mofificar el rol...")
+        console.log(e)
+      })
   }
 
   const handleDeleteUser = (id) => {
@@ -39,12 +44,17 @@ export const SimpleTable = () => {
     })
       .then((data) => {
         dispatch(deleteUser(id))
+        toast.success('Usuario eliminado!')
       })
-      .catch(e => console.log('aca', e.response))
+      .catch(e => {
+        toast.error("Oops, no se pudo eliminar el usuario...")
+        console.log('aca', e.response)
+      })
   }
 
   return (
     <div className='simpleTable'>
+      <Toaster />
       <table className="table table-hover table-borderless">
         <thead>
           <tr>

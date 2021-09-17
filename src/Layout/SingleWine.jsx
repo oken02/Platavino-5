@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import GoogleFontLoader from "react-google-font-loader";
+import toast, { Toaster } from 'react-hot-toast';
 import NoSsr from "@material-ui/core/NoSsr";
 
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -79,12 +80,20 @@ export function SingleWine() {
 
   const handleClickDelete = () => {
     axios
-      .delete(`http://localhost:3001/api/vinos/borrar/${selected}`)
+      .delete(`http://localhost:3001/api/vinos/borrar/${selected}`, {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        }
+      })
       .then(() => {
         console.log("eliminado");
+        toast.success('Vino eliminado correctamente!')
         history.push("/home");
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+        toast.error("Oops, no se pudo eliminar el vino...")
+        console.log(e)
+      });
   };
 
   const selectedWine = useSelector((state) => state.selectedProduct);
@@ -153,6 +162,7 @@ export function SingleWine() {
   return (
     //     /*
     <div>
+      <Toaster />
       <Grid container className={classes.vinoInfo} spacing={4}>
         <Grid item sm={6}>
           <Box>
@@ -237,9 +247,9 @@ export function SingleWine() {
                 variant="outline"
                 spacing="6"
                 isAttached
-                // mx={4}
-                // marginX=
-                // mx={3}
+              // mx={4}
+              // marginX=
+              // mx={3}
               >
                 <IconButton
                   flex={1}
