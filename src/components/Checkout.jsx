@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import toast, { Toaster } from 'react-hot-toast';
 import { useHistory } from "react-router";
 
 export const Checkout = () => {
@@ -35,9 +36,13 @@ export const Checkout = () => {
             }
         })
             .then((data) => {
+                toast.success('Compra realizada exitosamente!')
                 history.push('/ordenHistory')
             })
-            .catch(e => console.log(e.response))
+            .catch(e => {
+                toast.error("Oops, no se pudo realizar la compra...")
+                console.log(e.response)
+            })
     }
     const cartItems = useSelector((state) => {
         return state.carrito
@@ -53,6 +58,7 @@ export const Checkout = () => {
 
     return (
         <div>
+            <Toaster />
             <div class="container">
                 <main>
                     <div class="py-5 text-center">

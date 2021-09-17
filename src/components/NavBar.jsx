@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
+import toast, { Toaster } from 'react-hot-toast';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
@@ -176,6 +177,7 @@ export default function NavBar({ handleClick, handleClickLogout }) {
 
     return (
         <div className={`{classes.grow} navBar`} >
+            <Toaster />
             <AppBar position="static">
                 <Toolbar>
                     <IconButton

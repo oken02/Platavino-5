@@ -16,7 +16,14 @@ code {
 
 
 .navBar {
-  height: 10vh;
+  /* height: 10vh; */
+  padding-left: 100px;
+  padding-right: 100px;
+  color: rgba(77, 0, 128, 0.562);
+}
+
+.navBar button {
+  color: rgba(128, 0, 128, 0.74);
 }
 
 .footer {
@@ -101,4 +108,8 @@ code {
   margin: 10px;
   height: 300px;
   width: 200px;
+}
+
+.userButton {
+  margin-left: 30px;
 }
