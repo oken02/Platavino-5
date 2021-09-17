@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link as routerLink, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 
 import {
@@ -78,12 +78,11 @@ function Login() {
   const classes = useStyles();
 
   const isLogged = useSelector((state) => {
-    return state.user.data.username
-  })
+    return state.user.data.username;
+  });
 
   const [leyenda, setLeyenda] = useState("");
   const [error, setError] = useState(false);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,7 +92,7 @@ function Login() {
         setEmail("");
       } else {
         history.push("/");
-        return toast.success(`Bienvenido, has iniciado sesion!`)
+        return toast.success(`Bienvenido, has iniciado sesion!`);
       }
     });
   };
