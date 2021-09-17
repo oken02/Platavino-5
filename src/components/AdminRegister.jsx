@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-
+import toast, { Toaster } from 'react-hot-toast';
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -13,6 +13,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { setUsers } from "../store/usersReducer";
 
 function Copyright() {
   return (
@@ -48,14 +52,49 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function AdminRegister({
-  handleChangeEmailRegister,
-  handleChangePasswordRegister,
-  handleChangeUsernameRegister,
-  handleSubmitAdminRegisterForm,
   error,
   leyenda,
 }) {
   const classes = useStyles();
+  const dispatch = useDispatch()
+  const history = useHistory()
+  let usernameRegister
+  let passwordRegister
+  let emailRegister
+
+  const handleChangeUsernameRegister = (e) => {
+    usernameRegister = e.target.value
+  }
+  console.log(usernameRegister)
+  const handleChangePasswordRegister = (e) => {
+    passwordRegister = e.target.value
+  }
+  console.log(passwordRegister)
+  const handleChangeEmailRegister = (e) => {
+    emailRegister = e.target.value
+  }
+  console.log(emailRegister)
+
+  const handleSubmitAdminRegisterForm = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3001/api/auth/register", {
+        email: emailRegister,
+        username: usernameRegister,
+        password: passwordRegister,
+        role: "admin",
+      })
+      .then((data) => {
+        dispatch(setUsers(data.data));
+        toast.success('Administrador registrado exitosamente!')
+        history.push('/login')
+
+      })
+      .catch((e) => {
+        toast.error("Oops, no se pudo registrar el administrador...")
+        console.log(e.response)
+      });
+  };
 
   return (
     <Container component="main" maxWidth="xs">

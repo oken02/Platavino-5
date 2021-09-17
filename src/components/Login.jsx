@@ -91,6 +91,7 @@ function Login() {
       if (action.error) {
         setPassword("");
         setEmail("");
+        toast.error("Oops, no se pudo iniciar sesion...")
       } else {
         history.push("/");
         return toast.success(`Bienvenido, has iniciado sesion!`)
