@@ -18,8 +18,16 @@ export const setCategories = createAsyncThunk(
   }
 );
 
+export const getBodega = createAsyncThunk("GET_BODEGA", (data, thunkAPI) => {
+  return data;
+});
+
 const CategoriesReducer = createReducer([], {
   [setCategories.fulfilled]: (state, { payload }) => {
+    return payload;
+  },
+  [getBodega.fulfilled]: (state, { payload }) => {
+    console.log("GEETTT BODEGAA", payload);
     return payload;
   },
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -29,16 +29,17 @@ import {
   Box,
 } from "@chakra-ui/react";
 
-
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
 import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMenu/float";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { Form } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+
 import { setUsers } from "../store/usersReducer";
+import { setSelectedProduct } from "../store/selectedProductReducer";
+import { getBodega } from "../store/CategoriesReducer";
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -59,31 +60,65 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function MyAppBar({ handleClickLogout }) {
+  const [input, setInput] = useState("");
+
+  const lstoken = localStorage.getItem("token");
+  let inputLS = localStorage.setItem("input", input);
+
   const classes = useStyles();
   const lstoken = localStorage.getItem('token')
   const isLogged = useSelector((state) => {
-    return state.user.isAuthenticated
-  })
-  const dispatch = useDispatch()
-  const history = useHistory()
+    return state.user.isAuthenticated;
+  });
+  const dispatch = useDispatch();
+  const history = useHistory();
   const username = useSelector((state) => {
-    return state.user.data.username
-  })
+    return state.user.data.username;
+  });
   const userRole = useSelector((state) => {
-    return state.user.data.role
-  })
+    return state.user.data.role;
+  });
   const handleClickUsersPanel = () => {
+<<<<<<< HEAD
     axios.get("http://localhost:3001/api/users", {
       headers: {
         Authorization: `Bearer ${lstoken}`
       }
     })
-      .then((data) => {
-        dispatch(setUsers(data.data))
-        history.push('/admin/usuarios')
+=======
+    axios
+      .get("http://localhost:3001/api/users", {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        }
       })
-      .catch(e => console.log(e))
-  }
+>>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
+      .then((data) => {
+        dispatch(setUsers(data.data));
+        history.push("/admin/usuarios");
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const handleChange = (e) => {
+    let value = e.target.value;
+    let first = value.charAt(0).toUpperCase();
+    let resto = value.slice(1);
+    let finalValue = first + resto;
+    setInput(finalValue);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .get(`http://localhost:3001/api/categorias/bodega/${input}`)
+      .then(({ data }) => {
+        dispatch(getBodega(data));
+        setInput("");
+        history.push(`/results`);
+      })
+      .catch((err) => history.push("/notfound"));
+  };
 
   return (
     <div className={classes.root}>
@@ -94,64 +129,73 @@ export function MyAppBar({ handleClickLogout }) {
             <Heading mr="2" as="h6" size="xs">
               Platavino 5
             </Heading>
-
-            {/* <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            > */}
             <LocalBarIcon className={classes.menuButton} />
-            {/* </IconButton> */}
           </Box>
-
-          {/* <Typography variant="h6" className={classes.title}>
-            Platavino 5
-          </Typography>
-          <Button color="inherit">Login</Button>
-          <Button component={Link} to="/admin" color="inherit">
-            Admin
-          </Button> */}
-
-          <NavMenu className={classes.menu} gutter={1} useStyles={useFloatNavigationMenuStyles}>
+          <NavMenu
+            className={classes.menu}
+            gutter={1}
+            useStyles={useFloatNavigationMenuStyles}
+          >
             <NavItem active as={Link} to="/home">
               Vinos
             </NavItem>
-            <NavItem as={Link} to="/home">
+            <NavItem as={Link} to="/results">
               Categorias
             </NavItem>
             <NavItem as={Link} to="/cart">
               Carrito
             </NavItem>
+<<<<<<< HEAD
             <NavItem as={Link} to="/perfil">
               Perfil
             </NavItem>
             {userRole === 'admin' ?
+=======
+            <NavItem as={Link} to="/ordenHistory">
+              Historial de ordenes
+            </NavItem>
+            {userRole === "admin" ? (
+>>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
               <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
-              : null}
-
+            ) : null}
           </NavMenu>
-          <Link to='/addProduct'>
-            <Button className={classes.menu} useStyles={useFloatNavigationMenuStyles}>Add wine</Button>
+          <Link to="/addProduct">
+            <Button
+              className={classes.menu}
+              useStyles={useFloatNavigationMenuStyles}
+            >
+              Add wine
+            </Button>
           </Link>
           <Box>
-            <Input variant="filled" placeholder="Find your wine" />
+            <form onSubmit={handleSubmit}>
+              <Input
+                value={input}
+                onChange={handleChange}
+                variant="filled"
+                placeholder="Find your wine"
+              />
+            </form>
           </Box>
-          {isLogged ? <div className='userButton'>
-            <Link to='/perfil'>
-              <Button>{username}</Button>
-            </Link>
-            <Link to='/perfil'>
-              <Button onClick={handleClickLogout}>Log Out</Button>
-            </Link>
-          </div> : <div className='userButton'>
-            <Link to='/login'>
-              <Button>Sign In</Button>
-            </Link>
-            <Link to='/register'>
-              <Button>Register</Button>
-            </Link>
-          </div>}
+          {isLogged ? (
+            <div className="userButton">
+              <Link to="/perfil">
+                <Button>{username}</Button>
+              </Link>
+              <Link to="/perfil">
+                <Button onClick={handleClickLogout}>Log Out</Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="userButton">
+              <Link to="/login">
+                <Button>Sign In</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Register</Button>
+              </Link>
+            </div>
+          )}
           {/* </Form> */}
         </Toolbar>
 

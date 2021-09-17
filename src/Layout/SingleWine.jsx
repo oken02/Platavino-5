@@ -31,8 +31,12 @@ import { setCarrito } from "../store/addToCarrito";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
+<<<<<<< HEAD
 import { useIncrease } from "../hooks/useIncrease";
 
+=======
+import { Link } from "react-router-dom";
+>>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -77,8 +81,11 @@ export function SingleWine() {
   const userLogged = useSelector((state) => {
     return state.user.data.role;
   });
+<<<<<<< HEAD
 
   const { amount, add, minus } = useIncrease(0);
+=======
+>>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
 
   const handleClickDelete = () => {
     axios
@@ -89,6 +96,10 @@ export function SingleWine() {
       })
       .catch((e) => console.log(e));
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
   const selectedWine = useSelector((state) => state.selectedProduct);
   const classes = useStyles();
   const theme = useTheme();
@@ -111,6 +122,7 @@ export function SingleWine() {
   const [reviews, setReviews] = useState([]);
   const isLogged = useSelector((state) => state.user.data);
   const review = useSelector((state) => state.review);
+
   const handleInputChange = (e) => {
     const value = e.target.value;
     console.log("Cambio el valor input");
@@ -144,9 +156,6 @@ export function SingleWine() {
   };
 
   useEffect(() => {
-    // axios
-    //   .get(`http://localhost:3001/api/reviews/${id}`)
-    //   .then((res) => dispatch(getReview(res.data)));
     axios
       .get(`http://localhost:3001/api/reviews/${id}`)
       .then((res) => setReviews(res.data));
@@ -334,11 +343,19 @@ export function SingleWine() {
                 fonts={[{ font: "Ubuntu", weights: [400, 700] }]}
               />
             </NoSsr>
+<<<<<<< HEAD
             <Grid container className="bruno" spacing={4}>
               {reviews.map((rev, i) => {
                 console.log("rev", rev);
                 return (
                   <Grid item xs={12} md={6} lg={4} sm={12}>
+=======
+            {reviews.map((rev, i) => {
+              console.log("rev", rev);
+              return (
+                <Grid key={i} container className="bruno" spacing={4}>
+                  <Grid item xs={12} md={6} lg={4}>
+>>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
                     <ReviewCard
                       thumbnail={
                         "https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"

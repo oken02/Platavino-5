@@ -45,7 +45,7 @@ const FilterSidebar = () => {
           selected={indPrecio === 1}
           onClick={() => {
             setIndPrecio(1);
-            // dispatch(setPrecio("0-2000"));
+
             handleClick("Precio", "0-2000");
           }}
         >

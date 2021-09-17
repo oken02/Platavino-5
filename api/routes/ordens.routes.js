@@ -28,7 +28,7 @@ router.get("/", [validateToken], async (req, res) => {
     },
   });
   // const cartItems = CartItem.findAll({where:carritoId:})
-
+  console.log('ESTO ES LA RTA DEL BACK', ordens)
   res.json(ordens);
 });
 
