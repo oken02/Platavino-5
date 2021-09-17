@@ -27,6 +27,7 @@ const CategoriesReducer = createReducer([], {
     return payload;
   },
   [getBodega.fulfilled]: (state, { payload }) => {
+    console.log("GEETTT BODEGAA", payload);
     return payload;
   },
 });

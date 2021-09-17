@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function MyAppBar({ handleClickLogout }) {
   const [input, setInput] = useState("");
-  let inputLS = localStorage.setItem("input", input);
   const classes = useStyles();
   const isLogged = useSelector((state) => {
     return state.user.isAuthenticated;
@@ -87,15 +86,16 @@ export function MyAppBar({ handleClickLogout }) {
     let first = value.charAt(0).toUpperCase();
     let resto = value.slice(1);
     let finalValue = first + resto;
-    console.log(finalValue);
     setInput(finalValue);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
       .get(`http://localhost:3001/api/categorias/bodega/${input}`)
       .then(({ data }) => {
         dispatch(getBodega(data));
+        setInput("");
         history.push(`/results`);
       })
       .catch((err) => history.push("/notfound"));
@@ -158,6 +158,7 @@ export function MyAppBar({ handleClickLogout }) {
           <Box>
             <form onSubmit={handleSubmit}>
               <Input
+                value={input}
                 onChange={handleChange}
                 variant="filled"
                 placeholder="Find your wine"
