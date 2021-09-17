@@ -483,5 +483,3 @@ export function SingleWine({ match }) {
 
 //             {/* <Typography variant="h5">$ 1135.00</Typography> */}
 //             <Box mt={1}></Box>
-
-// */
