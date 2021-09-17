@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // import Table from "@material-ui/core/Table";
 // import TableBody from "@material-ui/core/TableBody";
@@ -20,13 +20,17 @@ import {
   Td,
   TableCaption,
 } from "@chakra-ui/table";
-import { MenuList,MenuItem } from "@chakra-ui/menu";
+import { MenuList, MenuItem } from "@chakra-ui/menu";
 import {
   ExternalLinkIcon,
   AddIcon,
   RepeatIcon,
   EditIcon,
 } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
+import axios from "axios";
+
+import { ModalContext } from "../contexts/modalContext";
 
 const useStyles = makeStyles({
   table: {
@@ -49,27 +53,74 @@ const rows = [
 export function MyOrders() {
   const classes = useStyles();
 
+  const isLogged = useSelector((state) => {
+    return state.user.data.username;
+  });
+  const lstoken = localStorage.getItem("token");
+  const [ordenes, setOrdenes] = React.useState([]);
+  const modalContext = useContext(ModalContext);
+
+  console.log("MODAL CONTEXT", modalContext);
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/ordens", {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setOrdenes(() => {
+          return data.data;
+        });
+      })
+      .catch((e) => console.log("ESTO ", e.response));
+  }, []);
+
   return (
     <div>
       <Heading mb={4} as="h3" size="lg">
         Orders
       </Heading>
       <Table variant="striped">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
-        <Thead>
+        <TableCaption>
+          <b>{`Ordenes de compra de ${isLogged}`}</b>
+        </TableCaption>
+        {/* <Thead>
           <Tr>
             <Th>To convert</Th>
             <Th>into</Th>
             <Th isNumeric>multiply by</Th>
           </Tr>
+        </Thead> */}
+        <Thead>
+          <Tr>
+            <Th>Id de orden</Th>
+            <Th>Status</Th>
+            <Th>Fecha</Th>
+            <Th>Total</Th>
+          </Tr>
         </Thead>
         <Tbody>
-          <Tr>
+          {/* <Tr>
             <Td>inches</Td>
             <Td>millimetres (mm)</Td>
             <Td isNumeric>25.4</Td>
-          </Tr>
-          <Tr>
+          </Tr> */}
+          {ordenes.map((orden) => {
+            return (
+              <Tr>
+                <Td>{orden.id}</Td>
+                <Td>{orden.Status}</Td>
+                <Td>
+                  {new Date(orden.FechaCompra).toLocaleDateString("es-PE")}
+                </Td>
+                <Td>{orden.PrecioTotal}</Td>
+              </Tr>
+            );
+          })}
+          {/* <Tr>
             <Td>feet</Td>
             <Td>centimetres (cm)</Td>
             <Td isNumeric>30.48</Td>
@@ -78,15 +129,15 @@ export function MyOrders() {
             <Td>yards</Td>
             <Td>metres (m)</Td>
             <Td isNumeric>0.91444</Td>
-          </Tr>
+          </Tr> */}
         </Tbody>
-        <Tfoot>
+        {/* <Tfoot>
           <Tr>
             <Th>To convert</Th>
             <Th>into</Th>
             <Th isNumeric>multiply by</Th>
           </Tr>
-        </Tfoot>
+        </Tfoot> */}
       </Table>
       {/* <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">

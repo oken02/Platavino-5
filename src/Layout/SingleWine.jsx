@@ -31,12 +31,8 @@ import { setCarrito } from "../store/addToCarrito";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
-<<<<<<< HEAD
 import { useIncrease } from "../hooks/useIncrease";
 
-=======
-import { Link } from "react-router-dom";
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -81,11 +77,8 @@ export function SingleWine() {
   const userLogged = useSelector((state) => {
     return state.user.data.role;
   });
-<<<<<<< HEAD
 
-  const { amount, add, minus } = useIncrease(0);
-=======
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
+  const { amount, add, minus } = useIncrease(1);
 
   const handleClickDelete = () => {
     axios
@@ -96,10 +89,6 @@ export function SingleWine() {
       })
       .catch((e) => console.log(e));
   };
-<<<<<<< HEAD
-=======
-
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
   const selectedWine = useSelector((state) => state.selectedProduct);
   const classes = useStyles();
   const theme = useTheme();
@@ -147,12 +136,13 @@ export function SingleWine() {
           },
         }
       )
-      .then((data) =>
+      .then((data) => {
+        console.log("DATA", data);
         setReviews(() => {
           console.log("setReview", [...reviews, data.data]);
           return [...reviews, data.data];
-        })
-      );
+        });
+      });
   };
 
   useEffect(() => {
@@ -289,7 +279,9 @@ export function SingleWine() {
                 colorScheme="purple"
                 size="md"
                 onClick={() => {
-                  dispatch(setCarrito(selectedWine));
+                  dispatch(
+                    setCarrito({ wine: selectedWine, cantidad: amount })
+                  );
                   history.push("/cart");
                 }}
               >
@@ -343,19 +335,12 @@ export function SingleWine() {
                 fonts={[{ font: "Ubuntu", weights: [400, 700] }]}
               />
             </NoSsr>
-<<<<<<< HEAD
+
             <Grid container className="bruno" spacing={4}>
               {reviews.map((rev, i) => {
                 console.log("rev", rev);
                 return (
                   <Grid item xs={12} md={6} lg={4} sm={12}>
-=======
-            {reviews.map((rev, i) => {
-              console.log("rev", rev);
-              return (
-                <Grid key={i} container className="bruno" spacing={4}>
-                  <Grid item xs={12} md={6} lg={4}>
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
                     <ReviewCard
                       thumbnail={
                         "https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
@@ -409,6 +394,14 @@ export function SingleWine() {
       </Grid>
     </div>
   );
+}
+
+{
+  /* {reviews.map((rev, i) => {
+              console.log("rev", rev);
+              return (
+                <Grid key={i} container className="bruno" spacing={4}>
+                  <Grid item xs={12} md={6} lg={4}> */
 }
 
 //       <Grid container className={classes.vinoInfo} spacing={4}>

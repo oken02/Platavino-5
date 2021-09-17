@@ -9,6 +9,12 @@ import { MyProfileEdit } from "./MyProfileEdit";
 import { Heading } from "@chakra-ui/layout";
 import { Sidebar2 } from "./Sidebar2";
 import { NewSidebar } from "./NewSidebar";
+import { ListUsers } from "./ListUsers";
+import { SimpleTable } from "./SimpleTable";
+import { ListProducts } from "./ListProducts";
+import { MyModal } from "./Modal";
+
+import { ModalContextProvider } from "../contexts/modalContext";
 
 export const MyProfile = () => {
   return (
@@ -19,18 +25,31 @@ export const MyProfile = () => {
             <MyProfileSidebar />
             {/* <Sidebar2 /> */}
             {/* <NewSidebar/> */}
-
           </Paper>
         </Grid>
         <Grid item md={9}>
           {/* <Paper> */}
-            <Box px={3}>
+          <Box px={3}>
+            <ModalContextProvider>
               <Switch>
                 <Route path="/perfil/orders" component={MyOrders}></Route>
                 <Route path="/perfil/info" component={MyProfileInfo}></Route>
                 <Route path="/perfil/edit" component={MyProfileEdit}></Route>
+                <Route path="/perfil/admin/users">
+                  <div>
+                    <ListUsers />
+                    {/* <SimpleTable /> */}
+                  </div>
+                </Route>
+                <Route path="/perfil/admin/products">
+                  <div>
+                    <ListProducts />
+                    {/* <SimpleTable /> */}
+                  </div>
+                </Route>
               </Switch>
-            </Box>
+            </ModalContextProvider>
+          </Box>
           {/* </Paper> */}
         </Grid>
       </Grid>

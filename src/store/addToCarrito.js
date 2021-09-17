@@ -7,27 +7,31 @@ import axios from "axios";
 const lstoken = localStorage.getItem("token");
 // export const setCarrito = createAction("SET_CARRITO");
 
-export const setCarrito = createAsyncThunk("SET_CARRITO", (wine, thunkAPI) => {
-  const { user } = thunkAPI.getState();
+export const setCarrito = createAsyncThunk(
+  "SET_CARRITO",
+  ({ wine, cantidad }, thunkAPI) => {
+    console.log();
+    const { user } = thunkAPI.getState();
 
-  const { carritoId } = user.data;
-  if (!user.data.id) throw new Error("You need to be logged in");
+    const { carritoId } = user.data;
+    if (!user.data.id) throw new Error("You need to be logged in");
 
-  return axios
-    .post(
-      `http://localhost:3001/api/carritos/${wine.id}`,
-      {},
-      {
-        headers: {
-          Authorization: "Bearer " + lstoken,
-        },
-      }
-    )
-    .then((res) => {
-      console.log("RESPUESTAAA RES", res);
-      return res.data;
-    });
-});
+    return axios
+      .post(
+        `http://localhost:3001/api/carritos/${wine.id}`,
+        { cantidad },
+        {
+          headers: {
+            Authorization: "Bearer " + lstoken,
+          },
+        }
+      )
+      .then((res) => {
+        console.log("RESPUESTAAA RES", res);
+        return res.data;
+      });
+  }
+);
 
 export const removeCarrito = createAsyncThunk(
   "REMOVE_CARRITO",
@@ -57,13 +61,29 @@ export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
     });
 });
 
+export const increaseAmount = createAsyncThunk(
+  "INCREASE_AMOUNT",
+  ({ card, amount, execute }) => {
+    console.log("AMOUNTTTTTTTTTTTTTTTTTT", { card, amount });
+    return axios
+      .put(
+        `http://localhost:3001/api/carritos/${card.id}`,
+        {
+          newCantidad: amount,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      )
+      .then(({ data }) => ({ card, amount }));
+  }
+);
+
 const carritoReducer = createReducer([], {
   [setCarrito.fulfilled]: (state, { payload }) => {
-<<<<<<< HEAD
-    console.log('CARITEMDB', payload)
-=======
-    console.log("PAYLOADDDDDD", payload);
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
+    console.log("CARITEMDB", payload);
     return [...state, payload];
   },
   [removeCarrito.fulfilled]: (state, { payload }) => {
@@ -72,6 +92,18 @@ const carritoReducer = createReducer([], {
   [getCart.fulfilled]: (state, { payload }) => {
     console.log("soy apyload", payload);
     return payload;
+  },
+
+  [increaseAmount.fulfilled]: (state, { payload }) => {
+    console.log("INCREMENTADO", payload.card);
+    // payload.execute();
+
+    const car = state.findIndex((c) => {
+      return c.id == payload.card.id;
+    });
+    state[car].cantidad = payload.amount;
+    console.log("PROXIIII", state);
+    // return state;
   },
 });
 

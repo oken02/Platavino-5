@@ -1,12 +1,32 @@
-import { Box, Typography, Button, TextField } from "@material-ui/core";
-import React from "react";
+import { Box, Typography, Button, TextField, Divider } from "@material-ui/core";
+import React, { useEffect } from "react";
 import { SimpleTable } from "./SimpleTable";
 import AddIcon from "@material-ui/icons/Add";
+import { setUsers } from "../store/usersReducer";
+
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
 export const ListUsers = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/users", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((data) => {
+        dispatch(setUsers(data.data));
+        // history.push("/admin/usuarios");
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
-    <div classname='contenedor1'>
-      <div className='simple'>
+    <div classname="contenedor1">
+      <div className="simple">
         <Box mb={2} display="flex" justifyContent="space-between">
           <Typography variant="h5">Users</Typography>
 
@@ -31,6 +51,10 @@ export const ListUsers = () => {
           />
         </Box>
       </div>
+
+      {/* <Divider style={clases.divider} /> */}
+      <Divider />
+
       <SimpleTable />
     </div>
   );

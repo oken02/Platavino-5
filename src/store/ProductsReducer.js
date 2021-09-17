@@ -12,25 +12,7 @@ export const addProduct = createAction("ADD_PRODUCT");
 
 export const deleteProduct = createAction("DELETE_PRODUCT");
 
-export const increaseAmount = createAsyncThunk(
-  "INCREASE_AMOUNT",
-  ({ card, amount, execute }) => {
-    console.log("AMOUNTTTTTTTTTTTTTTTTTT", { card, amount });
-    return axios
-      .put(
-        `http://localhost:3001/api/carritos/${card.id}`,
-        {
-          newCantidad: amount,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      )
-      .then(({ data }) => ({ data, execute }));
-  }
-);
+
 
 const ProductsReducer = createReducer([], {
   [setProducts.fulfilled]: (state, { payload }) => {
@@ -46,18 +28,11 @@ const ProductsReducer = createReducer([], {
       }),
     };
   },
-  // [increaseAmount.fulfilled]:
-  //   (state,
-  //   ({ payload }) => {
-  //     console.log("INCREMENTADO", payload);
-  //   })=>{
+  // [increaseAmount.fulfilled]: (state) => {
+  //   return [...state];
+  // },
 
-  //   },
-
-  [increaseAmount.fulfilled]: (state, { payload }) => {
-    console.log("INCREMENTADO", payload.data);
-    payload.execute();
-  },
+  
 });
 
 export default ProductsReducer;

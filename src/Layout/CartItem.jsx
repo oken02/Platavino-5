@@ -12,7 +12,7 @@ import { FilterSidebar } from "./FilterSidebar";
 import { Card, CardContent, CardActions, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useIncrease } from "../hooks/useIncrease";
-import { increaseAmount } from "../store/ProductsReducer";
+import { increaseAmount } from "../store/addToCarrito";
 
 export const CartItem = ({ card }) => {
   const [evt, setEvt] = useState(false);
@@ -25,11 +25,13 @@ export const CartItem = ({ card }) => {
   const dispatch = useDispatch();
 
   const increment = () => {
-    dispatch(increaseAmount({ card, amount: amount + 1, execute: add }));
+    dispatch(increaseAmount({ card, amount: amount + 1 }));
+    add();
   };
 
   const decrement = () => {
-    dispatch(increaseAmount({ card, amount: amount - 1, execute: minus }));
+    dispatch(increaseAmount({ card, amount: amount - 1 }));
+    minus();
   };
 
   return (

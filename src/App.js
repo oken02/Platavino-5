@@ -10,7 +10,7 @@ import { setCarrito } from "./store/addToCarrito";
 import EditProduct from "./components/EditProduct";
 import SingleRowSelectionGrid from './components/OrdenList'
 
-import toast, { Toaster } from 'react-hot-toast';
+// import toast, { Toaster } from 'react-hot-toast';
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
@@ -77,7 +77,7 @@ function App() {
       })
       .then((data) => {
         dispatch(setUsers(data.data));
-        toast.success('Usuario registrado!')
+        // toast.success('Usuario registrado!')
         history.push('/login')
       })
       .catch((e) => console.log(e.response));
@@ -141,12 +141,12 @@ function App() {
         <MyAppBar handleClickLogout={handleClickLogout} />
 
         <Box mt={4}></Box>
-        <Container maxWidth="lg">
-          <Switch>
+        <Container maxWidth="lg"> 
+          <Switch> 
             <Route path="/home" component={MyHome} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
-            <Route path="/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} />
+            {/* <Route path="/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} /> */}
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />

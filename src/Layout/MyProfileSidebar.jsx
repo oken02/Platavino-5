@@ -61,15 +61,15 @@ export const MyProfileSidebar = () => {
       subMenus: [
         {
           key: "users",
-          label: <p onClick={redirect("/admin/users")}>Users</p>,
+          label: <p onClick={redirect("/perfil/admin/users")}>Users</p>,
         },
         {
           key: "products",
-          label: <p onClick={redirect("/admin/products")}>Products</p>,
+          label: <p onClick={redirect("/perfil/admin/products")}>Products</p>,
         },
         {
           key: "categories",
-          label: <p onClick={redirect("/admin/categories")}>Categories</p>,
+          label: <p onClick={redirect("/perfil/admin/categories")}>Categories</p>,
         },
       ],
     },

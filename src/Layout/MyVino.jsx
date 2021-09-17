@@ -105,7 +105,9 @@ export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
           body={Descripcion}
         />
         <Button
-          className={buttonStyles}
+          color="primary"
+          // className={buttonStyles}
+          variant="outlined"
           onClick={() => {
             dispatch(setCarrito(wine));
             history.push("/cart");

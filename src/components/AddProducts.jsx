@@ -14,6 +14,9 @@ import { Link } from "@material-ui/core";
 import { addProduct } from "../store/ProductsReducer";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
+import { ModalFooter } from "@chakra-ui/modal";
+
+import { Button as CkButton } from "@chakra-ui/react";
 
 function Copyright() {
   return (
@@ -61,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddProduct() {
+function AddProduct({ onClose }) {
   const lstoken = localStorage.getItem("token");
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -111,164 +114,155 @@ function AddProduct() {
       .then((data) => {
         dispatch(addProduct(data));
         history.push("/home");
+        onClose();
       })
       .catch((e) => console.log("ERROR EN POSTEO", e));
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            ¿Want to add a wine?
-          </Typography>
-          <form
-            onSubmit={handleSubmit}
-            className={`${classes.form} reqInfoContainer`}
-            noValidate
-          >
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Pais de origen"
-              name="paisDeOrigen"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Bodega"
-              name="bodega"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Precio"
-              name="precio"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Varietal"
-              name="varietal"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Color"
-              name="color"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="ml"
-              name="ml"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Descripcion"
-              name="descripcion"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Imagen"
-              name="img"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <TextField
-              onChange={handleChange}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Stock"
-              name="stock"
-              autoComplete="email"
-              autoFocus
-              className="input"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Add a wine!
-            </Button>
+    <div>
+      {/* <Typography component="h1" variant="h5">
+        ¿Want to add a wine?
+      </Typography> */}
+      <form className={`${classes.form} reqInfoContainer`} noValidate>
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Pais de origen"
+          name="paisDeOrigen"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Bodega"
+          name="bodega"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Precio"
+          name="precio"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Varietal"
+          name="varietal"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Color"
+          name="color"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="ml"
+          name="ml"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Descripcion"
+          name="descripcion"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Imagen"
+          name="img"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        <TextField
+          onChange={handleChange}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Stock"
+          name="stock"
+          autoComplete="email"
+          autoFocus
+          className="input"
+        />
+        {/* <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        >
+          Add a wine!
+        </Button> */}
 
-            <Grid container>
-              <Grid item xs></Grid>
-            </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
+        <Grid container>
+          <Grid item xs></Grid>
+        </Grid>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </form>
+
+      <br />
+
+    </div>
   );
 }
 

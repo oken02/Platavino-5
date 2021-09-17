@@ -83,7 +83,7 @@ router.get("/", [validateToken], async (req, res) => {
     const carrito = await Carrito.findByPk(user.carritoId);
 
     const vinosDB = await carrito.getCartItems({
-      // include: Vino,
+      include: Vino,
       // attributes: ["id", "cantidad", "carritoId"],
     });
     res.json(vinosDB);

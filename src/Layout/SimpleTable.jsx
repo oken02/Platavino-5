@@ -7,52 +7,58 @@ import { changeUserRole, deleteUser, setUsers } from "../store/usersReducer";
 import axios from "axios";
 
 export const SimpleTable = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const lstoken = localStorage.getItem("token");
 
   const users = useSelector((state) => {
-    return state.users
-  })
+    return state.users;
+  });
 
   users.map((user) => {
-    return console.log(user.username)
-  })
+    return console.log(user.username);
+  });
 
   const handleAdminPermisoClick = (id) => {
-    axios.put(`http://localhost:3001/api/auth/promover/${id}`, {}, {
-      headers: {
-        Authorization: "Bearer " + lstoken,
-      }
-    })
+    axios
+      .put(
+        `http://localhost:3001/api/auth/promover/${id}`,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + lstoken,
+          },
+        }
+      )
       .then((data) => {
-        dispatch(changeUserRole(data.data))
+        dispatch(changeUserRole(data.data));
       })
-      .catch(e => console.log(e))
-  }
+      .catch((e) => console.log(e));
+  };
 
   const handleDeleteUser = (id) => {
     const lstoken = localStorage.getItem("token");
-    axios.delete(`http://localhost:3001/api/users/${id}`, {
-      headers: {
-        Authorization: "Bearer " + lstoken,
-      }
-    })
-      .then((data) => {
-        dispatch(deleteUser(id))
+    axios
+      .delete(`http://localhost:3001/api/users/${id}`, {
+        headers: {
+          Authorization: "Bearer " + lstoken,
+        },
       })
-      .catch(e => console.log('aca', e.response))
-  }
+      .then((data) => {
+        dispatch(deleteUser(id));
+      })
+      .catch((e) => console.log("aca", e.response));
+  };
 
   return (
-    <div className='simpleTable'>
+    <div className="simpleTable">
       <table className="table table-hover table-borderless">
         <thead>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Username</th>
             <th scope="col">Email</th>
-            <th scope="col">Acciones</th>
             <th scope="col">Rol</th>
+            <th scope="col">Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -61,15 +67,24 @@ export const SimpleTable = () => {
               <th scope="row">{idx + 1}</th>
               <td>{n.username}</td>
               <td>{n.email}</td>
+
+              <td>{n.role}</td>
               <td>
-                <IconButton onClick={() => handleAdminPermisoClick(n.id)} color="primary" aria-label="add an alarm">
+                <IconButton
+                  onClick={() => handleAdminPermisoClick(n.id)}
+                  color="primary"
+                  aria-label="add an alarm"
+                >
                   <EditOutlinedIcon />
                 </IconButton>
-                <IconButton onClick={() => handleDeleteUser(n.id)} color="primary" aria-label="add an alarm">
+                <IconButton
+                  onClick={() => handleDeleteUser(n.id)}
+                  color="primary"
+                  aria-label="add an alarm"
+                >
                   <DeleteOutlineOutlinedIcon />
                 </IconButton>
               </td>
-              <td>{n.role}</td>
             </tr>
           ))}
         </tbody>

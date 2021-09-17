@@ -12,14 +12,16 @@ import { useN01TextInfoContentStyles } from "@mui-treasury/styles/textInfoConten
 import { useBouncyShadowStyles } from "@mui-treasury/styles/shadow/bouncy";
 import { Typography, Box } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
-import { IconButton, CardActions } from "@material-ui/core";
+// import { IconButton, CardActions } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import { Box as BoxCh, Heading } from "@chakra-ui/react";
+import { Box as BoxCh, Heading, IconButton } from "@chakra-ui/react";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedProduct } from "../store/selectedProductReducer";
+
 const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 304,
@@ -32,6 +34,10 @@ const useStyles = makeStyles(() => ({
       display: "flex",
     },
     borderRadius: "10px",
+    "& .MuiCardMedia-root":{
+      cursor: "pointer",
+
+    }
   },
   content: {
     padding: 24,
@@ -42,6 +48,10 @@ const useStyles = makeStyles(() => ({
   },
   icons: {
     justifyContent: "center",
+  },
+  img: {
+    cursor: "pointer",
+
   },
 }));
 
@@ -55,18 +65,18 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
   const shadowStyles = useBouncyShadowStyles();
   const history = useHistory();
 
-
-
   //en algun lado hacer que la imagen se adapte al tamaño sin cortarsee
   return (
-    <Card
-      onClick={() => {
-        dispatch(setSelectedProduct(wine));
-        history.push(`/vino/${id}`);
-      }}
-      className={cx(styles.root, shadowStyles.root)}
-    >
-      <CardMedia classes={mediaStyles} image={Img} />
+    <Card className={cx(styles.root, shadowStyles.root)}>
+      <CardMedia
+        onClick={() => {
+          dispatch(setSelectedProduct(wine));
+          history.push(`/vino/${id}`);
+        }}
+        classes={mediaStyles}
+        image={Img}
+        
+      />
       <CardContent className={styles.content}>
         <Heading as="h5" size="sm">
           {Varietal}
@@ -77,7 +87,34 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
         <BoxCh>{`$ ${Precio}`}</BoxCh>
       </CardContent>
 
-      <Box
+      {/* <CardActions disableSpacing> */}
+      {/* <IconButton aria-label="add to favorites"> */}
+
+      <BoxCh display="flex" p="2">
+        <IconButton
+          flex="1"
+          variant="outline"
+          colorScheme="purple"
+          aria-label="Send email"
+          icon={<EditIcon />}
+          mr="2"
+        />
+        <IconButton
+          flex="1"
+          variant="outline"
+          colorScheme="purple"
+          aria-label="Send email"
+          icon={<DeleteIcon />}
+        />
+      </BoxCh>
+
+      {/* </IconButton> */}
+      {/* <IconButton aria-label="share">
+          <DeleteIcon fontSize="small" color="primary" />
+        </IconButton> */}
+      {/* </CardActions> */}
+
+      {/* <Box
         display="none"
         className="icon"
         position="absolute"
@@ -88,7 +125,7 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon fontSize="small" />
         </IconButton>
-      </Box>
+      </Box> */}
     </Card>
   );
 });

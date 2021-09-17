@@ -57,8 +57,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export function MyAppBar({ handleClickLogout }) {
   const [input, setInput] = useState("");
 
@@ -66,7 +64,7 @@ export function MyAppBar({ handleClickLogout }) {
   let inputLS = localStorage.setItem("input", input);
 
   const classes = useStyles();
-  const lstoken = localStorage.getItem('token')
+  // const lstoken = localStorage.getItem('token')
   const isLogged = useSelector((state) => {
     return state.user.isAuthenticated;
   });
@@ -79,20 +77,12 @@ export function MyAppBar({ handleClickLogout }) {
     return state.user.data.role;
   });
   const handleClickUsersPanel = () => {
-<<<<<<< HEAD
-    axios.get("http://localhost:3001/api/users", {
-      headers: {
-        Authorization: `Bearer ${lstoken}`
-      }
-    })
-=======
     axios
       .get("http://localhost:3001/api/users", {
         headers: {
-          Authorization: "Bearer " + lstoken,
-        }
+          Authorization: `Bearer ${lstoken}`,
+        },
       })
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
       .then((data) => {
         dispatch(setUsers(data.data));
         history.push("/admin/usuarios");
@@ -138,24 +128,17 @@ export function MyAppBar({ handleClickLogout }) {
           >
             <NavItem active as={Link} to="/home">
               Vinos
-            </NavItem>
+            </NavItem> 
             <NavItem as={Link} to="/results">
               Categorias
             </NavItem>
             <NavItem as={Link} to="/cart">
               Carrito
             </NavItem>
-<<<<<<< HEAD
             <NavItem as={Link} to="/perfil">
               Perfil
             </NavItem>
-            {userRole === 'admin' ?
-=======
-            <NavItem as={Link} to="/ordenHistory">
-              Historial de ordenes
-            </NavItem>
             {userRole === "admin" ? (
->>>>>>> fb87f3da260ae9782998bb0e6f428324dc2a7cad
               <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
             ) : null}
           </NavMenu>
