@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import { useHistory } from "react-router";
 
 import emailjs from "emailjs-com";
@@ -20,7 +20,6 @@ export const Checkout = () => {
   let adress;
 
   const form = useRef();
-
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -46,60 +45,30 @@ export const Checkout = () => {
   //     <form ref={form} onSubmit={sendEmail}>
   //       <input value={isLogged.username} type="text" name="user_name" />
 
-    const handleSubmitCheckoutForm = (e) => {
-        e.preventDefault()
-        // history.push('/confirmada')
-        axios.post('http://localhost:3001/api/ordens', {}, {
-            headers: {
-                Authorization: "Bearer " + lstoken,
-            }
-        })
-            .then((data) => {
-                toast.success('Compra realizada exitosamente!')
-                history.push('/ordenHistory')
-            })
-            .catch(e => {
-                toast.error("Oops, no se pudo realizar la compra...")
-                console.log(e.response)
-            })
-    }
-    const cartItems = useSelector((state) => {
-        return state.carrito
-    })
-    useEffect(() => {
-        let suma = cartItems.map((wine) => wine.vino.Precio);
-        setTotal(
-            suma.reduce(function (previousValue, currentValue) {
-                return Number(previousValue) + Number(currentValue);
-            }, 0)
-        );
-    }, [cartItems]);
+  //     return (
+  //         <div>
+  //             <Toaster />
+  //             <div class="container">
+  //                 <main>
+  //                     <div class="py-5 text-center">
+  //                         <img
+  //                             class="d-block mx-auto mb-4"
+  //                             src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2019/03/attachment_75908874-e1552887176124.jpg?auto=format&q=60&fit=max&w=930"
+  //                             alt=""
+  //                             width="72"
+  //                             height="57"
+  //                         />
+  //                         <p class="lead">
+  //                             <h1>Checkout Form</h1>
+  //                         </p>
+  //                     </div>
 
-    return (
-        <div>
-            <Toaster />
-            <div class="container">
-                <main>
-                    <div class="py-5 text-center">
-                        <img
-                            class="d-block mx-auto mb-4"
-                            src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2019/03/attachment_75908874-e1552887176124.jpg?auto=format&q=60&fit=max&w=930"
-                            alt=""
-                            width="72"
-                            height="57"
-                        />
-                        <p class="lead">
-                            <h1>Checkout Form</h1>
-                        </p>
-                    </div>
-
-
-  //       <input value={isLogged.email} type="email" name="user_email" />
-  //       <button value={clickbutton} id="bruno" type="submit" value="Send">
-  //         send
-  //       </button>
-  //     </form>
-  //   );
+  //   //       <input value={isLogged.email} type="email" name="user_email" />
+  //   //       <button value={clickbutton} id="bruno" type="submit" value="Send">
+  //   //         send
+  //   //       </button>
+  //   //     </form>
+  //   //   );
 
   const handleChangeFirstNameCheckout = (e) => {
     firstName = e.target.value;
@@ -146,6 +115,7 @@ export const Checkout = () => {
 
   return (
     <div>
+      <Toaster />
       <div class="container">
         <main>
           <div class="py-5 text-center">
