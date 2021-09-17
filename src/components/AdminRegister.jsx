@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function AdminRegister({ handleChangeEmailRegister, handleChangePasswordRegister, handleChangeUsernameRegister, handleSubmitRegisterForm }) {
+function AdminRegister({ handleChangeEmailRegister, handleChangePasswordRegister, handleChangeUsernameRegister, handleSubmitAdminRegisterForm }) {
     const classes = useStyles();
 
     return (
@@ -60,7 +60,7 @@ function AdminRegister({ handleChangeEmailRegister, handleChangePasswordRegister
                 <Typography component="h1" variant="h5">
                     Admin Register
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmitRegisterForm}>
+                <form className={classes.form} noValidate onSubmit={(e) => handleSubmitAdminRegisterForm(e)}>
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField

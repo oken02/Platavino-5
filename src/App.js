@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { setCarrito } from "./store/addToCarrito";
 
 import EditProduct from "./components/EditProduct";
+import SingleRowSelectionGrid from './components/OrdenList'
 
-
-
+import toast, { Toaster } from 'react-hot-toast';
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
@@ -48,6 +48,9 @@ import { ListUsers } from "./Layout/ListUsers";
 
 
 import Login from "./components/Login";
+import { Checkout } from "./components/Checkout";
+import Confirmada from "./components/OrdenList";
+import OrdenList from "./components/OrdenList";
 
 function App() {
   let usernameRegister;
@@ -66,15 +69,18 @@ function App() {
   const handleSubmitAdminRegisterForm = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:3001/api/auth/admin", {
+      .post("http://localhost:3001/api/auth/register", {
         email: emailRegister,
         username: usernameRegister,
         password: passwordRegister,
+        role: 'admin'
       })
       .then((data) => {
         dispatch(setUsers(data.data));
+        toast.success('Usuario registrado!')
+        history.push('/login')
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e.response));
   };
 
   const handleClick = (input) => {
@@ -144,7 +150,17 @@ function App() {
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
             <Route path="/results" component={Results} />
+            <Route path='/checkout' component={Checkout} />
+            <Route path='/ordenHistory' component={SingleRowSelectionGrid} />
+            <Route path='/adminRegister' render={() => {
+              return <AdminRegister
+                handleSubmitAdminRegisterForm={handleSubmitAdminRegisterForm}
+                handleChangePasswordRegister={handleChangePasswordRegister}
+                handleChangeUsernameRegister={handleChangeUsernameRegister}
+                handleChangeEmailRegister={handleChangeEmailRegister}
 
+              />
+            }} />
             <Route path='/editProduct' component={EditProduct} />
             <Route path='/addProduct' component={AddProduct} />
 

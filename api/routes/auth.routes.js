@@ -131,7 +131,7 @@ router.post("/register", async (req, res) => {
         password: passwordHashed,
       },
       {
-        fields: ["password", "username", "email"],
+        fields: ["password", "username", "email", 'role'],
       }
     );
 
