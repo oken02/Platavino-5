@@ -90,6 +90,7 @@ function Login() {
     dispatch(sendLogin({ email, password })).then((action) => {
       if (action.error) {
         setPassword("");
+        setEmail("");
       } else {
         history.push("/");
         return toast.success(`Bienvenido, has iniciado sesion!`)
@@ -105,13 +106,13 @@ function Login() {
   const handleEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
-    // if ((value.includes("@") && value.includes(".")) || !value) {
-    //   setError(false);
-    //   setLeyenda("");
-    // } else {
-    //   setError(true);
-    //   setLeyenda("email invalido");
-    // }
+    if ((value.includes("@") && value.includes(".")) || !value) {
+      setError(false);
+      setLeyenda("");
+    } else {
+      setError(true);
+      setLeyenda("email invalido");
+    }
   };
 
   return (

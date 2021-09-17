@@ -14,7 +14,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Register from "./components/Register";
 import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { setUsers } from "./store/usersReducer";
@@ -60,6 +60,8 @@ function App() {
   let usernameRegister;
   let passwordRegister;
   let emailRegister;
+  const [error, setError] = useState("");
+  const [leyenda, setLeyenda] = useState("");
   const history = useHistory();
   const dispatch = useDispatch();
   const userLooged = useSelector((state) => {
@@ -82,8 +84,6 @@ function App() {
       .then((data) => {
         dispatch(setUsers(data.data));
 
-        toast.success("Usuario registrado!");
-        history.push("/login");
 
         toast.success('Administrador registrado exitosamente!')
         history.push('/login')
@@ -120,6 +120,16 @@ function App() {
   const handleChangeEmailRegister = (e) => {
     emailRegister = e.target.value;
     console.log(emailRegister);
+    if (
+      (emailRegister.includes("@") && emailRegister.includes(".")) ||
+      !emailRegister
+    ) {
+      setError(false);
+      setLeyenda("");
+    } else {
+      setError(true);
+      setLeyenda("email invalido");
+    }
   };
 
   const handleSubmitRegisterForm = (e) => {
@@ -136,10 +146,12 @@ function App() {
         toast.success('Usuario registrado exitosamente!')
         history.push("/login");
       })
+
       .catch((e) => {
         toast.error("Oops, no se pudo registrar el usuario...")
         console.log('aca en el front', e.response)
       });
+
 
   };
 
@@ -199,6 +211,10 @@ function App() {
                     handleChangePasswordRegister={handleChangePasswordRegister}
                     handleChangeUsernameRegister={handleChangeUsernameRegister}
                     handleChangeEmailRegister={handleChangeEmailRegister}
+
+                    error={error}
+                    leyenda={leyenda}
+
                   />
                 );
               }}
@@ -216,10 +232,16 @@ function App() {
                   handleChangePasswordRegister={handleChangePasswordRegister}
                   handleChangeUsernameRegister={handleChangeUsernameRegister}
                   handleSubmitRegisterForm={handleSubmitRegisterForm}
+                  error={error}
+                  leyenda={leyenda}
                 />
               )}
             />
+
+            <Redirect to="/home" />
+
             <Route path="/send" component={ContactUs} />
+
 
             <Route path="*" component={NotFound} />
           </Switch>
