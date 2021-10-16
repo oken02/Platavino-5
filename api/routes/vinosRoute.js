@@ -50,7 +50,7 @@ router.put("/edit/:id", [validateToken, justAdmin], (req, res, next) => {
 });
 
 //RUTA QUE NOS PERMITE ELIMINAR UN VINO A TRAVÉS DE SU ID
-router.delete("/borrar/:id", [validateToken, justAdmin], (req, res, next) => {
+router.delete("/:id", (req, res, next) => {
   Vinos.destroy({
     where: {
       id: req.params.id,

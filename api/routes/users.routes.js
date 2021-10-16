@@ -15,6 +15,7 @@ const router = express.Router();
  */
 
 router.get("/", [validateToken, justAdmin], async (req, res) => {
+  console.log("GET USERS");
   try {
     const users = await User.findAll({
       // attributes: ["username", "email", "id", "role"],
@@ -26,6 +27,18 @@ router.get("/", [validateToken, justAdmin], async (req, res) => {
   }
 });
 
+router.get("/:name", async (req, res) => {
+  const users = await User.findAll({
+    where: {
+      username: {
+        [Op.substring]: req.params.name,
+      },
+    },
+  }).catch(console.log);
+
+  res.json(users);
+});
+
 router.delete("/:id", [validateToken, justAdmin], async (req, res) => {
   const { id } = req.params;
 
@@ -34,15 +47,13 @@ router.delete("/:id", [validateToken, justAdmin], async (req, res) => {
       const resDB = await User.destroy({ where: { id }, limit: 1 });
       console.log("DELETE RES", resDB);
     }
-    // const userToDelete = User.build({ id });
-    // const resDB = await userToDelete.destroy();
+
     res.json({ msg: "usuario eliminado" });
   } catch (error) {
-    console.log('aca en back', error);
+    console.log("aca en back", error);
     res.sendStatus(500);
   }
 });
-
 
 router.put("/:id", [validateToken], async (req, res) => {
   const { id } = req.params;
@@ -51,10 +62,8 @@ router.put("/:id", [validateToken], async (req, res) => {
 
   const { id: tokenID, role } = req.payload;
 
-
   if (tokenID != id) {
     return res.status(401).json({ msg: "no puedes editar el perfil de otro" });
-
   }
 
   try {

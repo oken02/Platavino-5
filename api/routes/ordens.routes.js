@@ -28,7 +28,23 @@ router.get("/", [validateToken], async (req, res) => {
     },
   });
   // const cartItems = CartItem.findAll({where:carritoId:})
-  console.log('ESTO ES LA RTA DEL BACK', ordens)
+  console.log("ESTO ES LA RTA DEL BACK", ordens);
+  res.json(ordens);
+});
+
+router.get("/all", async (req, res) => {
+  // const { id: userId } = req.payload;
+
+  // const user = User.build({ id: userId });
+
+  const ordens = await Orden.findAll({
+    include: {
+      model: Carrito,
+      include: { model: CartItem, include: { model: Vino } },
+    },
+  });
+  // const cartItems = CartItem.findAll({where:carritoId:})
+  console.log("ESTO ES LA RTA DEL BACK", ordens);
   res.json(ordens);
 });
 
@@ -58,16 +74,16 @@ router.post("/", [validateToken], async (req, res) => {
   let totalPrice = 0;
 
   for (const cartItem of cartItems) {
-    totalPrice += cartItem.cantidad * cartItem.vino.Precio;
+    totalPrice += cartItem.cantidad * cartItem.vino.precio;
   }
 
   const sinStock = [];
   const conStock = [];
   for (const cartItem of cartItems) {
-    if (cartItem.cantidad > cartItem.vino.Stock) {
+    if (cartItem.cantidad > cartItem.vino.stock) {
       sinStock.push({
         vino: cartItem.vino,
-        stock: cartItem.vino.Stock,
+        stock: cartItem.vino.stock,
       });
     } else {
       conStock.push({
@@ -78,10 +94,11 @@ router.post("/", [validateToken], async (req, res) => {
 
   if (sinStock.length == 0) {
     const orden = await Orden.create({
-      PrecioTotal: totalPrice,
+      precioTotal: totalPrice,
       state: "procesado",
       userId,
       carritoId: user.carritoId,
+      ...req.body,
     });
 
     const carrito = await Carrito.create();
@@ -93,9 +110,9 @@ router.post("/", [validateToken], async (req, res) => {
 
     setTimeout(async () => {
       if (Math.random() * 100 <= 10) {
-        orden.Status = "cancelado";
+        orden.state = "cancelado";
       } else {
-        orden.Status = "completado";
+        orden.state = "completado";
         Orden.disminuirStock(cartItems);
       }
       await orden.save();
@@ -103,14 +120,12 @@ router.post("/", [validateToken], async (req, res) => {
     }, 5000);
 
     res.send({
-      ok: "true",
       orden,
       conStock,
       sinStock,
     });
   } else {
     res.status(401).json({
-      ok: false,
       msg: "hay productos sin stock",
       sinStock,
       conStock,

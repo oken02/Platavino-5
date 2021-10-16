@@ -14,7 +14,6 @@ const validateToken = (req, res, next) => {
 
   jwt.verify(reqToken, "SECRET", (err, payload) => {
     if (err) return res.status(401).json({ msg: "el token no es valido" });
-
     req.payload = payload;
     next();
   });

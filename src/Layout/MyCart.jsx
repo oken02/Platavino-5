@@ -1,6 +1,6 @@
 import { Heading, Text } from "@chakra-ui/layout";
 import { Box, Grid, Paper } from "@material-ui/core";
-import { Box as BoxCk } from "@chakra-ui/react";
+// import { Box as BoxCk } from "@chakra-ui/react";
 import { AddIcon, MinusIcon, DeleteIcon, CloseIcon } from "@chakra-ui/icons";
 import { Tag } from "@chakra-ui/tag";
 import { ButtonGroup, Button, IconButton } from "@chakra-ui/button";
@@ -12,6 +12,7 @@ import { FilterSidebar } from "./FilterSidebar";
 import { Card, CardContent, CardActions, Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { useIncrease } from "../hooks/useIncrease";
+import { Alert, AlertIcon } from "@chakra-ui/react";
 import { CartItem } from "./CartItem";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,10 +57,6 @@ export const MyCart = () => {
     dispatch(getCart());
   }, []);
 
-  const kev = cart.filter((car) => {
-    return car !== "";
-  });
-
   useEffect(() => {
     // let suma = kev.map((wine) => wine.vino.Precio);
     console.log("RE RENDER MY CART");
@@ -67,37 +64,31 @@ export const MyCart = () => {
     let totalALGo = 0;
 
     for (const cartItem of cart) {
-      totalALGo += cartItem.vino.Precio * cartItem.cantidad;
+      totalALGo += cartItem.vino.precio * cartItem.cantidad;
     }
 
     setTotal(totalALGo);
-
-    // setTotal(
-
-    //   suma.reduce(function (previousValue, currentValue) {
-    //     return Number(previousValue) + Number(currentValue);
-    //   }, 0)
-
-    // );
   }, [cart]);
 
   return (
     <div className={classes.div}>
       <Grid container spacing={2}>
         <Grid item container md={8} lg={8}>
-          {cart.length
-            ? kev.map((card, i) => {
-                console.log("este es el card de map", card);
-                // if (typeof card === 'string') {
-                //   return null
-                // }
-                return (
-                  <Grid item md={12} lg={12}>
-                    <CartItem card={card} />
-                  </Grid>
-                );
-              })
-            : null}
+          {!cart.length && (
+            <Alert status="info" colorScheme="purple" justifyContent="center">
+              <AlertIcon />
+              No tienes nada en tu carrito
+            </Alert>
+          )}
+          {cart.map((card, i) => {
+            console.log("este es el card de map", card);
+            return (
+              <Grid item md={12} lg={12}>
+                <CartItem card={card} />
+                <br />
+              </Grid>
+            );
+          })}
         </Grid>
 
         <Grid item md={4} lg={4}>
@@ -117,7 +108,17 @@ export const MyCart = () => {
               </div>
             </CardContent>
             <CardActions>
-              <Button size="small" onClick={() => history.push("/checkout")}>
+              {/* <Button size="small" onClick={() => history.push("/checkout")}>
+                Comprar
+              </Button> */}
+              <Button
+                // mx={4}
+                flex={1}
+                colorScheme="purple"
+                // width="100%"
+                size="md"
+                onClick={() => history.push("/checkout")}
+              >
                 Comprar
               </Button>
             </CardActions>

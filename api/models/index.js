@@ -11,7 +11,9 @@ User.belongsTo(Carrito);
 CartItem.belongsTo(Carrito);
 Carrito.hasMany(CartItem);
 
-Vino.hasOne(CartItem);
+Vino.hasOne(CartItem, {
+  onDelete: "CASCADE",
+});
 CartItem.belongsTo(Vino);
 
 User.hasMany(Review);

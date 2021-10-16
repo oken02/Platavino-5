@@ -6,89 +6,75 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeUserRole, deleteUser, setUsers } from "../store/usersReducer";
 import axios from "axios";
 
-export const SimpleTable = () => {
+import { TriangleUpIcon,DeleteIcon } from "@chakra-ui/icons";
+
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+} from "@chakra-ui/react";
+
+export const SimpleTable = ({ users }) => {
   const dispatch = useDispatch();
-  const lstoken = localStorage.getItem("token");
 
-  const users = useSelector((state) => {
-    return state.users;
-  });
-
-  users.map((user) => {
-    return console.log(user.username);
-  });
-
-  const handleAdminPermisoClick = (id) => {
-    axios
-      .put(
-        `http://localhost:3001/api/auth/promover/${id}`,
-        {},
-        {
-          headers: {
-            Authorization: "Bearer " + lstoken,
-          },
-        }
-      )
-      .then((data) => {
-        dispatch(changeUserRole(data.data));
-      })
-      .catch((e) => console.log(e));
-  };
-
-  const handleDeleteUser = (id) => {
-    const lstoken = localStorage.getItem("token");
-    axios
-      .delete(`http://localhost:3001/api/users/${id}`, {
-        headers: {
-          Authorization: "Bearer " + lstoken,
-        },
-      })
-      .then((data) => {
-        dispatch(deleteUser(id));
-      })
-      .catch((e) => console.log("aca", e.response));
-  };
+  // const users = useSelector((state) => state.users);
 
   return (
-    <div className="simpleTable">
-      <table className="table table-hover table-borderless">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Username</th>
-            <th scope="col">Email</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((n, idx) => (
-            <tr>
-              <th scope="row">{idx + 1}</th>
-              <td>{n.username}</td>
-              <td>{n.email}</td>
+    <Table variant="striped" colorScheme="purple">
+      <TableCaption>Imperial to metric conversion factors</TableCaption>
+      <Thead>
+        <Tr>
+          <Th>#</Th>
+          <Th>Username</Th>
+          <Th>Email</Th>
+          <Th>Rol</Th>
+          <Th>Acciones</Th>
+        </Tr>
+      </Thead>
+      <Tbody>
+        {/* <Tr>
+          <Td>inches</Td>
+          <Td>millimetres (mm)</Td>
+          <Td isNumeric>25.4</Td>
+        </Tr> */}
+        {users.map((user, idx) => (
+          <Tr>
+            <Td>{user.id}</Td>
+            <Td>{user.username}</Td>
+            <Td>{user.email}</Td>
 
-              <td>{n.role}</td>
-              <td>
-                <IconButton
-                  onClick={() => handleAdminPermisoClick(n.id)}
-                  color="primary"
-                  aria-label="add an alarm"
-                >
-                  <EditOutlinedIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => handleDeleteUser(n.id)}
-                  color="primary"
-                  aria-label="add an alarm"
-                >
-                  <DeleteOutlineOutlinedIcon />
-                </IconButton>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+            <Td>{user.role}</Td>
+            <Td>
+              <IconButton
+                onClick={() => dispatch(changeUserRole(user.id))}
+                color="primary"
+                aria-label="add an alarm"
+              >
+                <TriangleUpIcon />
+              </IconButton>
+              <IconButton
+                onClick={() => dispatch(deleteUser(user.id))}
+                color="primary"
+                aria-label="add an alarm"
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Td>
+          </Tr>
+        ))}
+      </Tbody>
+      {/* <Tfoot>
+          <Tr>
+            <Th>To convert</Th>
+            <Th>into</Th>
+            <Th isNumeric>multiply by</Th>
+          </Tr>
+        </Tfoot> */}
+    </Table>
   );
 };

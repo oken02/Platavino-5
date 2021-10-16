@@ -2,60 +2,57 @@ import { Box, Typography, Button, TextField, Divider } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { SimpleTable } from "./SimpleTable";
 import AddIcon from "@material-ui/icons/Add";
-import { setUsers } from "../store/usersReducer";
+import { getUsers, setUsers } from "../store/usersReducer";
 
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Input, Heading } from "@chakra-ui/react";
+import { useSearch } from "../hooks/useSearch";
 
 export const ListUsers = () => {
   const dispatch = useDispatch();
+  console.log("RENDER USER LISt");
+  const users = useSelector((state) => state.users);
+
+  const [usersTemp, changeQuery] = useSearch(
+    "http://localhost:3001/api/users/"
+  );
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/users", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-      .then((data) => {
-        dispatch(setUsers(data.data));
-        // history.push("/admin/usuarios");
-      })
-      .catch((e) => console.log(e));
+    dispatch(getUsers());
   }, []);
 
   return (
-    <div classname="contenedor1">
-      <div className="simple">
-        <Box mb={2} display="flex" justifyContent="space-between">
-          <Typography variant="h5">Users</Typography>
+    <div>
+      <h1>{JSON.stringify(usersTemp)}</h1>
+      <div>
+        <Box display="flex" justifyContent="space-between">
+          <Heading as="h4" size="lg">
+            Users
+          </Heading>
 
-          <Button
+          {/* <Button
             variant="contained"
             color="primary"
-            // className={classes.button}
             startIcon={<AddIcon />}
           >
             Add user
-          </Button>
+          </Button> */}
         </Box>
 
         {/* <Box mb={2} textAlign="center" padding="0 20%"> */}
-        <Box mb={2} width="30%">
-          <TextField
-            inputProps={{ type: "search" }}
-            // fullWidth
-            id="standard-basic"
-            label="Search user"
-            fullWidth
+        <Box my={4}>
+          <Input
+            onChange={changeQuery}
+            variant="filled"
+            placeholder="Busca un usuario"
           />
         </Box>
       </div>
 
       {/* <Divider style={clases.divider} /> */}
-      <Divider />
+      {/* <Divider /> */}
 
-      <SimpleTable />
+      <SimpleTable users={usersTemp || users} />
     </div>
   );
 };

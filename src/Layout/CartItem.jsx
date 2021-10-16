@@ -25,23 +25,21 @@ export const CartItem = ({ card }) => {
   const dispatch = useDispatch();
 
   const increment = () => {
-    dispatch(increaseAmount({ card, amount: amount + 1 }));
-    add();
+    dispatch(increaseAmount({ card, amount: amount + 1 })).then(add);
   };
 
   const decrement = () => {
-    dispatch(increaseAmount({ card, amount: amount - 1 }));
-    minus();
+    dispatch(increaseAmount({ card, amount: amount - 1 })).then(minus);
   };
 
   return (
-    <Paper elevation={1}>
+    <Paper elevation={1} >
       <Box p={2}>
         <Grid container>
           <Grid item md={4}>
             <img
               style={{ maxWidth: "100px", height: "100px" }}
-              src={card.vino.Img}
+              src={card.vino.img}
               alt=""
             />
           </Grid>
@@ -60,7 +58,7 @@ export const CartItem = ({ card }) => {
                 fontWeight="normal"
                 fontSize="xl"
               >
-                {card.vino.Varietal}
+                {card.vino.varietal}
               </Text>
               <IconButton
                 aria-label="Add to friends"
@@ -68,7 +66,7 @@ export const CartItem = ({ card }) => {
                   setEvt(!evt);
                   dispatch(removeCarrito(card));
                 }}
-                icon={<CloseIcon />}
+                icon={<CloseIcon color="purple" />}
               />
             </Box>
             <Box
@@ -80,18 +78,18 @@ export const CartItem = ({ card }) => {
               // ml="2"
               flex={1}
             >
-              {card.vino.Color}
+              {card.vino.color}
             </Box>
 
             <Box display="flex" justifyContent="space-between" width="100%">
               <BoxCk display="flex" alignItems="center">
-                {`$ ${card.vino.Precio}.00`}
+                {`$ ${card.vino.precio}.00`}
               </BoxCk>
               <ButtonGroup variant="outline" spacing="6" isAttached>
                 <IconButton
                   onClick={decrement}
                   aria-label="Add to friends"
-                  icon={<MinusIcon />}
+                  icon={<MinusIcon color="purple" />}
                 />
                 <BoxCk
                   // bg="purple"
@@ -100,6 +98,7 @@ export const CartItem = ({ card }) => {
                   px={4}
                   d="flex"
                   alignItems="center"
+                  color="purple"
                 >
                   {amount}
                 </BoxCk>
@@ -107,7 +106,7 @@ export const CartItem = ({ card }) => {
                 <IconButton
                   onClick={increment}
                   aria-label="Add to friends"
-                  icon={<AddIcon />}
+                  icon={<AddIcon color="purple" />}
                 />
               </ButtonGroup>
             </Box>

@@ -10,31 +10,31 @@ const Vino = db.define("vino", {
     type: S.FLOAT,
     defaultValue: 0,
   },
-  PaisDeOrigen: {
+  paisDeOrigen: {
     type: S.STRING,
   },
-  Bodega: {
+  bodega: {
     type: S.STRING,
   },
-  Precio: {
+  precio: {
     type: S.INTEGER,
   },
-  Varietal: {
+  varietal: {
     type: S.STRING,
   },
-  Color: {
+  color: {
     type: S.STRING,
   },
   ml: {
     type: S.INTEGER,
   },
-  Descripcion: {
+  descripcion: {
     type: S.TEXT,
   },
-  Img: {
+  img: {
     type: S.TEXT,
   },
-  Stock: {
+  stock: {
     type: S.INTEGER,
   },
 });

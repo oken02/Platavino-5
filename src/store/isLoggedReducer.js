@@ -1,4 +1,4 @@
-import { Satellite } from "@material-ui/icons";
+
 import {
   createAction,
   createAsyncThunk,
@@ -7,10 +7,24 @@ import {
 import axios from "axios";
 import { login } from "../utils/login";
 
+const AuthorizationHeader = {
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("token"),
+  },
+};
 
-export const sendValidation = createAsyncThunk("SEND_VALIDATION", () => {
-  return login().then(({ data }) => data);
-});
+export const sendValidation = createAsyncThunk(
+  "SEND_VALIDATION",
+  (data, thunkAPI) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) return thunkAPI.rejectWithValue();
+
+    return axios
+      .post("http://localhost:3001/api/auth/validate", {}, AuthorizationHeader)
+      .then(({ data }) => data);
+  }
+);
 
 export const sendLogin = createAsyncThunk("SEND_LOGIN", (credd) => {
   return axios
@@ -29,7 +43,7 @@ const isLoggedReducer = createReducer(
   },
   {
     [setIsLogged]: (state, { payload: user }) => {
-      console.log(state)
+      console.log(state);
       return user;
     },
 

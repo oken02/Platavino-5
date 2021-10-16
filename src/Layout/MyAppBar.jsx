@@ -3,31 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+// import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 // import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MyMenu } from "./MyMenu";
 import LocalBarIcon from "@material-ui/icons/LocalBar";
-import {
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuIcon,
-  MenuCommand,
-  MenuDivider,
-  Heading,
-  Input,
-  Flex,
-  Spacer,
-  Tooltip,
-  Box,
-} from "@chakra-ui/react";
+import { Heading, Box, Button } from "@chakra-ui/react";
 
 import { NavMenu, NavItem } from "@mui-treasury/components/menu/navigation";
 import { useFloatNavigationMenuStyles } from "@mui-treasury/styles/navigationMenu/float";
@@ -37,9 +20,11 @@ import { Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
-import { setUsers } from "../store/usersReducer";
 import { setSelectedProduct } from "../store/selectedProductReducer";
 import { getBodega } from "../store/CategoriesReducer";
+import { Autocomplete, TextField } from "@mui/material";
+import { sendLogout } from "../store/isLoggedReducer";
+import { resetCart } from "../store/addToCarrito";
 
 const useStyles = makeStyles((theme) => ({
   menu: {
@@ -65,30 +50,10 @@ export function MyAppBar({ handleClickLogout }) {
 
   const classes = useStyles();
   // const lstoken = localStorage.getItem('token')
-  const isLogged = useSelector((state) => {
-    return state.user.isAuthenticated;
-  });
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const username = useSelector((state) => {
-    return state.user.data.username;
-  });
-  const userRole = useSelector((state) => {
-    return state.user.data.role;
-  });
-  const handleClickUsersPanel = () => {
-    axios
-      .get("http://localhost:3001/api/users", {
-        headers: {
-          Authorization: `Bearer ${lstoken}`,
-        },
-      })
-      .then((data) => {
-        dispatch(setUsers(data.data));
-        history.push("/admin/usuarios");
-      })
-      .catch((e) => console.log(e));
-  };
+  const user = useSelector((state) => state.user);
 
   const handleChange = (e) => {
     let value = e.target.value;
@@ -126,59 +91,71 @@ export function MyAppBar({ handleClickLogout }) {
             gutter={1}
             useStyles={useFloatNavigationMenuStyles}
           >
-            <NavItem active as={Link} to="/home">
+            <NavItem as={NavLink} to="/home">
               Vinos
-            </NavItem> 
-            <NavItem as={Link} to="/results">
-              Categorias
             </NavItem>
-            <NavItem as={Link} to="/cart">
-              Carrito
-            </NavItem>
-            <NavItem as={Link} to="/perfil">
-              Perfil
-            </NavItem>
-            {userRole === "admin" ? (
-              <Button onClick={handleClickUsersPanel}>Panel de usuarios</Button>
-            ) : null}
+
+            {user.isAuthenticated && (
+              <>
+                <NavItem as={NavLink} to="/cart">
+                  Carrito
+                </NavItem>
+                <NavItem as={NavLink} to="/perfil/info">
+                  Perfil
+                </NavItem>
+              </>
+            )}
           </NavMenu>
-          <Link to="/addProduct">
-            <Button
-              className={classes.menu}
-              useStyles={useFloatNavigationMenuStyles}
-            >
-              Add wine
-            </Button>
-          </Link>
-          <Box>
-            <form onSubmit={handleSubmit}>
-              <Input
-                value={input}
-                onChange={handleChange}
-                variant="filled"
-                placeholder="Find your wine"
-              />
-            </form>
+          <Box display="flex" alignItems="center">
+            {/* {user.validated} */}
+            {/* <Heading as="h6" size="xs">
+              {JSON.stringify(user.validated)}
+            </Heading> */}
+            {!user.validated && (
+              <Heading as="h5" size="md">
+                validating
+              </Heading>
+            )}
+            {user.validated &&
+              (user.isAuthenticated ? (
+                <>
+                  <Heading as="h4" size="md">
+                    {user.data.username}
+                  </Heading>
+
+                  <Button
+                    onClick={() => {
+                      dispatch(sendLogout());
+                      dispatch(resetCart());
+                      // history.push("/login");
+                    }}
+                    ml="2"
+                    colorScheme="purple"
+                    variant="outline"
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => history.push("/login")}
+                    colorScheme="purple"
+                    variant="outline"
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    onClick={() => history.push("/register")}
+                    ml="2"
+                    colorScheme="purple"
+                    variant="outline"
+                  >
+                    Register
+                  </Button>
+                </>
+              ))}
           </Box>
-          {isLogged ? (
-            <div className="userButton">
-              <Link to="/perfil">
-                <Button>{username}</Button>
-              </Link>
-              <Link to="/perfil">
-                <Button onClick={handleClickLogout}>Log Out</Button>
-              </Link>
-            </div>
-          ) : (
-            <div className="userButton">
-              <Link to="/login">
-                <Button>Sign In</Button>
-              </Link>
-              <Link to="/register">
-                <Button>Register</Button>
-              </Link>
-            </div>
-          )}
           {/* </Form> */}
         </Toolbar>
 

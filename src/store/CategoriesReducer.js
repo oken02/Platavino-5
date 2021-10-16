@@ -6,9 +6,9 @@ export const setCategories = createAsyncThunk(
   (categories, thunkAPI) => {
     const { Precio, PaisDeOrigen, Varietal, Color } = categories;
     let pedido = `http://localhost:3001/api/categorias?`;
-
     let keys = Object.keys(categories);
     let values = Object.values(categories);
+    
     keys.map((key, i) => {
       pedido = `${pedido}${key}=${values[i]}&`;
     });

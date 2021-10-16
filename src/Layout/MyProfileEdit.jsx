@@ -1,7 +1,14 @@
 import { Button } from "@chakra-ui/button";
 import { Input } from "@chakra-ui/input";
 import { Heading } from "@chakra-ui/layout";
-import { Box, Grid, makeStyles, TextField } from "@material-ui/core";
+import {
+  Box,
+  Grid,
+  makeStyles,
+  TextField,
+  FormControl,
+  FormLabel,
+} from "@material-ui/core";
 import React from "react";
 import { Form } from "react-bootstrap";
 
@@ -29,17 +36,30 @@ export const MyProfileEdit = () => {
       <Grid container className={classes.root}>
         <Grid item md={6}>
           <Input variant="outline" placeholder="Outline" />
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
+            <Input type="text" />
+          </FormControl>
         </Grid>
         <Grid item md={6}>
-          <Input variant="outline" placeholder="Outline" />
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
+            <Input type="text" />
+          </FormControl>
         </Grid>
 
         <Grid item md={6}>
-          <Input variant="outline" placeholder="Outline" />
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
+            <Input type="text" />
+          </FormControl>
         </Grid>
 
         <Grid item md={6}>
-          <Input variant="outline" placeholder="Outline" />
+          <FormControl id="email">
+            <FormLabel>Email address</FormLabel>
+            <Input type="text" />
+          </FormControl>
         </Grid>
       </Grid>
       <Button colorScheme="purple" size="md">

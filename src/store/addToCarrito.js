@@ -4,25 +4,25 @@ import {
   createAsyncThunk,
 } from "@reduxjs/toolkit";
 import axios from "axios";
-const lstoken = localStorage.getItem("token");
+import { BrowserRouter } from "react-router-dom";
+
+// const lstoken = localStorage.getItem("token");
 // export const setCarrito = createAction("SET_CARRITO");
 
-export const setCarrito = createAsyncThunk(
-  "SET_CARRITO",
-  ({ wine, cantidad }, thunkAPI) => {
-    console.log();
-    const { user } = thunkAPI.getState();
+export const resetCart = createAction("RESET_CART");
 
-    const { carritoId } = user.data;
-    if (!user.data.id) throw new Error("You need to be logged in");
+export const addCartItem = createAsyncThunk(
+  "ADD_CART_ITEM",
+  ({ vinoId, cantidad }, thunkAPI) => {
+    const { user } = thunkAPI.getState();
 
     return axios
       .post(
-        `http://localhost:3001/api/carritos/${wine.id}`,
+        `http://localhost:3001/api/carritos/${vinoId}`,
         { cantidad },
         {
           headers: {
-            Authorization: "Bearer " + lstoken,
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
         }
       )
@@ -42,7 +42,7 @@ export const removeCarrito = createAsyncThunk(
     return axios
       .delete(`http://localhost:3001/api/carritos/${wine.id}`, {
         headers: {
-          Authorization: "Bearer " + lstoken,
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
       })
       .then((res) => wine.id);
@@ -50,10 +50,13 @@ export const removeCarrito = createAsyncThunk(
 );
 
 export const getCart = createAsyncThunk("GET_CART", (id, thunkAPI) => {
+  const { carrito } = thunkAPI.getState();
+  if (carrito.length !== 0) return carrito;
+
   return axios
     .get(`http://localhost:3001/api/carritos`, {
       headers: {
-        Authorization: "Bearer " + lstoken,
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
     .then((res) => {
@@ -82,9 +85,13 @@ export const increaseAmount = createAsyncThunk(
 );
 
 const carritoReducer = createReducer([], {
-  [setCarrito.fulfilled]: (state, { payload }) => {
-    console.log("CARITEMDB", payload);
-    return [...state, payload];
+  [addCartItem.fulfilled]: (state, { payload: { cartItem, created } }) => {
+    console.log("CARITEM DB", cartItem);
+    if (!created) return;
+    // if (created) {
+    state.push(cartItem);
+    // }
+    // return [...state, payload];
   },
   [removeCarrito.fulfilled]: (state, { payload }) => {
     return state.filter((wine) => wine.id !== payload);
@@ -104,6 +111,9 @@ const carritoReducer = createReducer([], {
     state[car].cantidad = payload.amount;
     console.log("PROXIIII", state);
     // return state;
+  },
+  [resetCart]: () => {
+    return [];
   },
 });
 

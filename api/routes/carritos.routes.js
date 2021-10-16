@@ -25,52 +25,32 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
   const { id: userId } = req.payload;
   const { vinoId } = req.params;
   const { cantidad } = req.body;
+  console.log("VINO ID", vinoId, "CANTIDAD", cantidad);
 
   try {
     const user = await User.findByPk(userId);
+    // console.log("USER POST", user);
+    // console.log("VINO", await Vino.findByPk(vinoId));
 
-    const cartItem = await CartItem.findOrCreate({
+    const [cartItem, created] = await CartItem.findOrCreate({
       where: { carritoId: user.carritoId, vinoId },
       defaults: {
         cantidad: cantidad || 1,
       },
-      include: Vino,
+      // include: Vino,
     });
-    console.log(cartItem[0].vino);
 
-    // return res.json({ ...cartItem});
-    return res.json(await CartItem.findByPk(cartItem[0].id, { include: Vino }));
+    // return res.json(await CartItem.findByPk(cartItem[0].id, { include: Vino }));
+    cartItem.dataValues.vino = await cartItem.getVino();
+    console.log("ADDED", cartItem.dataValues);
+
+    return res.json({ cartItem, created });
 
     // res.send("ok")
   } catch (error) {
     console.log(error);
   }
 });
-
-// router.post('/:vinoId', [validateToken], (req, res) => {
-//   const { id: userId } = req.payload;
-//   const { vinoId } = req.params;
-//   const { cantidad } = req.body;
-
-//   try {
-//     const user = await User.findByPk(userId);
-//     // console.log("RE BODY", user.carritoId, id, vinoId);
-//   User.findByPk(userId)
-//     .then((data) => {
-//       CartItem.findOrCreate({
-//         where: {
-//           carritoId: data,
-//           vinoId: vinoId
-//         },
-//         include: Vino,
-//       })
-//         .then((data) => {
-//           res.send(data)
-//         })
-//         .catch(e => console.log('FINDORCREATE', e))
-//     })
-//     .catch(e => console.log('FINDBYPK', e))
-// })
 
 router.get("/", [validateToken], async (req, res) => {
   const { id: userId } = req.payload;
@@ -122,12 +102,6 @@ router.put("/:cartItemId", [validateToken], async (req, res) => {
 
       returning: true,
     }
-  );
-
-  console.log("ITEM UPDATED", cartItemUpdated);
-  console.log(
-    "CART ITEM =>" + cartItemId + "",
-    await CartItem.findByPk(cartItemId)
   );
 
   res.json(cartItemUpdated);

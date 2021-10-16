@@ -15,19 +15,6 @@ import Container from "@material-ui/core/Container";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@material-ui/core";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -68,13 +55,13 @@ function Register({
           Register
         </Typography>
 
-        <Link to='/adminRegister'>
-          <Button onClick={handleAdminClick}>Admin?</Button>
-        </Link>
-
-        <form className={classes.form} noValidate onSubmit={handleSubmitRegisterForm}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmitRegisterForm}
+        >
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 autoComplete="fname"
                 name="username"
@@ -112,12 +99,6 @@ function Register({
                 onChange={handleChangePasswordRegister}
               />
             </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />
-            </Grid>
           </Grid>
           {/* <Link to="/products"> */}
           <Button
@@ -139,9 +120,6 @@ function Register({
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
     </Container>
   );
 }

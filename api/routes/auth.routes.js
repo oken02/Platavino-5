@@ -42,11 +42,14 @@ router.post("/validate", validateToken, (req, res) => {
 
   User.findByPk(userId)
     .then((user) => {
-      res.json({
-        ok: true,
-        msg: "el token es valido",
-        user: user.toJSON(),
-      });
+      setTimeout(() => {
+        res.json({
+          ok: true,
+          msg: "el token es valido",
+          user: user.toJSON(),
+        });
+      }, 1000);
+     
     })
     .catch(console.log);
 });

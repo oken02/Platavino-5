@@ -1,7 +1,6 @@
 import React from "react";
 
 const Carousel = ({ children: vinos = [] }) => {
-  u;
   const buttonActiveProps = {};
   return (
     <div>

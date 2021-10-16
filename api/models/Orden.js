@@ -23,18 +23,26 @@ class Orden extends Model {
 
 Orden.init(
   {
-    PrecioTotal: {
+    precioTotal: {
       type: S.STRING,
       allowNull: false,
     },
-    Status: {
+    state: {
       type: S.STRING,
       // allowNull: false,
       defaultValue: "creado",
     },
-    FechaCompra: {
+    fechaCompra: {
       type: S.DATE,
       defaultValue: new Date(),
+    },
+    payment: {
+      type: S.STRING,
+      allowNull: false,
+    },
+    address: {
+      type: S.STRING,
+      allowNull: false,
     },
   },
   {
@@ -47,7 +55,7 @@ Orden.disminuirStock = async (cartItems) => {
   for (const cartItem of cartItems) {
     await Vino.update(
       {
-        Stock: cartItem.vino.Stock - cartItem.cantidad,
+        stock: cartItem.vino.stock - cartItem.cantidad,
       },
       {
         where: {

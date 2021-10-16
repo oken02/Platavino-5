@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
 });
 
 db.sync({ force: false })
-  .then(() =>
+  .then(() => 
     app.listen(3001, () =>
       console.log("Servidor corriendo en http://localhost:3001")
     )

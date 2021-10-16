@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-// import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import GoogleFontLoader from "react-google-font-loader";
-import NoSsr from "@material-ui/core/NoSsr";
-
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 import { Box, Grid } from "@material-ui/core";
 import { Heading, Text, Box as BoxCh } from "@chakra-ui/layout";
@@ -27,11 +16,12 @@ import { useSelector, useDispatch } from "react-redux";
 // import { Tag } from "@chakra-ui/tag";
 import { Rating } from "@material-ui/lab";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
-import { setCarrito } from "../store/addToCarrito";
+import { addCartItem } from "../store/addToCarrito";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { getReview } from "../store/reviewReducer";
 import { useIncrease } from "../hooks/useIncrease";
+import { ReviewSection } from "./ReviewSection";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,22 +84,22 @@ export function SingleWine() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const {
-    Img,
-    Bodega,
-    Color,
-    PaisDeOrigen,
-    Varietal,
-    Precio,
-    Descripcion,
+    img,
+    bodega,
+    color,
+    paisDeOrigen,
+    varietal,
+    precio,
+    descripcion,
     ml,
     id,
   } = selectedWine;
 
   const lstoken = localStorage.getItem("token");
   const [comentario, setComentario] = useState("");
-  const [puntaje, setPuntaje] = useState("");
+  const [puntaje, setPuntaje] = useState(4.5);
   const [reviews, setReviews] = useState([]);
-  const isLogged = useSelector((state) => state.user.data);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const review = useSelector((state) => state.review);
 
   const handleInputChange = (e) => {
@@ -122,27 +112,6 @@ export function SingleWine() {
     const starts = e.target.value;
     console.log("valor estrellas", starts);
     setPuntaje(starts);
-  };
-  const handleSubmit = (e) => {
-    console.log(id);
-    e.preventDefault();
-    axios
-      .post(
-        `http://localhost:3001/api/reviews/${id}`,
-        { comentario, puntaje },
-        {
-          headers: {
-            Authorization: "Bearer " + lstoken,
-          },
-        }
-      )
-      .then((data) => {
-        console.log("DATA", data);
-        setReviews(() => {
-          console.log("setReview", [...reviews, data.data]);
-          return [...reviews, data.data];
-        });
-      });
   };
 
   useEffect(() => {
@@ -166,7 +135,7 @@ export function SingleWine() {
                 objectFit: "contain",
                 borderRadius: "16px",
               }}
-              src={Img}
+              src={img}
               alt=""
             />
           </Box>
@@ -181,17 +150,17 @@ export function SingleWine() {
           >
             {/* <Typography variant="h4">Live From Space</Typography> */}
             <Heading as="h3" size="lg">
-              {Bodega}
+              {bodega}
             </Heading>
             <Box mt={1}></Box>
             <Rating name="stars" value={4} readOnly />
             <Box mt={1}></Box>
 
-            <BoxCh fontSize="lg">{`$ ${Precio}`} </BoxCh>
+            <BoxCh fontSize="lg">{`$ ${precio}`} </BoxCh>
 
             <Box mt={1}></Box>
 
-            <Text fontSize="md">{Descripcion}</Text>
+            <Text fontSize="md">{descripcion}</Text>
             <Box mt={1}></Box>
 
             <Grid container>
@@ -200,7 +169,7 @@ export function SingleWine() {
                   <p style={{ paddingRight: "4rem" }}>
                     <strong>Color</strong>
                   </p>
-                  {Color}
+                  {color}
                 </Tag>
                 <Box mt={1}></Box>
 
@@ -208,7 +177,7 @@ export function SingleWine() {
                   <p style={{ paddingRight: "4rem" }}>
                     <strong>Pais </strong>
                   </p>
-                  {PaisDeOrigen}
+                  {paisDeOrigen}
                 </Tag>
                 <Box mt={1}></Box>
 
@@ -216,7 +185,7 @@ export function SingleWine() {
                   <p style={{ paddingRight: "4rem" }}>
                     <strong>Varietal</strong>
                   </p>
-                  {Varietal}
+                  {varietal}
                 </Tag>
                 <Box mt={1}></Box>
 
@@ -279,8 +248,11 @@ export function SingleWine() {
                 colorScheme="purple"
                 size="md"
                 onClick={() => {
+                  if (!isAuthenticated) {
+                    return history.push("/login");
+                  }
                   dispatch(
-                    setCarrito({ wine: selectedWine, cantidad: amount })
+                    addCartItem({ vinoId: selectedWine.id, cantidad: amount })
                   );
                   history.push("/cart");
                 }}
@@ -312,173 +284,7 @@ export function SingleWine() {
 
       {/* REVIEWS */}
 
-      <Heading
-        my="10"
-        // borderWidth="1px"
-        p="3"
-        textAlign="center"
-        as="h4"
-        size="md"
-        // borderColor="purple"
-        border="1px solid purple"
-        borderRadius="lg"
-        color="purple.700"
-      >
-        Reviews
-      </Heading>
-
-      <Grid container spacing={3} className={` ${classes.reviews} `}>
-        <Grid item lg={6} md={6} sm={12} className="">
-          <>
-            <NoSsr>
-              <GoogleFontLoader
-                fonts={[{ font: "Ubuntu", weights: [400, 700] }]}
-              />
-            </NoSsr>
-
-            <Grid container className="bruno" spacing={4}>
-              {reviews.map((rev, i) => {
-                console.log("rev", rev);
-                return (
-                  <Grid item xs={12} md={6} lg={4} sm={12}>
-                    <ReviewCard
-                      thumbnail={
-                        "https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
-                      }
-                      title={rev.user.username}
-                      description={
-                        <>
-                          <b>{rev.comentario}</b>
-                        </>
-                      }
-                      puntaje={rev.puntaje}
-                    />
-                  </Grid>
-                );
-              })}
-            </Grid>
-          </>
-        </Grid>
-
-        <Grid item lg={6} md={6} sm={12}>
-          <Heading my="3" as="h5" size="md">
-            Write a Review for this wine
-          </Heading>
-          <form onSubmit={handleSubmit}>
-            <FormControl id="first-name" isRequired>
-              <FormLabel>Your Rating</FormLabel>
-              <Rating
-                name="customized-empty"
-                Required
-                defaultValue={3}
-                precision={0.5}
-                emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                onClick={handleClick}
-              />
-            </FormControl>
-
-            <FormControl id="first-name">
-              <FormLabel>Your Review</FormLabel>
-              <Textarea
-                // value={"hi"}
-                onChange={handleInputChange}
-                placeholder="Here is a sample placeholder"
-                size="sm"
-              />
-            </FormControl>
-            <Button mt={4} colorScheme="purple" type="submit">
-              Submit
-            </Button>
-          </form>
-        </Grid>
-      </Grid>
+      <ReviewSection vinoId={selectedWine.id} />
     </div>
   );
 }
-
-{
-  /* {reviews.map((rev, i) => {
-              console.log("rev", rev);
-              return (
-                <Grid key={i} container className="bruno" spacing={4}>
-                  <Grid item xs={12} md={6} lg={4}> */
-}
-
-//       <Grid container className={classes.vinoInfo} spacing={4}>
-//         <Grid item sm={6}>
-//           <Box>
-//             <img
-//               style={{
-//                 width: "100%",
-//                 height: "70vh",
-//                 objectFit: "contain",
-//                 borderRadius: "16px",
-//               }}
-//               src="https://wongfood.vteximg.com.br/arquivos/ids/339315-1000-1000/479513002-01-9505.jpg?v=637118676758900000"
-//               alt=""
-//             />
-//           </Box>
-//         </Grid>
-//         <Grid item sm={6} style={{ height: "100%" }}>
-//           <Box
-//             height="100%"
-//             display="flex"
-//             flexDirection="column"
-//             justifyContent="center"
-//             pr={4}
-//           >
-//             {/* <Typography variant="h4">Live From Space</Typography> */}
-//             <Heading as="h3" size="lg">
-//               Live From Space
-//             </Heading>
-//             <Box mt={1}></Box>
-//             <Rating name="stars" value={4} readOnly />
-//             <Box mt={1}></Box>
-
-//             <BoxCh fontSize="lg">$ 1135.00 </BoxCh>
-//             {/* <Typography variant="subtitle1" color="textSecondary">
-//             <Box mt={1}></Box>
-//             Balanceado: es el estado ideal de un vino en boca y significa que
-//             sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en
-//             armonía.
-//           </Typography> */}
-//             <Box mt={1}></Box>
-
-//             <Text fontSize="md">
-//               Balanceado: es el estado ideal de un vino en boca y significa que
-//               sus atributos (alcohol, taninos, acidez, fruta y dulzor) están en
-//               armonía.
-//             </Text>
-//             <Box mt={1}></Box>
-
-//             <Grid container>
-//               <Grid item md={6} lg={6} className={classes.tags}>
-//                 <Tag size="lg">
-//                   <p style={{ paddingRight: "4rem" }}>Color</p> Red
-//                 </Tag>
-//                 <Box mt={1}></Box>
-
-//                 <Tag size="lg">
-//                   <p style={{ paddingRight: "4rem" }}>Color</p> Red
-//                 </Tag>
-//                 <Box mt={1}></Box>
-
-//                 <Tag size="lg">
-//                   <p style={{ paddingRight: "4rem" }}>Color</p> Red
-//                 </Tag>
-//                 <Box mt={1}></Box>
-
-//                 <Tag size="lg">
-//                   <p style={{ paddingRight: "4rem" }}>Color</p> Red
-//                 </Tag>
-//               </Grid>
-
-//               {/* <Grid item md={6}></Grid> */}
-//             </Grid>
-
-//             <Box mt={1}></Box>
-
-//             {/* <Typography variant="h5">$ 1135.00</Typography> */}
-//             <Box mt={1}></Box>
-
-// */

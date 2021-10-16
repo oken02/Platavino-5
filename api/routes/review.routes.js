@@ -15,21 +15,27 @@ const router = express.Router();
 */
 
 router.get("/:vinoId", async (req, res) => {
-  const vinos = await Review.findAll({
-    where: {
-      vinoId: req.params.vinoId,
-    },
-    include: User,
-  });
+  console.log("VINO ID", req.params.vinoId);
 
-  res.json(vinos);
+  try {
+    const vinos = await Review.findAll({
+      where: {
+        vinoId: req.params.vinoId,
+      },
+      include: User,
+    });
+
+    res.json(vinos);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 });
 
 router.post("/:vinoId", [validateToken], async (req, res) => {
   const userId = req.payload.id;
   const vinoId = req.params.vinoId;
-  try {
 
+  try {
     const review = await Review.create({ ...req.body, vinoId, userId });
 
     const reviews = await Review.findAll({ where: { vinoId } });
@@ -45,11 +51,12 @@ router.post("/:vinoId", [validateToken], async (req, res) => {
       { where: { id: vinoId }, returning: true }
     );
 
-    console.log("VINO UPDATED", vino);
+    console.log("REVIEW UPDATED", review.dataValues);
 
     res.json({ ...review.toJSON(), user: await review.getUser() });
   } catch (error) {
     console.log(error);
+    res.sendStatus(500);
   }
 });
 

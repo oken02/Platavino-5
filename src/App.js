@@ -1,51 +1,33 @@
-import Footer from "./components/Footer";
-import { Switch, Route, useHistory } from "react-router-dom";
-import Wine from "./components/Wine";
-import Cart from "./components/Cart";
-import NavBar from "./components/NavBar";
-import Grids from "./components/Grids";
+import { Switch, Route, useHistory,Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCarrito } from "./store/addToCarrito";
+// import { setCarrito } from "./store/addToCarrito";
 
 import EditProduct from "./components/EditProduct";
-import SingleRowSelectionGrid from './components/OrdenList'
+import SingleRowSelectionGrid from "./components/OrdenList";
 
-// import toast, { Toaster } from 'react-hot-toast';
 import Register from "./components/Register";
-import Protector from "./components/Protector";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
 import { useEffect } from "react";
 
 import axios from "axios";
-import { setUsers } from "./store/usersReducer";
 import AdminRegister from "./components/AdminRegister";
-import AdminLogin from "./components/AdminLogin";
-import Header from "./components/Header";
 import { NotFound } from "./components/NotFound";
 import { useSelector } from "react-redux";
 
-import { Redirect } from "react-router-dom";
-import { SimpleNavBar } from "./components/SimpleNavBar";
 import { AdminDrawer } from "./Layout/AdminDrawer";
-import { MyContainer } from "./Layout/MyContainer";
-import { Mylogin } from "./Layout/MyLogin";
 import { MyProfile } from "./Layout/MyProfile";
 import { Box, Container } from "@material-ui/core";
 import { MyHome } from "./Layout/MyHome";
 import { MyAppBar } from "./Layout/MyAppBar";
-import { MyMenu } from "./Layout/MyMenu";
 import { PlatavinoBox } from "./Layout/PlatavinoBox";
 
 import { MyCart } from "./Layout/MyCart";
-import { VinoProduct } from "./Layout/VinoProduct";
 import { SingleWine } from "./Layout/SingleWine";
-import AddProducts from "./components/AddProducts";
 import Results from "./Layout/Results";
 
 import AddProduct from "./components/AddProducts";
 import { SimpleTable } from "./Layout/SimpleTable";
 import { ListUsers } from "./Layout/ListUsers";
-
 
 import Login from "./components/Login";
 import { Checkout } from "./components/Checkout";
@@ -61,8 +43,12 @@ function App() {
   const userLooged = useSelector((state) => {
     return state.users.isAuthenticated;
   });
+  console.log("RENDER APPPPPP");
 
   useEffect(() => {
+    // if () {
+
+    // }
     dispatch(sendValidation());
   }, []);
 
@@ -73,19 +59,14 @@ function App() {
         email: emailRegister,
         username: usernameRegister,
         password: passwordRegister,
-        role: 'admin'
+        role: "admin",
       })
       .then((data) => {
-        dispatch(setUsers(data.data));
+        // dispatch(setUsers(data.data));
         // toast.success('Usuario registrado!')
-        history.push('/login')
+        history.push("/login");
       })
       .catch((e) => console.log(e.response));
-  };
-
-  const handleClick = (input) => {
-    console.log(input);
-    return dispatch(setCarrito(input));
   };
 
   const protector = (user) => {
@@ -112,7 +93,7 @@ function App() {
 
   const handleSubmitRegisterForm = (e) => {
     e.preventDefault();
-    console.log(emailRegister, usernameRegister, passwordRegister)
+    console.log(emailRegister, usernameRegister, passwordRegister);
     axios
       .post("http://localhost:3001/api/auth/register", {
         email: emailRegister,
@@ -120,10 +101,10 @@ function App() {
         password: passwordRegister,
       })
       .then((data) => {
-        dispatch(setUsers(data.data));
+        // dispatch(setUsers(data.data));
         history.push("/login");
       })
-      .catch((e) => console.log('aca en el front', e.response));
+      .catch((e) => console.log("aca en el front", e.response));
   };
 
   const handleAdminClick = () => {
@@ -141,28 +122,34 @@ function App() {
         <MyAppBar handleClickLogout={handleClickLogout} />
 
         <Box mt={4}></Box>
-        <Container maxWidth="lg"> 
-          <Switch> 
+        <Container maxWidth="lg">
+          <Switch>
             <Route path="/home" component={MyHome} />
             <Route path="/perfil" component={MyProfile} />
             <Route path="/admin" component={AdminDrawer} />
             {/* <Route path="/admin/usuarios" render={() => { <div><ListUsers handleSubmitRegisterForm={handleSubmitRegisterForm} handleChangePasswordRegister={handleChangePasswordRegister} handleChangeUsernameRegister={handleChangeUsernameRegister} handleChangeEmailRegister={handleChangeEmailRegister} /> <SimpleTable /> </div> }} /> */}
             <Route path="/cart" component={MyCart} />
             <Route path="/vino/:id" component={SingleWine} />
-            <Route path="/results" component={Results} />
-            <Route path='/checkout' component={Checkout} />
-            <Route path='/ordenHistory' component={SingleRowSelectionGrid} />
-            <Route path='/adminRegister' render={() => {
-              return <AdminRegister
-                handleSubmitAdminRegisterForm={handleSubmitAdminRegisterForm}
-                handleChangePasswordRegister={handleChangePasswordRegister}
-                handleChangeUsernameRegister={handleChangeUsernameRegister}
-                handleChangeEmailRegister={handleChangeEmailRegister}
-
-              />
-            }} />
-            <Route path='/editProduct' component={EditProduct} />
-            <Route path='/addProduct' component={AddProduct} />
+            <Route path="/categorias" component={Results} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/ordenHistory" component={SingleRowSelectionGrid} />
+            <Route
+              path="/adminRegister"
+              render={() => {
+                return (
+                  <AdminRegister
+                    handleSubmitAdminRegisterForm={
+                      handleSubmitAdminRegisterForm
+                    }
+                    handleChangePasswordRegister={handleChangePasswordRegister}
+                    handleChangeUsernameRegister={handleChangeUsernameRegister}
+                    handleChangeEmailRegister={handleChangeEmailRegister}
+                  />
+                );
+              }}
+            />
+            <Route path="/editProduct" component={EditProduct} />
+            <Route path="/addProduct" component={AddProduct} />
 
             <Route path="/login" component={Login} />
             <Route
@@ -177,6 +164,8 @@ function App() {
                 />
               )}
             />
+
+            <Redirect exact from="/" to="/home" />
 
             <Route path="*" component={NotFound} />
           </Switch>

@@ -5,6 +5,7 @@ import NestedMenu from "@mui-treasury/components/menu/nested";
 import { Link, useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useFirebaseBtnStyles } from "@mui-treasury/styles/button/firebase";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(({ transitions, palette }) => ({
   link: {
@@ -29,14 +30,12 @@ const useStyles = makeStyles(({ transitions, palette }) => ({
   },
 }));
 
-const com = () => {
-  return <p>dee</p>;
-};
-
 export const MyProfileSidebar = () => {
   const classes = useStyles();
   const styles = useFirebaseBtnStyles();
   const history = useHistory();
+
+  const user = useSelector((state) => state.user);
 
   const redirect = (path) => () => {
     history.push(path);
@@ -51,28 +50,30 @@ export const MyProfileSidebar = () => {
       key: "profile",
       label: <p onClick={redirect("/perfil/info")}>Profile</p>,
     },
-    {
-      key: "editProfile",
-      label: <p onClick={redirect("/perfil/edit")}>Edit profile</p>,
-    },
-    {
-      key: "admin",
-      label: "Admin Section",
-      subMenus: [
-        {
-          key: "users",
-          label: <p onClick={redirect("/perfil/admin/users")}>Users</p>,
-        },
-        {
-          key: "products",
-          label: <p onClick={redirect("/perfil/admin/products")}>Products</p>,
-        },
-        {
-          key: "categories",
-          label: <p onClick={redirect("/perfil/admin/categories")}>Categories</p>,
-        },
-      ],
-    },
+    ...(user.data.role === "admin"
+      ? [
+          {
+            key: "admin",
+            label: "Admin Section",
+            subMenus: [
+              {
+                key: "users",
+                label: <p onClick={redirect("/perfil/admin/users")}>Users</p>,
+              },
+              {
+                key: "products",
+                label: (
+                  <p onClick={redirect("/perfil/admin/products")}>Products</p>
+                ),
+              },
+              {
+                key: "allOrders",
+                label: <p onClick={redirect("/perfil/admin/orders")}>Orders</p>,
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 
   return (

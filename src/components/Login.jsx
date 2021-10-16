@@ -22,22 +22,9 @@ import {
 } from "../store/isLoggedReducer";
 import { Link } from "@material-ui/core";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "70vh",
   },
   image: {
     backgroundImage: "url(https://source.unsplash.com/random)",
@@ -83,7 +70,7 @@ function Login() {
       if (action.error) {
         setPassword("");
       } else {
-        history.push("/products");
+        history.push("/home");
       }
     });
   };
@@ -96,13 +83,6 @@ function Login() {
   const handleEmail = (e) => {
     const value = e.target.value;
     setEmail(value);
-    // if ((value.includes("@") && value.includes(".")) || !value) {
-    //   setError(false);
-    //   setLeyenda("");
-    // } else {
-    //   setError(true);
-    //   setLeyenda("email invalido");
-    // }
   };
 
   return (
@@ -117,9 +97,6 @@ function Login() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Link to="/adminLogin">
-            <Button>Admin?</Button>
-          </Link>
           <form onSubmit={handleSubmit} className={classes.form} noValidate>
             <TextField
               onChange={handleEmail}
@@ -149,7 +126,8 @@ function Login() {
               value={password}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              
+              control={<Checkbox checked={true} check value="remember" color="primary" />}
               label="Remember me"
             />
 
@@ -171,9 +149,6 @@ function Login() {
                 </Link>
               </Grid>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
           </form>
         </div>
       </Grid>

@@ -9,8 +9,8 @@ import TextInfoContent from "@mui-treasury/components/content/textInfo";
 import { useBlogTextInfoContentStyles } from "@mui-treasury/styles/textInfoContent/blog";
 import { useOverShadowStyles } from "@mui-treasury/styles/shadow/over";
 import { Box } from "@material-ui/core";
-import { setCarrito } from "../store/addToCarrito";
-import { useDispatch } from "react-redux";
+import { addCartItem } from "../store/addToCarrito";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
@@ -74,8 +74,9 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 }));
 
 export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
-  const { Img, PaisDeOrigen, Descripcion, Bodega } = wine;
+  const { img, paisDeOrigen, descripcion, bodega } = wine;
   const styles = useStyles();
+  const { isAuthenticated } = useSelector((state) => state.user);
   const { button: buttonStyles, ...contentStyles } =
     useBlogTextInfoContentStyles();
   const shadowStyles = useOverShadowStyles();
@@ -92,7 +93,7 @@ export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
             objectFit: "cover",
             borderRadius: "16px",
           }}
-          src={Img}
+          src={img}
           alt=""
         />
       </Box>
@@ -100,16 +101,18 @@ export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
       <CardContent>
         <TextInfoContent
           classes={contentStyles}
-          overline={`Pais de origen : ${PaisDeOrigen}`}
-          heading={`Bodega : ${Bodega}`}
-          body={Descripcion}
+          overline={`Pais de origen : ${paisDeOrigen}`}
+          heading={`Bodega : ${bodega}`}
+          body={descripcion}
         />
         <Button
           color="primary"
           // className={buttonStyles}
           variant="outlined"
           onClick={() => {
-            dispatch(setCarrito(wine));
+            // dispatch(setCarrito(wine));
+            if (!isAuthenticated) return history.push("/login");
+            dispatch(addCartItem({ vinoId: wine.id, cantidad: 1 }));
             history.push("/cart");
           }}
         >

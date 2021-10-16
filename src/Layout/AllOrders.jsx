@@ -1,16 +1,15 @@
 import { Heading } from "@chakra-ui/layout";
 import axios from "axios";
 import React, { useEffect } from "react";
-
 import getToken from "../utils/getToken";
 import Orders from "./Orders";
 
-const MyOrders = () => {
+const AllOrders = () => {
   const [ordenes, setOrdenes] = React.useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/ordens", getToken())
+      .get("http://localhost:3001/api/ordens/all", getToken())
       .then(({ data }) => {
         console.log(data);
         setOrdenes(data);
@@ -21,11 +20,11 @@ const MyOrders = () => {
   return (
     <div>
       <Heading mb={4} as="h3" size="lg">
-        MyOrders
+        All Orders
       </Heading>
       <Orders orders={ordenes} />
     </div>
   );
 };
 
-export default MyOrders;
+export default AllOrders;

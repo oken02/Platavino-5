@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -21,10 +21,13 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSelectedProduct } from "../store/selectedProductReducer";
+import { height } from "@mui/system";
+import { ModalContext } from "../contexts/modalContext";
+import EditProduct from "../components/EditProduct";
 
 const useStyles = makeStyles(() => ({
   root: {
-    maxWidth: 304,
+    // maxWidth: 304,
     margin: "auto",
     boxShadow: "none",
     borderRadius: 0,
@@ -34,10 +37,12 @@ const useStyles = makeStyles(() => ({
       display: "flex",
     },
     borderRadius: "10px",
-    "& .MuiCardMedia-root":{
+    "& .MuiCardMedia-root": {
       cursor: "pointer",
-
-    }
+      backgroundSize: "contain",
+      padding: 0,
+      height: "200px",
+    },
   },
   content: {
     padding: 24,
@@ -51,19 +56,32 @@ const useStyles = makeStyles(() => ({
   },
   img: {
     cursor: "pointer",
-
   },
 }));
 
-export const VinoProduct = React.memo(function NewsCard({ wine }) {
+export const VinoProduct = React.memo(function NewsCard({
+  wine,
+  adminAcions = false,
+  onEdit,
+  onDelete,
+}) {
   const dispatch = useDispatch();
 
-  const { Img, Bodega, Color, PaisDeOrigen, Varietal, Precio, id } = wine;
+  const { img, bodega, color, paisDeOrigen, varietal, precio, id } = wine;
   const styles = useStyles();
   const mediaStyles = useWideCardMediaStyles();
   const textCardContentStyles = useN01TextInfoContentStyles();
   const shadowStyles = useBouncyShadowStyles();
   const history = useHistory();
+
+  const modalContext = useContext(ModalContext);
+
+  // const openModal = () => {
+  //   modalContext.setData({
+  //     body: <EditProduct />,
+  //     title: "ADD A PRODUCT",
+  //   });
+  // };
 
   //en algun lado hacer que la imagen se adapte al tamaño sin cortarsee
   return (
@@ -74,39 +92,42 @@ export const VinoProduct = React.memo(function NewsCard({ wine }) {
           history.push(`/vino/${id}`);
         }}
         classes={mediaStyles}
-        image={Img}
-        
+        image={img}
       />
       <CardContent className={styles.content}>
         <Heading as="h5" size="sm">
-          {Varietal}
+          {bodega}
         </Heading>
         <Box py={1}>
           <Rating name="read-only" value={3} readOnly size="small" />
         </Box>
-        <BoxCh>{`$ ${Precio}`}</BoxCh>
+        <BoxCh>{`$ ${precio}`}</BoxCh>
       </CardContent>
 
       {/* <CardActions disableSpacing> */}
       {/* <IconButton aria-label="add to favorites"> */}
 
-      <BoxCh display="flex" p="2">
-        <IconButton
-          flex="1"
-          variant="outline"
-          colorScheme="purple"
-          aria-label="Send email"
-          icon={<EditIcon />}
-          mr="2"
-        />
-        <IconButton
-          flex="1"
-          variant="outline"
-          colorScheme="purple"
-          aria-label="Send email"
-          icon={<DeleteIcon />}
-        />
-      </BoxCh>
+      {adminAcions && (
+        <BoxCh display="flex" p="2">
+          <IconButton
+            onClick={onEdit(wine.id)}
+            flex="1"
+            variant="outline"
+            colorScheme="purple"
+            aria-label="Send email"
+            icon={<EditIcon />}
+            mr="2"
+          />
+          <IconButton
+            onClick={onDelete(wine.id)}
+            flex="1"
+            variant="outline"
+            colorScheme="purple"
+            aria-label="Send email"
+            icon={<DeleteIcon />}
+          />
+        </BoxCh>
+      )}
 
       {/* </IconButton> */}
       {/* <IconButton aria-label="share">

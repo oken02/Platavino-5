@@ -11,13 +11,18 @@ const { Op } = require("sequelize");
 router.get("/", (req, res, next) => {
   const fields = req.query;
   console.log(fields);
-  if (fields.Precio) {
-    let [min, max] = fields.Precio.split("-");
+  if (fields.precio) {
+    let [min, max] = fields.precio.split("-");
     if (!min) min = 0;
     if (!max) max = 10000000;
-
-    fields.Precio = {
+    fields.precio = {
       [Op.between]: [parseInt(min), parseInt(max)],
+    };
+  }
+
+  if (fields.bodega) {
+    fields.bodega = {
+      [Op.substring]: fields.bodega,
     };
   }
 
@@ -37,23 +42,20 @@ router.get("/precio", (req, res) => {
   // if (min && max && min < max) {
   Vinos.findAll({
     where: {
-      Precio: {
+      precio: {
         [Op.between]: [parseInt(min), parseInt(max)],
       },
     },
   })
     .then((vinos) => res.send(vinos))
     .catch(console.log);
-  // } else {
-  // res.json({ msg: "tienes que eviar el min y el max" });
-  // }
 });
 
 //OBTENDREMOS TODOS LOS VINOS QUE TENGAN EL MISMO VARIETAL QUE PASAREMOS EN EL BODY
 router.get("/varietal", (req, res, next) => {
   Vinos.findAll({
     where: {
-      Varietal: req.body.Varietal,
+      varietal: req.body.varietal,
     },
   })
     .then((vinos) => res.send(vinos))
@@ -66,22 +68,22 @@ router.get("/bodega/:name", async (req, res, next) => {
 
   const vinos = await Vinos.findAll({
     where: {
-      Bodega: {
+      bodega: {
         [Op.substring]: req.params.name,
       },
     },
   }).catch(console.log);
 
-  res.send(vinos);
+  setTimeout(() => {
+    res.send(vinos);
+  }, 1000);
 });
-
-
 
 //OBTENDREMOS TODOS LOS VINOS QUE TENGAN EL MISMO VARIETAL QUE PASAMOS COMO PARÁMETRO DE RUTA
 router.get("/:varietal", (req, res, next) => {
   Vinos.findAll({
     where: {
-      Varietal: req.params.varietal,
+      varietal: req.params.varietal,
     },
   })
     .then((vinos) => res.send(vinos))

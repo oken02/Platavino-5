@@ -93,6 +93,7 @@ const FilterSidebar = () => {
               onClick={() => setIndVarietal(0)}
             >
               Varietal
+              
             </Menu.RowItem>
             <Menu.Action button toggled={collapsed} onClick={onClick} />
           </Menu.Row>
@@ -194,6 +195,7 @@ const FilterSidebar = () => {
           }}
         >
           Argentina
+        
         </Menu.ListItem>
         <Menu.ListItem
           button
@@ -239,6 +241,7 @@ const FilterSidebar = () => {
               }}
             >
               Color
+              
             </Menu.RowItem>
             <Menu.Action button toggled={collapsed} onClick={onClick} />
           </Menu.Row>

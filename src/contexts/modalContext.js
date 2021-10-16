@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useMemo, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -25,11 +25,11 @@ export const ModalContextProvider = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [modal, setModal] = useState({
-    isOpen,
     onOpen,
     onClose,
     data: {},
   });
+  console.log("MODAL RENDER");
 
   const setData = (data) => {
     setModal({ ...modal, data });
@@ -40,12 +40,21 @@ export const ModalContextProvider = ({ children }) => {
 
   // }, [modal.data])
 
+  const close = () => {
+    console.log("CLOSED");
+    setModal({ ...modal, data: {} });
+
+    onClose();
+  };
+
+  // const childrenMemo = useMemo(() => children, []);
+
   return (
     <ModalContext.Provider value={{ ...modal, setData }}>
       <>
-        <Button onClick={onOpen}>Open Modal</Button>
+        {/* <Button onClick={onOpen}>Open Modal</Button> */}
 
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={close}>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>{modal.data.title || "MODAL"} </ModalHeader>
@@ -56,7 +65,7 @@ export const ModalContextProvider = ({ children }) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="purple" mr={3} onClick={onClose}>
+              <Button colorScheme="purple" mr={3} onClick={modal.data.onSubmit}>
                 Add wine
               </Button>
               <Button variant="ghost">Cancelar</Button>

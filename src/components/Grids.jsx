@@ -5,7 +5,7 @@ import { Box } from "@material-ui/core";
 import { Grid } from "@material-ui/core";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts, setProduct } from "../store/ProductsReducer";
+import { getProducts, setProduct } from "../store/ProductsReducer";
 
 function Grids() {
   const products = useSelector((state) => state.products);
@@ -15,7 +15,7 @@ function Grids() {
 
     axios
       .get("http://localhost:3001/api/vinos")
-      .then((res) => dispatch(setProducts(res.data)))
+      .then((res) => dispatch(getProducts(res.data)))
       .catch((e) => console.log(e));
     
   }, []);
