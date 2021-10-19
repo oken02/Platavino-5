@@ -83,7 +83,7 @@ export default function Results() {
               value={filters.bodega || ""}
               onChange={(e) => setFilter("bodega", e.target.value)()}
               variant="filled"
-              placeholder="Find your wine"
+              placeholder="Find a wine"
               mb={4}
             />
             {/* <p>{JSON.stringify(filters)}</p> */}

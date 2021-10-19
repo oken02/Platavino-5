@@ -7,7 +7,7 @@ import axios from "axios";
 
 export const getUsers = createAsyncThunk("GET_USERS", async (p, thunkAPI) => {
   const { users } = thunkAPI.getState();
-  if (users.length !== 0) return users;
+  // if (users.length !== 0) return users;
   return axios
     .get("http://localhost:3001/api/users", {
       headers: {

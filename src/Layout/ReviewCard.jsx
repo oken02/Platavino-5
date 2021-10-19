@@ -56,7 +56,13 @@ export const ReviewCard = ({ thumbnail, title, description, puntaje }) => {
           <Info position={"middle"} useStyles={useApexInfoStyles}>
             <InfoTitle>{title}</InfoTitle>
             {/* <InfoSubtitle>{subtitle}</InfoSubtitle> */}
-            <Rating name="size-small" defaultValue={puntaje} size="small" />
+            <Rating
+              name="size-small"
+              defaultValue={puntaje}
+              precision={0.5}
+              size="small"
+              readOnly
+            />
           </Info>
         </Row>
         <Box

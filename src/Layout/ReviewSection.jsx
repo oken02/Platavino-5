@@ -9,7 +9,7 @@ import { Heading, Text, Box as BoxCh } from "@chakra-ui/layout";
 import { Input, Textarea } from "@chakra-ui/react";
 
 import { Button, ButtonGroup, IconButton } from "@chakra-ui/button";
-
+import { Alert, AlertIcon } from "@chakra-ui/react";
 import { ReviewCard } from "./ReviewCard";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Rating } from "@material-ui/lab";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ReviewSection = ({ vinoId }) => {
   const classes = useStyles();
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState(null);
   const user = useSelector((state) => state.user);
   const [{ comentario, puntaje }, setReview] = useState({
     comentario: "",
@@ -56,7 +56,11 @@ export const ReviewSection = ({ vinoId }) => {
 
   const onChange = (e) => {
     const { name, value } = e.target;
-    setReview((p) => ({ ...p, [name]: value }));
+    console.log("VALUE", typeof value);
+    setReview((p) => ({
+      ...p,
+      [name]: value,
+    }));
   };
 
   return (
@@ -84,25 +88,38 @@ export const ReviewSection = ({ vinoId }) => {
             </NoSsr>
 
             <Grid container className="bruno" spacing={4}>
-              {reviews.map((rev, i) => {
-                console.log("rev", rev);
-                return (
-                  <Grid item xs={12} md={6} lg={4} sm={12}>
-                    <ReviewCard
-                      thumbnail={
-                        "https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
-                      }
-                      title={rev.user.username}
-                      description={
-                        <>
-                          <b>{rev.comentario}</b>
-                        </>
-                      }
-                      puntaje={rev.puntaje}
-                    />
-                  </Grid>
-                );
-              })}
+              {reviews !== null && (
+                <>
+                  {reviews.length ? (
+                    reviews.map((rev, i) => {
+                      console.log("rev", rev);
+                      return (
+                        <Grid key={rev.id} item xs={12} md={6} lg={4} sm={12}>
+                          <ReviewCard
+                            thumbnail={
+                              "https://thumbs.dreamstime.com/b/icono-de-usuario-predeterminado-vectores-imagen-perfil-avatar-predeterminada-vectorial-medios-sociales-retrato-182347582.jpg"
+                            }
+                            title={rev.user.username}
+                            description={
+                              <>
+                                <b>{rev.comentario}</b>
+                              </>
+                            }
+                            puntaje={rev.puntaje}
+                          />
+                        </Grid>
+                      );
+                    })
+                  ) : (
+                    <BoxCh p="5" width="100%">
+                      <Alert status="warning">
+                        <AlertIcon />
+                        This wine has no reviews
+                      </Alert>
+                    </BoxCh>
+                  )}
+                </>
+              )}
             </Grid>
           </>
         </Grid>
@@ -116,11 +133,12 @@ export const ReviewSection = ({ vinoId }) => {
               <FormLabel>Your Rating</FormLabel>
               <Rating
                 name="puntaje"
-                Required
+                // Required
                 value={puntaje}
                 precision={0.5}
                 emptyIcon={<StarBorderIcon fontSize="inherit" />}
-                onClick={onChange}
+                // onClick={onChange}
+                onChange={onChange}
               />
             </FormControl>
 

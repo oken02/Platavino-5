@@ -98,6 +98,7 @@ function AddProduct({ onClose }) {
       {/* <Typography component="h1" variant="h5">
         ¿Want to add a wine?
       </Typography> */}
+      <h1>HIIIIII</h1>
       <form className={`${classes.form} reqInfoContainer`} noValidate>
         <TextField
           onChange={handleChange}
@@ -108,6 +109,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Pais de origen"
           name="paisDeOrigen"
+          value={values.paisDeOrigen}
           autoComplete="email"
           autoFocus
           className="input"
@@ -121,6 +123,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Bodega"
           name="bodega"
+          value={values.bodega}
           autoComplete="email"
           autoFocus
           className="input"
@@ -134,6 +137,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Precio"
           name="precio"
+          value={values.precio}
           autoComplete="email"
           autoFocus
           className="input"
@@ -147,6 +151,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Varietal"
           name="varietal"
+          value={values.varietal}
           autoComplete="email"
           autoFocus
           className="input"
@@ -160,6 +165,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Color"
           name="color"
+          value={values.color}
           autoComplete="email"
           autoFocus
           className="input"
@@ -173,6 +179,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="ml"
           name="ml"
+          value={values.ml}
           autoComplete="email"
           autoFocus
           className="input"
@@ -186,6 +193,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Descripcion"
           name="descripcion"
+          value={values.descripcion}
           autoComplete="email"
           autoFocus
           className="input"
@@ -199,6 +207,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Imagen"
           name="img"
+          value={values.img}
           autoComplete="email"
           autoFocus
           className="input"
@@ -212,6 +221,7 @@ function AddProduct({ onClose }) {
           id="email"
           label="Stock"
           name="stock"
+          value={values.stock}
           autoComplete="email"
           autoFocus
           className="input"

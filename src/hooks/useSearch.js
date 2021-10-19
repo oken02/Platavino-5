@@ -21,6 +21,7 @@ export const useSearch = (path) => {
         console.log("SETTED!!!");
       }
     });
+    console.log("PIDIENDO");
     // setData([]);
     console.log("CHANGE");
   };

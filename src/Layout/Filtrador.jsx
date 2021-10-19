@@ -72,6 +72,7 @@ export const Filtrador = ({ setFilter, filters }) => {
       {menuData.map((menuItem) => (
         <Menu
           //   collapsed
+          key={menuItem.appName}
           useStyles={useGatsbyCollapsibleMenuStyles}
           renderToggle={({ onClick, collapsed }) => (
             <Menu.Row>
@@ -83,15 +84,14 @@ export const Filtrador = ({ setFilter, filters }) => {
           )}
         >
           {menuItem.values.map((value) => (
-            <>
-              <Menu.ListItem
-                button
-                selected={value === filters[menuItem.dbName]}
-                onClick={setFilter(menuItem.dbName, value)}
-              >
-                {value}
-              </Menu.ListItem>
-            </>
+            <Menu.ListItem
+              key={value}
+              button
+              selected={value === filters[menuItem.dbName]}
+              onClick={setFilter(menuItem.dbName, value)}
+            >
+              {value}
+            </Menu.ListItem>
           ))}
         </Menu>
       ))}
@@ -118,7 +118,7 @@ export const Filtrador = ({ setFilter, filters }) => {
         ></Menu>
       </Box>
 
-      <Box px="6" className="Jiiiiiiiiiiii">
+      <Box px="6">
         <Slider
           colorScheme="purple"
           // defaultValue={1000}

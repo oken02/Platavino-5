@@ -2,14 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { Grid } from "@material-ui/core";
 import { VinoProduct } from "./VinoProduct";
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ModalContext } from "../contexts/modalContext";
 import { ProductForm } from "./ProductForm";
 import axios from "axios";
 import { deleteProduct } from "../store/ProductsReducer";
 
 export const AllVinos = ({ products, adminAcions }) => {
-
   const modalContext = useContext(ModalContext);
   const dispatch = useDispatch();
 
@@ -23,8 +22,8 @@ export const AllVinos = ({ products, adminAcions }) => {
     axios.get("http://localhost:3001/api/vinos/" + id).then((res) => {
       console.log("DATA", res.data);
       modalContext.setData({
-        body: <ProductForm data={res.data} />,
-        title: "ADD A WINE",
+        body: <ProductForm data={res.data} editing={true} />,
+        title: "Edit a wine",
         onSubmit: () => {
           console.log("SUBMIT EN CREATE PRODUCT");
         },

@@ -9,6 +9,7 @@ import { getProducts } from "../store/ProductsReducer";
 import axios from "axios";
 import { Input } from "@chakra-ui/input";
 import Results from "./Results";
+import { getCart } from "../store/addToCarrito";
 
 export const MyHome = () => {
   const products = useSelector((state) => state.products);
@@ -16,6 +17,7 @@ export const MyHome = () => {
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getCart());
   }, []);
 
   return (
@@ -36,7 +38,7 @@ export const MyHome = () => {
         />
       </Box> */}
       {/* <AllVinos products={products} /> */}
-      <Results/>
+      <Results />
     </div>
   );
 };

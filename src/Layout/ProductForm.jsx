@@ -1,21 +1,72 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import TextField from "@material-ui/core/TextField";
 
-export const ProductForm = ({ data = {} }) => {
+import { Button } from "@chakra-ui/react";
+import getToken from "../utils/getToken";
+import axios from "axios";
+import { addProduct, updateProduct } from "../store/ProductsReducer";
+import { useDispatch } from "react-redux";
+import { ModalContext } from "../contexts/modalContext";
 
-  for (const key in data) {
-    // console.log("JKKK", data[key]);
-    // data[key] = data[key][0].toLowerCase() + data[key][0].slice(1);
-    // data[key] = data[key][0].toLowerCase() + data[key][0].slice(1);
-    data[key[0].toLowerCase() + key.slice(1)] = data[key];
-  }
+export const ProductForm = ({ data, editing }) => {
+  const dispatch = useDispatch();
+  const { onClose } = useContext(ModalContext);
+
+  const [form, setForm] = useState(
+    data || {
+      paisDeOrigen: "",
+      bodega: "",
+      precio: "",
+      varietal: "",
+      color: "",
+      ml: "",
+      descripcion: "",
+      img: "",
+      stock: "",
+    }
+  );
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    console.log("SUBMIT DATA", form);
+
+    if (editing) {
+      console.log("EDITING");
+
+      const res = await axios.put(
+        "http://localhost:3001/api/vinos/edit/" + form.id,
+        form,
+        getToken()
+      );
+      console.log("UPDATEDDDDDDD", res.data);
+      dispatch(updateProduct(res.data));
+      onClose();
+      return;
+    }
+    const { data } = await axios.post(
+      `http://localhost:3001/api/vinos/nuevo`,
+      form,
+      getToken()
+    );
+
+    console.log("CREATED", data);
+    dispatch(addProduct(data));
+    onClose();
+  };
+
   return (
     <div>
+
       <div>
-        <form style={{ width: "100%" }} noValidate>
+        <form style={{ width: "100%" }} noValidate onSubmit={onSubmit}>
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -24,10 +75,11 @@ export const ProductForm = ({ data = {} }) => {
             label="Pais de origen"
             name="paisDeOrigen"
             className="input"
-            value={data.paisDeOrigen || ""}
+            autoFocus
+            value={form.paisDeOrigen}
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -35,13 +87,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Bodega"
             name="bodega"
-            value={data.bodega || ""}
+            value={form.bodega}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -49,13 +100,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Precio"
             name="precio"
-            value={data.precio || ""}
+            value={form.precio}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -63,13 +113,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Varietal"
             name="varietal"
-            value={data.varietal || ""}
+            value={form.varietal}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -77,13 +126,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Color"
             name="color"
-            value={data.varietal || ""}
+            value={form.color}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -91,13 +139,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="ml"
             name="ml"
-            value={data.ml || ""}
+            value={form.ml}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -105,13 +152,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Descripcion"
             name="descripcion"
-            value={data.descripcion || ""}
+            value={form.descripcion}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -119,13 +165,12 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Imagen"
             name="img"
-            value={data.img || ""}
+            value={form.img}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           <TextField
-            // onChange={handleChange}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -133,20 +178,21 @@ export const ProductForm = ({ data = {} }) => {
             id="email"
             label="Stock"
             name="stock"
-            value={data.stock || ""}
+            value={form.stock}
             autoComplete="email"
-            autoFocus
             className="input"
           />
           {/* <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-        >
-          Add a wine!
-        </Button> */}
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+          >
+            Add a wine!
+          </Button> */}
+          <Button type="submit" width="100%" colorScheme="purple" mr={3}>
+            {editing ? "Edit wine" : " Add a wine!"}
+          </Button>
         </form>
 
         <br />

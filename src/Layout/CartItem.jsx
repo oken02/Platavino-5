@@ -58,7 +58,7 @@ export const CartItem = ({ card }) => {
                 fontWeight="normal"
                 fontSize="xl"
               >
-                {card.vino.varietal}
+                {card.vino.bodega}
               </Text>
               <IconButton
                 aria-label="Add to friends"

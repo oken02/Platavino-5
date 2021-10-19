@@ -158,7 +158,10 @@ const bcrypt = require("bcrypt");
       ml: 750,
       descripcion:
         "Graso: este descriptor se refiere a la textura del vino. Así como están aquellos que fluyen ligeros y lineales otros despliegan una untuosidad a su paso, como aceitosa o grasa acompañada de buen sabor.",
-      img: "https://lh3.googleusercontent.com/proxy/_4l5vU0b2aK-E3DjtmFRyFrjIVF2b8mNFLBUz9Gz1RRXMavzh2mpWpt5C37XNij-7Yq8SZMVjigjJqL4KV_Uog7119s2XiqKfnWAkZL384SAguixFD7s",
+      // img: "https://lh3.googleusercontent.com/proxy/_4l5vU0b2aK-E3DjtmFRyFrjIVF2b8mNFLBUz9Gz1RRXMavzh2mpWpt5C37XNij-7Yq8SZMVjigjJqL4KV_Uog7119s2XiqKfnWAkZL384SAguixFD7s",
+      img: "https://barrapisco.com/wp-content/uploads/2019/08/Vino-Quebranta.jpg",
+      
+      
       stock: 500,
     },
     {

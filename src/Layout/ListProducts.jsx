@@ -9,6 +9,7 @@ import AddProduct from "../components/AddProducts";
 import { ModalContext } from "../contexts/modalContext";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearch } from "../hooks/useSearch";
+import { ProductForm } from "./ProductForm";
 
 export const ListProducts = () => {
   const dispatch = useDispatch();
@@ -43,11 +44,11 @@ export const ListProducts = () => {
 
   const openModal = () => {
     modalContext.setData({
-      body: <AddProduct />,
-      title: "ADD A WINE",
-      onSubmit: () => {
-        console.log("SUBMIT EN CREATE PRODUCT");
-      },
+      body: <ProductForm editing={false} />,
+      title: "Add a wine",
+      // onSubmit: () => {
+      //   console.log("SUBMIT EN CREATE PRODUCT");
+      // },
     });
   };
 

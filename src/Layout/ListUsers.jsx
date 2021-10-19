@@ -23,7 +23,6 @@ export const ListUsers = () => {
 
   return (
     <div>
-      <h1>{JSON.stringify(usersTemp)}</h1>
       <div>
         <Box display="flex" justifyContent="space-between">
           <Heading as="h4" size="lg">

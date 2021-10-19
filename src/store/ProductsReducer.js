@@ -24,6 +24,7 @@ export const getProducts = createAsyncThunk(
   }
 );
 export const addProduct = createAction("ADD_PRODUCT");
+export const updateProduct = createAction("UPDATE_PRODUCT");
 
 // export const deleteProduct = createAction("DELETE_PRODUCT");
 
@@ -44,6 +45,16 @@ const ProductsReducer = createReducer([], {
 
   [deleteProduct.fulfilled]: (state, { payload: id }) => {
     return state.filter((product) => product.id !== id);
+  },
+  [updateProduct]: (state, { payload: productUpdated }) => {
+    const idx = state.findIndex((p) => p.id == productUpdated.id);
+    console.log("UPDATE IDXXXXXX", idx);
+
+    state[idx] = productUpdated;
+  },
+
+  [addProduct]: (state, { payload: product }) => {
+    state.push(product);
   },
 });
 

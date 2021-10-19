@@ -78,9 +78,14 @@ export function MyAppBar({ handleClickLogout }) {
   return (
     <div className={classes.root}>
       <div className={classes.offset} />
-      <AppBar position="fixed" color="white">
+      <AppBar position="fixed" color="inherit">
         <Toolbar>
-          <Box display="flex" alignItems="center">
+          <Box
+            display="flex"
+            alignItems="center"
+            cursor="pointer"
+            onClick={() => history.push("/")}
+          >
             <Heading mr="2" as="h6" size="xs">
               Platavino 5
             </Heading>
@@ -127,7 +132,7 @@ export function MyAppBar({ handleClickLogout }) {
                     onClick={() => {
                       dispatch(sendLogout());
                       dispatch(resetCart());
-                      // history.push("/login");
+                      history.push("/home");
                     }}
                     ml="2"
                     colorScheme="purple"

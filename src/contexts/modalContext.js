@@ -60,16 +60,17 @@ export const ModalContextProvider = ({ children }) => {
             <ModalHeader>{modal.data.title || "MODAL"} </ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <h2>MY MODAL</h2>
               {modal.data.body}
             </ModalBody>
 
-            <ModalFooter>
-              <Button colorScheme="purple" mr={3} onClick={modal.data.onSubmit}>
+            {/* <ModalFooter>
+              <Button colorScheme="purple" mr={3}>
                 Add wine
               </Button>
-              <Button variant="ghost">Cancelar</Button>
-            </ModalFooter>
+              <Button variant="ghost" onClick={onClose}>
+                Cancelar
+              </Button>
+            </ModalFooter> */}
           </ModalContent>
         </Modal>
       </>

@@ -1,9 +1,10 @@
-import { Switch, Route, useHistory,Redirect } from "react-router-dom";
+import { Switch, Route, useHistory, Redirect } from "react-router-dom";
 import { useDispatch } from "react-redux";
 // import { setCarrito } from "./store/addToCarrito";
 
 import EditProduct from "./components/EditProduct";
 import SingleRowSelectionGrid from "./components/OrdenList";
+import Front from "./components/Front";
 
 import Register from "./components/Register";
 import { sendLogout, sendValidation } from "./store/isLoggedReducer";
@@ -165,7 +166,7 @@ function App() {
               )}
             />
 
-            <Redirect exact from="/" to="/home" />
+            <Route path="/" exact component={Front} />
 
             <Route path="*" component={NotFound} />
           </Switch>

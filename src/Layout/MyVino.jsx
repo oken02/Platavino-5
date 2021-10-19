@@ -85,7 +85,7 @@ export const BlogCardDemo = React.memo(function BlogCard({ wine }) {
 
   return (
     <Card className={cx(styles.root, shadowStyles.root)}>
-      <Box px={2} py={2}>
+      <Box px={2} py={2} minWidth="40%">
         <img
           style={{
             width: "100%",
